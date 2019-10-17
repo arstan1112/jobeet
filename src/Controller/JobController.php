@@ -2,11 +2,14 @@
 
 namespace App\Controller;
 
+use App\Repository\JobsRepository;
+use App\Repository\CategoriesRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Jobs;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 
 /**
  * @Route("job")
@@ -22,16 +25,14 @@ class JobController extends AbstractController
      *
      * @return Response
      */
-    public function list(EntityManagerInterface $em) : Response
+    public function list(CategoriesRepository $repository) : Response
     {
 //        $jobs = $this->getDoctrine()->getRepository(Jobs::class)->findAll();
-        $query = $em->createQuery(
-            'SELECT j FROM App:Jobs j WHERE j.expiresAt > :date'
-        )->setParameter('date', new \DateTime());
-        $jobs = $query->getResult();
-
+//        $jobs = $em->getRepository(Jobs::class)->findActiveJobs();
+//        $jobs = $repository->findActiveJobs();
+        $categories = $repository->findWithActiveJobs();
         return $this->render('job/list.html.twig', [
-            'jobs' => $jobs,
+            'categories' => $categories,
         ]);
     }
 
@@ -39,6 +40,8 @@ class JobController extends AbstractController
      * Finds and displays a job entity.
      *
      * @Route("/{id}", name="job.show", methods="GET", requirements={"id" = "\d+"})
+     *
+     * @Entity("job", expr="repository.findActiveJob(id)")
      *
      * @param Jobs $job
      *
