@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\JobsRepository")
@@ -10,6 +11,16 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Jobs
 {
+    public const FULL_TIME_TYPE = 'full-time';
+    public const PART_TIME_TYPE = 'part-time';
+    public const FREELANCE_TYPE = 'freelance';
+
+    public const TYPES = [
+        self::FULL_TIME_TYPE,
+        self::PART_TIME_TYPE,
+        self::FREELANCE_TYPE,
+    ];
+
     /**
      * @var int
      * @ORM\Id()
@@ -151,11 +162,19 @@ class Jobs
         return $this;
     }
 
+    /**
+     * @return string|null|UploadedFile
+     */
     public function getLogo(): ?string
     {
         return $this->logo;
     }
 
+    /**
+     * @param string|null|UploadedFile $logo
+     *
+     * @return self
+     */
     public function setLogo(?string $logo): self
     {
         $this->logo = $logo;

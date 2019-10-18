@@ -9,4 +9,7 @@
 
 {#    {% include 'job/table.html.twig' with {'jobs': category.activeJobs} only %}#}
     {% include 'job/table.html.twig' with {'jobs': activeJobs} only %}
+    <div class="navigation text-center">
+        {{ knp_pagination_render(activeJobs) }}
+    </div>
 {% endblock %}

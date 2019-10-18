@@ -5,7 +5,6 @@ namespace App\Repository;
 use App\Entity\Jobs;
 use App\Entity\Categories;
 use Doctrine\ORM\AbstractQuery;
-use Doctrine\ORM\EntityRepository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -15,7 +14,7 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  * @method Jobs[]    findAll()
  * @method Jobs[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class JobsRepository extends EntityRepository
+class JobsRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
@@ -66,7 +65,7 @@ class JobsRepository extends EntityRepository
     public function getPaginatedActiveJobsByCategoryQuery(Categories $category) : AbstractQuery
     {
         return $this->createQueryBuilder('j')
-            ->where('j.category = :category')
+            ->where('j.categories = :category')
             ->andWhere('j.expiresAt > :date')
             ->setParameter('category', $category)
             ->setParameter('date', new \DateTime())
