@@ -7,6 +7,7 @@ use App\Entity\Categories;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\NonUniqueResultException;
 
 /**
  * @method Jobs|null find($id, $lockMode = null, $lockVersion = null)
@@ -30,7 +31,9 @@ class JobsRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('j')
             ->where('j.expiresAt > :date')
+            ->andWhere('j.activated = :activated')
             ->setParameter('date', new \DateTime())
+            ->setParameter('activated', true)
             ->orderBy('j.expiresAt', 'DESC');
 
         if ($categoryId) {
@@ -44,6 +47,8 @@ class JobsRepository extends ServiceEntityRepository
     /**
      * @param int $id
      *
+     * @throws NonUniqueResultException
+     *
      * @return Jobs|null
      */
     public function findActiveJob(int $id) : ?Jobs
@@ -51,8 +56,10 @@ class JobsRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('j')
             ->where('j.id = :id')
             ->andWhere('j.expiresAt > :date')
+            ->andWhere('j.activated = :activated')
             ->setParameter('id', $id)
             ->setParameter('date', new \DateTime())
+            ->setParameter('activated', true)
             ->getQuery()
             ->getOneOrNullResult();
     }
@@ -67,8 +74,10 @@ class JobsRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('j')
             ->where('j.categories = :category')
             ->andWhere('j.expiresAt > :date')
+            ->andWhere('j.activated = :activated')
             ->setParameter('category', $category)
             ->setParameter('date', new \DateTime())
+            ->setParameter('activated', true)
             ->getQuery();
     }
 
