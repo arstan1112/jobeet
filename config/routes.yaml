@@ -4,3 +4,5 @@
 #blog_list:
 #  path: /job
 #  controller: App\Controller\JobController::index
+fos_user:
+  resource: "@FOSUserBundle/Resources/config/routing/security.xml"

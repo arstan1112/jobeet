@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Entity\Category;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AffiliatesRepository")
@@ -102,7 +103,7 @@ class Affiliates
         return $this->token;
     }
 
-    public function setToken(string $token): self
+    public function setToken(?string $token): self
     {
         $this->token = $token;
 
@@ -117,10 +118,10 @@ class Affiliates
         return $this->active;
     }
 
-    public function getActive(): ?bool
-    {
-        return $this->active;
-    }
+//    public function getActive(): ?bool
+//    {
+//        return $this->active;
+//    }
 
     public function setActive(bool $active): self
     {
@@ -134,26 +135,33 @@ class Affiliates
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
+//    public function setCreatedAt(\DateTimeInterface $createdAt): self
+//    {
+//        $this->createdAt = $createdAt;
+//
+//        return $this;
+//    }
 
     /**
-     * @return Collection|Categories[]
+//     * @return Collection|Categories[]
+     * @return Categories[]|ArrayCollection
      */
-    public function getCategories(): Collection
+//    public function getCategories(): Collection
+    public function getCategories()
     {
         return $this->categories;
     }
 
+    /**
+     * @param Categories $category
+     * @return self
+     */
     public function addCategory(Categories $category): self
     {
         if (!$this->categories->contains($category)) {
-            $this->categories[] = $category;
-            $category->addAffiliate($this);
+//            $this->categories[] = $category;
+//            $category->addAffiliate($this);
+            $this->categories->add($category);
         }
 
         return $this;
@@ -161,10 +169,11 @@ class Affiliates
 
     public function removeCategory(Categories $category): self
     {
-        if ($this->categories->contains($category)) {
-            $this->categories->removeElement($category);
-            $category->removeAffiliate($this);
-        }
+        $this->categories->removeElement($category);
+//        if ($this->categories->contains($category)) {
+//            $this->categories->removeElement($category);
+//            $category->removeAffiliate($this);
+//        }
 
         return $this;
     }

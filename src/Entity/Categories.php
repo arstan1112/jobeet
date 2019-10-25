@@ -28,7 +28,7 @@ class Categories
 
     /**
      * @var Jobs[]|ArrayCollection
-     * @ORM\OneToMany(targetEntity="App\Entity\Jobs", mappedBy="categories")
+     * @ORM\OneToMany(targetEntity="App\Entity\Jobs", mappedBy="categories", cascade={"remove"})
      */
     private $jobs;
 

@@ -68,6 +68,7 @@ class JobsRepository extends ServiceEntityRepository
      * @param Categories $category
      *
      * @return AbstractQuery
+     * @throws \Exception
      */
     public function getPaginatedActiveJobsByCategoryQuery(Categories $category) : AbstractQuery
     {

@@ -3,19 +3,22 @@
 namespace App\Controller;
 
 use App\Entity\Categories;
+use App\EventListener\Event\VisitCreatedEvent;
 use App\Repository\JobsRepository;
 use App\Repository\CategoriesRepository;
 use App\Form\JobType;
 use App\Entity\Jobs;
+use App\Service\FileUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use App\Service\FileUploader;
 use Symfony\Component\Form\FormInterface;
+use App\Service\JobHistoryService;
 
 ///**
 // * @Route("job")
@@ -23,41 +26,72 @@ use Symfony\Component\Form\FormInterface;
 
 class JobController extends AbstractController
 {
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
+    /**
+     * @var EventDispatcherInterface
+     */
+    private $dispatcher;
+
+    public function __construct(EntityManagerInterface $em, EventDispatcherInterface $dispatcher)
+    {
+        $this->em = $em;
+        $this->dispatcher = $dispatcher;
+    }
 
     /**
      * Lists all job entities.
      *
      * @Route("/", name="job.list", methods="GET")
      *
+     * @param JobHistoryService $jobHistoryService
+     *
      * @return Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
 //    public function list(EntityManagerInterface $em) : Response
-    public function list(EntityManagerInterface $em) : Response
+    public function list(JobHistoryService $jobHistoryService) : Response
     {
 //        $jobs = $this->getDoctrine()->getRepository(Jobs::class)->findAll();
 //        $jobs = $em->getRepository(Jobs::class)->findActiveJobs();
 //        $categories = $this->getDoctrine()->getRepository(Jobs::class)->findAll();
-        $categories = $em->getRepository(Categories::class)->findWithActiveJobs();
+        $categories = $this->em->getRepository(Categories::class)->findWithActiveJobs();
 //        $jobs = $repository->findActiveJobs();
 //        $categories = $repository->findWithActiveJobs();
+//        dump($jobHistoryService->getJobs());
+//        die;
+
+
+//        $event = new VisitCreatedEvent('job_list');
+//        $this->dispatcher->dispatch($event);
+
         return $this->render('job/list.html.twig', [
             'categories' => $categories,
+            'historyJobs' => $jobHistoryService->getJobs(),
         ]);
     }
 
     /**
      * Finds and displays a job entity.
      *
-     * @Route("job/{id}", name="job.show", methods="GET", requirements={"id" = "\d+"}, defaults={"id":1})
+     * @Route("job/{id}", name="job.show", methods="GET", requirements={"id" = "\d+"}, defaults={"id":40})
      *
-     * @Entity("job", expr="repository.findActiveJob(id)")
+     * @Entity("jobs", expr="repository.findActiveJob(id)")
      *
      * @param Jobs $job
+     * @param JobHistoryService $jobHistoryService
      *
      * @return Response
      */
-    public function show(Jobs $job) : Response
+    public function show(Jobs $job, JobHistoryService $jobHistoryService) : Response
     {
+        $jobHistoryService->addJob($job);
+
+//        $event = new VisitCreatedEvent('job_show');
+//        $this->dispatcher->dispatch($event);
+
         return $this->render('job/show.html.twig', [
             'job' => $job,
         ]);
@@ -71,42 +105,35 @@ class JobController extends AbstractController
      * @Route("job/create", name="job.create", methods={"GET", "POST"})
      *
      * @param Request $request
-     * @param EntityManagerInterface $em
+     * @param FileUploader $fileUploader
      *
      * @return Response
      */
-    public function create(Request $request, EntityManagerInterface $em, FileUploader $fileUploader) : Response
+    public function create(Request $request, FileUploader $fileUploader) : Response
     {
         $job = new Jobs();
         $form = $this->createForm(JobType::class, $job);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var UploadedFile|null $logoFile */
-            $logoFile = $form->get('logo')->getData();
+//            /** @var UploadedFile|null $logoFile */
+//            $logoFile = $form->get('logo')->getData();
+//            if ($logoFile instanceof UploadedFile) {
+//                $fileName = $fileUploader->upload($logoFile);
+//                $job->setLogo($fileName);
+//            }
 
-            if ($logoFile instanceof UploadedFile) {
-//                $fileName = \bin2hex(\random_bytes(10)) . '.' . $logoFile->guessExtension();
-                // moves the file to the directory where brochures are stored
-//                $logoFile->move(
-//                    $this->getParameter('jobs_directory'),
-//                    $fileName
-//                );
+            $this->em->persist($job);
+            $this->em->flush();
 
-                $fileName = $fileUploader->upload($logoFile);
-                $job->setLogo($fileName);
-            }
-
-            $em->persist($job);
-            $em->flush();
-
-//            return $this->redirectToRoute('job.list');
-//            return $this->redirectToRoute('job.list');
             return $this->redirectToRoute(
                 'job.preview',
                 ['token' => $job->getToken()]
             );
         }
+
+        $event = new VisitCreatedEvent('job_create');
+        $this->dispatcher->dispatch($event);
 
         return $this->render('job/create.html.twig', [
             'form' => $form->createView(),
@@ -120,17 +147,16 @@ class JobController extends AbstractController
      *
      * @param Request $request
      * @param Jobs $job
-     * @param EntityManagerInterface $em
      *
      * @return Response
      */
-    public function edit(Request $request, Jobs $job, EntityManagerInterface $em) : Response
+    public function edit(Request $request, Jobs $job) : Response
     {
         $form = $this->createForm(JobType::class, $job);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em->flush();
+            $this->em->flush();
 
 //            return $this->redirectToRoute('job.list');
             return $this->redirectToRoute(
@@ -187,18 +213,17 @@ class JobController extends AbstractController
      *
      * @param Request $request
      * @param Jobs $job
-     * @param EntityManagerInterface $em
      *
      * @return Response
      */
-    public function delete(Request $request, Jobs $job, EntityManagerInterface $em) : Response
+    public function delete(Request $request, Jobs $job) : Response
     {
         $form = $this->createDeleteForm($job);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em->remove($job);
-            $em->flush();
+            $this->em->remove($job);
+            $this->em->flush();
         }
 
         return $this->redirectToRoute('job.list');
@@ -211,11 +236,10 @@ class JobController extends AbstractController
      *
      * @param Request $request
      * @param Jobs $job
-     * @param EntityManagerInterface $em
      *
      * @return Response
      */
-    public function publish(Request $request, Jobs $job, EntityManagerInterface $em) : Response
+    public function publish(Request $request, Jobs $job) : Response
     {
         $form = $this->createPublishForm($job);
         $form->handleRequest($request);
@@ -223,7 +247,7 @@ class JobController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $job->setActivated(true);
 
-            $em->flush();
+            $this->em->flush();
 
             $this->addFlash('notice', 'Your job was published');
         }
