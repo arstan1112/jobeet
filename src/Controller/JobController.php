@@ -24,7 +24,7 @@ use App\Service\JobHistoryService;
 // * @Route("job")
 // */
 
-class JobController extends AbstractController
+class JobController extends AbstractController implements VisitInterface
 {
     /**
      * @var EntityManagerInterface

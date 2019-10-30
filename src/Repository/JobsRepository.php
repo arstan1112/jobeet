@@ -8,6 +8,7 @@ use Doctrine\ORM\AbstractQuery;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\NonUniqueResultException;
+use App\Entity\Affiliates;
 
 /**
  * @method Jobs|null find($id, $lockMode = null, $lockVersion = null)
@@ -80,6 +81,27 @@ class JobsRepository extends ServiceEntityRepository
             ->setParameter('date', new \DateTime())
             ->setParameter('activated', true)
             ->getQuery();
+    }
+
+    /**
+     * @param Affiliates $affiliate
+     *
+     * @return Jobs[]
+     */
+    public function findActiveJobsForAffiliate(Affiliates $affiliate)
+    {
+        return $this->createQueryBuilder('j')
+            ->leftJoin('j.categories', 'c')
+            ->leftJoin('c.affiliates', 'a')
+            ->where('a.id = :affiliate')
+            ->andWhere('j.expiresAt > :date')
+            ->andWhere('j.activated = :activated')
+            ->setParameter('affiliate', $affiliate)
+            ->setParameter('date', new \DateTime())
+            ->setParameter('activated', true)
+            ->orderBy('j.expiresAt', 'DESC')
+            ->getQuery()
+            ->getResult();
     }
 
     // /**

@@ -11,7 +11,11 @@ class AffiliateTokenListener
      * @param LifecycleEventArgs
      */
     public function prePersist(LifecycleEventArgs $args)
+//    public function prePersist()
     {
+//        $var = 'test';
+//        dump($var);
+//        die();
         $entity = $args->getEntity();
 
         if (!$entity instanceof Affiliates) {

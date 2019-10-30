@@ -19,6 +19,22 @@ class AffiliatesRepository extends ServiceEntityRepository
         parent::__construct($registry, Affiliates::class);
     }
 
+    /**
+     * @param string $token
+     *
+     * @return Affiliates|null
+     */
+    public function findOneActiveByToken(string $token) : ?Affiliates
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.active = :active')
+            ->andWhere('a.token = :token')
+            ->setParameter('active', true)
+            ->setParameter('token', $token)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     // /**
     //  * @return Affiliates[] Returns an array of Affiliates objects
     //  */

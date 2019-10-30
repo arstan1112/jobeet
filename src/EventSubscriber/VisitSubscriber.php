@@ -2,10 +2,12 @@
 
 namespace App\EventSubscriber;
 
+use App\Controller\VisitInterface;
 use App\Entity\Visits;
 use App\EventListener\Event\VisitCreatedEvent;
 use App\Repository\VisitsRepository;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
@@ -23,6 +25,9 @@ class VisitSubscriber implements EventSubscriberInterface
 
     public function onVisitCreated(VisitCreatedEvent $event)
     {
+        dump($event);
+        die;
+
         $visit = new Visits();
         $visit->setCount(
             $visit->getCount() + 1
@@ -33,8 +38,16 @@ class VisitSubscriber implements EventSubscriberInterface
         $this->visits->save($visit);
     }
 
-    public function onResponseCreated(ResponseEvent $event)
+    public function onResponseCreated(ControllerEvent $event)
     {
+        $controller = $event->getController()[0];
+//        dump($controller);
+//        die();
+
+        if ( ! ($controller instanceof VisitInterface)) {
+            return;
+        }
+
         $page = $event->getRequest()->attributes->get('_route');
         $visit = new Visits();
         $visit->setCount(
@@ -50,7 +63,7 @@ class VisitSubscriber implements EventSubscriberInterface
     {
         return [
 //            VisitCreatedEvent::class => 'onVisitCreated',
-            KernelEvents::RESPONSE => 'onResponseCreated'
+            KernelEvents::CONTROLLER => 'onResponseCreated'
         ];
     }
 }

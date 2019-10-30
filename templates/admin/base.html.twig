@@ -32,6 +32,10 @@
                 <li role="presentation" {% if currentRouteName starts with 'admin.job' %}class="active"{% endif %}>
                     <a href="{{ path('admin.job.list') }}">Jobs</a>
                 </li>
+
+                <li role="presentation" {% if currentRouteName starts with 'admin.affiliate.' %}class="active"{% endif %}>
+                    <a href="{{ path('admin.affiliates.list') }}">Affiliates</a>
+                </li>
             </ul>
         </div>
 

@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Controller\VisitInterface;
 use App\Entity\Categories;
 use Doctrine\ORM\EntityManagerInterface;
 use Entity\Category;
@@ -11,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\Admin\CategoryType;
 
-class CategoryController extends AbstractController
+class CategoryController extends AbstractController implements VisitInterface
 {
     /**
      * Lists all categories entities.

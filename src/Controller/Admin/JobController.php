@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Controller\VisitInterface;
 use App\Entity\Jobs;
 use App\Form\JobType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -13,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use App\Service\FileUploader;
 
-class JobController extends AbstractController
+class JobController extends AbstractController implements VisitInterface
 {
     /**
      * @var EntityManagerInterface $em

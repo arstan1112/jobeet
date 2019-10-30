@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use App\Service\JobHistoryService;
 
-class CategoryController extends AbstractController
+class CategoryController extends AbstractController implements VisitInterface
 //class CategoryController extends Controller
 {
 
@@ -78,5 +78,6 @@ class CategoryController extends AbstractController
             'historyJobs' => $jobHistoryService->getJobs(),
         ]);
     }
+
 
 }
