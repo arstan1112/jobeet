@@ -34,7 +34,7 @@ class JobController extends AbstractController implements VisitInterface
     /**
      * Lists all jobs entities
      *
-     * @Route("admin/jobs/{page}",
+     * @Route("/admin/jobs/{page}",
      *     name="admin.job.list",
      *     methods="GET",
      *     defaults={"page": 1},
@@ -48,6 +48,9 @@ class JobController extends AbstractController implements VisitInterface
      */
     public function list(PaginatorInterface $paginator, int $page) : Response
     {
+//        $test = 'test';
+//        dump($test);
+//        die();
         $jobs=$paginator->paginate(
             $this->em->getRepository(Jobs::class)->createQueryBuilder('j'),
             $page,
@@ -67,7 +70,7 @@ class JobController extends AbstractController implements VisitInterface
     /**
      * Create job
      *
-     * @Route("admin/job/create", name="admin.job.create", methods="GET|POST")
+     * @Route("/admin/job/create", name="admin.job.create", methods="GET|POST")
      *
      * @param Request $request
      *
@@ -109,7 +112,7 @@ class JobController extends AbstractController implements VisitInterface
     /**
      * Edit job
      *
-     * @Route("admin/job/{id}/edit", name="admin.job.edit", methods="GET|POST", requirements={"id" = "\d+"})
+     * @Route("/admin/job/{id}/edit", name="admin.job.edit", methods="GET|POST", requirements={"id" = "\d+"})
      *
      * @param Request $request
      * @param Jobs $job
@@ -135,7 +138,7 @@ class JobController extends AbstractController implements VisitInterface
     /**
      * Delete a job
      *
-     * @Route("admin/job/{id}/delete", name="admin.job.delete", methods="DELETE", requirements={"id" = "\d+"})
+     * @Route("/admin/job/{id}/delete", name="admin.job.delete", methods="DELETE", requirements={"id" = "\d+"})
      *
      * @param Request $request
      * @param Jobs $job

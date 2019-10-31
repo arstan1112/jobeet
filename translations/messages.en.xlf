@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="SwvMlQO" resname="Jobeet - Your best job board">
+        <source>Jobeet - Your best job board</source>
+        <target>Jobeet - Your best job board</target>
+      </trans-unit>
+      <trans-unit id="xqYQ02A" resname="Jobeet">
+        <source>Jobeet</source>
+        <target>Jobeet</target>
+      </trans-unit>
+      <trans-unit id="jC3twAE" resname="Admin Panel">
+        <source>Admin Panel</source>
+        <target>Admin Panel</target>
+      </trans-unit>
+      <trans-unit id="Y7SLIj4" resname="Affiliates">
+        <source>Affiliates</source>
+        <target>Affiliates</target>
+      </trans-unit>
+      <trans-unit id="e3cp8V6" resname="Post a Job">
+        <source>Post a Job</source>
+        <target>Post a Job</target>
+      </trans-unit>
+      <trans-unit id="ACcM9j_" resname="logout">
+        <source>logout</source>
+        <target>logout</target>
+      </trans-unit>
+      <trans-unit id="bVBmzKs" resname="Jobs in the %category% category">
+        <source>Jobs in the %category% category</source>
+        <target>Jobs in the %category% category</target>
+      </trans-unit>
+      <trans-unit id="QkolUdN" resname="Expired">
+        <source>Expired</source>
+        <target>Expired</target>
+      </trans-unit>
+      <trans-unit id="PV5l7l_" resname="Expires in %days% days">
+        <source>Expires in %days% days</source>
+        <target>Expires in %days% days</target>
+      </trans-unit>
+      <trans-unit id="hDTa85S" resname="]-Inf,0] Expired|{1}Expires in 1 day|]1,Inf[ Expires in %days% days">
+        <source>]-Inf,0] Expired|{1}Expires in 1 day|]1,Inf[ Expires in %days% days</source>
+        <target>]-Inf,0] Expired|{1}Expires in 1 day|]1,Inf[ Expires in %days% days</target>
+      </trans-unit>
+      <trans-unit id="A_xhM2L" resname="Extend (for another 30 days)">
+        <source>Extend (for another 30 days)</source>
+        <target>Extend (for another 30 days)</target>
+      </trans-unit>
+      <trans-unit id="0xrLENC" resname="[Bookmark this &lt;a href=&quot;%url%&gt;URL&lt;/a&gt; to manage this job in the future]">
+        <source>[Bookmark this &lt;a href="%url%&gt;URL&lt;/a&gt; to manage this job in the future]</source>
+        <target><![CDATA[[Bookmark this <a href="%url%>URL</a> to manage this job in the future]]]></target>
+      </trans-unit>
+      <trans-unit id="4tKEDjQ" resname="Recent viewed jobs">
+        <source>Recent viewed jobs</source>
+        <target>Recent viewed jobs</target>
+      </trans-unit>
+      <trans-unit id="yYjy2ph" resname="Your affiliate account has been created">
+        <source>Your affiliate account has been created</source>
+        <target>Your affiliate account has been created</target>
+      </trans-unit>
+      <trans-unit id="cBxOB8D" resname="Thank you! You will receive an email with your affiliate token as soon as your account will be activated.">
+        <source>Thank you! You will receive an email with your affiliate token as soon as your account will be activated.</source>
+        <target>Thank you! You will receive an email with your affiliate token as soon as your account will be activated.</target>
+      </trans-unit>
+      <trans-unit id="dGvk8k0" resname="Become an affiliate">
+        <source>Become an affiliate</source>
+        <target>Become an affiliate</target>
+      </trans-unit>
+      <trans-unit id="R1lJisK" resname="Create">
+        <source>Create</source>
+        <target>Create</target>
+      </trans-unit>
+      <trans-unit id="_KRz7jc" resname="Your account has been activated successfully!">
+        <source>Your account has been activated successfully!</source>
+        <target>Your account has been activated successfully!</target>
+      </trans-unit>
+      <trans-unit id="qmknise" resname="Your token is:">
+        <source>Your token is:</source>
+        <target>Your token is:</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

@@ -4,10 +4,10 @@
     <table class="table">
         <thead>
             <tr class="active">
-                <th>Email</th>
-                <th>URL</th>
-                <th>Active</th>
-                <th>Actions</th>
+                <th>{{'Email'|trans}}</th>
+                <th>{{'URL'|trans}}</th>
+                <th>{{'Active'|trans}}</th>
+                <th>{{'Actions'|trans}}</th>
             </tr>
         </thead>
 
@@ -18,18 +18,18 @@
                 <td>{{ affiliate.url }}</td>
                 <td>
                     {% if affiliate.active %}
-                     <span class="label label-success">Yes</span>
+                     <span class="label label-success">{{'Yes'|trans}}</span>
                     {% else %}
-                        <span class="label label-danger">No</span>
+                        <span class="label label-danger">{{'No'|trans}}</span>
                      {% endif %}
                 </td>
                 <td class="text-nowrap">
                     <ul class="list-inline">
                         <li>
                             {% if affiliate.active %}
-                                <a href="{{ path('admin.affiliate.deactivate', {id: affiliate.id}) }}" class="btn btn-default">Deactivate</a>
+                                <a href="{{ path('admin.affiliate.deactivate', {id: affiliate.id}) }}" class="btn btn-default">{{'Deactivate'|trans}}</a>
                             {% else %}
-                                <a href="{{ path('admin.affiliate.activate', {id: affiliate.id}) }}" class="btn btn-default">Activate</a>
+                                <a href="{{ path('admin.affiliate.activate', {id: affiliate.id}) }}" class="btn btn-default">{{'Activat'|trans}}e</a>
                             {% endif %}
                         </li>
                     </ul>

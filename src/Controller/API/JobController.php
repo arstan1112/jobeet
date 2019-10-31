@@ -13,14 +13,18 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Component\HttpFoundation\Response;
 
+///**
+// * @Route("/api/v1/")
+// */
 
 class JobController extends AbstractFOSRestController
 //class JobController extends FOSRestController
 {
     /**
-     * @Rest\Get("/{token}/jobs", name="api.job.list")
+     * @Rest\Get("/api/v1/{token}/jobs", name="api.job.list")
      *
      * @Entity("affiliate", expr="repository.findOneActiveByToken(token)")
+     *
      * @param Affiliates $affiliate
      * @param EntityManagerInterface $em
      *

@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Entity\Affiliates;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+//use Doctrine\ORM\EntityRepository;
+
 
 /**
  * @method Affiliates|null find($id, $lockMode = null, $lockVersion = null)
@@ -13,6 +15,7 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  * @method Affiliates[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class AffiliatesRepository extends ServiceEntityRepository
+//class AffiliatesRepository extends EntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {

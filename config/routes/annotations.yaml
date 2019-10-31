@@ -8,4 +8,4 @@ controllers:
 api_controllers:
     resource: ../../src/Controller/API
     type: annotation
-    prefix: /api/v1/
+#    prefix: /api/v1/
