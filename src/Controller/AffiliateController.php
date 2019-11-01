@@ -57,6 +57,4 @@ class AffiliateController extends AbstractController
         return $this->render('affiliate/wait.html.twig');
     }
 
-
-
 }

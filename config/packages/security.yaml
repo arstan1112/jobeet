@@ -30,8 +30,11 @@ security:
             form_login:
                 provider: fos_userbundle
                 csrf_token_generator: security.csrf.token_manager
+                login_path: fos_user_security_login
+                check_path: fos_user_security_check
 
-            logout: true
+            logout:
+                path: fos_user_security_logout
             anonymous: true
 
             # activate different ways to authenticate
@@ -46,3 +49,4 @@ security:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
          - { path: ^/admin, roles: ROLE_ADMIN }
+         - { path: ^/ru/admin, roles: ROLE_ADMIN }

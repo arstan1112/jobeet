@@ -1,7 +1,7 @@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
-            <span class="navbar-brand">Control Panel:</span>
+            <span class="navbar-brand">{{'Control Panel:'|trans}}</span>
         </div>
 
         <div class="collapse navbar-collapse">
@@ -9,13 +9,15 @@
                 {% if job.expiresAt < date() %}
                     <p class="navbar-text ">{{'Expired'|trans}}</p>
                 {% else %}
-                    <p class="navbar-text ">{{'Expires in %days% days'|trans({'%days%': job.expiresAt.diff(date())|date('%a')}) }}</p>
+{#                    <p class="navbar-text ">{{'Expires in %days% days'|trans({'%days%': job.expiresAt.diff(date())|date('%a')}) }}</p>#}
+                    <p class="navbar-text ">
+                        {% set daysToExpiring = job.expiresAt.diff(date())|date('%a') %}
+                        {% transchoice daysToExpiring with {'%days%': daysToExpiring} %}
+                            ]-Inf,0] Expired|{1}Expires in 1 day|]1,4] Expires in %days% days|[5,Inf[ Expires in %days% days
+                        {% endtranschoice %}
+                    </p>
                 {% endif %}
 
-                {% set daysToExpiration = job.expiresAt.diff(date())|date('$a') %}
-                {% transchoice daysToExpiring with {'%days%': daysToExpiring} %}
-                    ]-Inf,0] Expired|{1}Expires in 1 day|]1,Inf[ Expires in %days% days
-                {% endtranschoice %}
 
                 {% if job.expiresAt.diff(date())|date('%a') < 5 %}
                     <a class="btn btn-default navbar-btn" href="#">
@@ -29,10 +31,6 @@
                     {{'Edit'|trans}}
                 </a>
 
-{#                <a class="btn btn-default navbar-btn" href="#">#}
-{#                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>#}
-{#                    Publish#}
-{#                </a>#}
                  {{ form_start(publishForm, {'attr': {'class': 'navbar-form navbar-left'}}) }}
                      {{ form_widget(publishForm) }}
 
@@ -44,7 +42,7 @@
             {% endif %}
 
             <p class="navbar-text navbar-right">
-                {{'[Bookmark this <a href="%url%>URL</a> to manage this job in the future]'|trans({'%url%': path('job.preview', {token: job.token})})|raw }}
+                {{ '[Bookmark this <a href="%url%">URL</a> to manage this job in the future]'|trans({'%url%': path('job.preview', {token: job.token})})|raw }}
             </p>
             {{ form_start(deleteForm, {'attr': {'class': 'navbar-form navbar-left'}}) }}
             {{ form_widget(deleteForm) }}

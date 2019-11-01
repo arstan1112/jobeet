@@ -6,6 +6,9 @@
 #  controller: App\Controller\JobController::index
 fos_user:
   resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+  defaults:
+    locale: '%locale%'
   prefix:
     en: ''
     ru: '/ru'
+
