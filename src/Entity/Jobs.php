@@ -3,8 +3,9 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use JMS\Serializer\Annotation as JMS;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\JobsRepository")
@@ -38,6 +39,8 @@ class Jobs
      * @ORM\Column(type="string", length=255)
      * @JMS\Expose()
      * @JMS\Type("string")
+     *
+     * @Assert\NotBlank(message="Type cannot be blank.")
      */
     private $type;
 
@@ -46,6 +49,9 @@ class Jobs
      * @ORM\Column(type="string", length=255)
      * @JMS\Expose()
      * @JMS\Type("string")
+     *
+     * @Assert\NotBlank(message="Company cannot be blank.")
+     * @Assert\Length(max="255")
      */
     private $company;
 
@@ -60,6 +66,8 @@ class Jobs
      * @ORM\Column(type="string", length=255, nullable=true)
      * @JMS\Expose()
      * @JMS\Type("string")
+     *
+     * @Assert\Length(max="255")
      */
     private $url;
 
@@ -68,6 +76,9 @@ class Jobs
      * @ORM\Column(type="string", length=255)
      * @JMS\Expose()
      * @JMS\Type("string")
+     *
+     * @Assert\NotBlank(message="Position cannot be blank")
+     * @Assert\Length(max="255")
      */
     private $position;
 
@@ -76,6 +87,9 @@ class Jobs
      * @ORM\Column(type="string", length=255)
      * @JMS\Expose()
      * @JMS\Type("string")
+     *
+     * @Assert\NotBlank(message="Location cannot be blank")
+     * @Assert\Length(max="255")
      */
     private $location;
 
@@ -84,6 +98,8 @@ class Jobs
      * @ORM\Column(type="text")
      * @JMS\Expose()
      * @JMS\Type("string")
+     *
+     * @Assert\NotBlank(message="Description cannot be blank")
      */
     private $description;
 
@@ -92,30 +108,52 @@ class Jobs
      * @ORM\Column(type="text")
      * @JMS\Expose()
      * @JMS\Type("string")
+     * @JMS\SerializedName("howToApply")
+     *
+     * @Assert\NotBlank(message="This field cannot be blank")
      */
     private $howToApply;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=255, unique=true)
+     * @JMS\Expose()
+     * @JMS\Type("string")
+     *
+     * @Assert\NotBlank(message="Token cannot be blank")
+     * @Assert\Length(max="255")
      */
     private $token;
 
     /**
      * @var bool
      * @ORM\Column(type="boolean")
+     * @JMS\Expose()
+     * @JMS\Type("bool")
+     *
+     * @Assert\NotNull()
      */
     private $public;
 
     /**
      * @var bool
      * @ORM\Column(type="boolean")
+     * @JMS\Expose()
+     * @JMS\Type("bool")
+     *
+     * @Assert\NotNull()
      */
     private $activated;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=255)
+     * @JMS\Expose()
+     * @JMS\Type("string")
+     *
+     * @Assert\NotBlank(message="Email cannot be blank")
+     * @Assert\Email()
+     * @Assert\Length(max="255")
      */
     private $email;
 
@@ -142,8 +180,12 @@ class Jobs
 
     /**
      * @var Categories
-     * @ORM\ManyToOne(targetEntity="App\Entity\Categories", inversedBy="jobs")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Categories", inversedBy="jobs", cascade={"persist"})
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id", nullable=false)
+     * @JMS\Expose()
+     * @JMS\Type("integer")
+     *
+     * @Assert\NotBlank(message="Categories cannot be blank")
      */
     private $categories;
 

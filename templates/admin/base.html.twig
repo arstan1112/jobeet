@@ -17,6 +17,13 @@
         <div class="navbar-header">
             <a class="navbar-brand" href="#">Jobeet {{'Admin'|trans}}</a>
         </div>
+
+        <ul class="nav navbar-nav navbar-right">
+             <li>
+                <a href="{{ path('fos_user_security_logout') }}">{{ 'Logout'|trans }}</a>
+             </li>
+        </ul>
+
     </div>
 </nav>
 
@@ -35,6 +42,12 @@
 
                 <li role="presentation" {% if currentRouteName starts with 'admin.affiliate.' %}class="active"{% endif %}>
                     <a href="{{ path('admin.affiliates.list') }}">{{'Affiliates'|trans}}</a>
+                </li>
+                <li role="presentation">
+                    <a href="{{ path('job.list') }}">
+                        <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
+                        {{'Back to list'|trans}}
+                    </a>
                 </li>
             </ul>
         </div>
