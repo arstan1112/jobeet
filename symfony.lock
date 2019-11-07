@@ -171,6 +171,9 @@
     "hoa/zformat": {
         "version": "1.17.01.10"
     },
+    "hshn/base64-encoded-file": {
+        "version": "v2.0.1"
+    },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },

@@ -195,6 +195,45 @@ class Jobs
 //     */
 //    private $category;
 
+    /**
+     * @var string
+     * @Assert\NotBlank()
+     * @JMS\Expose()
+     * @JMS\Type("string")
+     */
+    private $logoname;
+
+    /**
+     * @var string
+     * @Assert\NotBlank()
+     * @JMS\Expose()
+     * @JMS\Type("string")
+     *
+     * @JMS\Accessor(setter="setLogodata");
+     */
+    private $logodata;
+
+    /**
+     * @var string
+     */
+    public $decodedLogodata;
+
+    public function setLogodata(?string $logodata)
+    {
+        $this->logodata = $logodata;
+        $this->decodedLogodata = base64_decode($logodata);
+    }
+
+    public function getLogodata(): ?string
+    {
+        return $this->logodata;
+    }
+
+    public function getDecodedlogodata(): ?string
+    {
+        return $this->decodedLogodata;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -438,6 +477,12 @@ class Jobs
     public function getCategoryName()
     {
         return $this->getCategories()->getName();
+    }
+
+    public function getCategoryId()
+    {
+        return $this->categories;
+
     }
 
 //    public function getCategory(): ?Categories

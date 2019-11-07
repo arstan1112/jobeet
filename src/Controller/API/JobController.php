@@ -6,6 +6,9 @@ namespace App\Controller\API;
 use App\Controller\FormErrorsTrait;
 use App\Entity\Affiliates;
 use App\Form\JobType;
+use App\Service\FileUploader;
+use App\Service\JobSaveService;
+use Doctrine\ORM\NonUniqueResultException;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use App\Entity\Jobs;
 use Doctrine\ORM\EntityManagerInterface;
@@ -14,13 +17,18 @@ use Doctrine\ORM\EntityManagerInterface;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use JMS\Serializer\Serializer;
 use JMS\Serializer\SerializerInterface;
+use PhpParser\Node\Scalar\MagicConst\File;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Component\Form\FormErrorIterator;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\File\File as FileObject;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use App\API\JobUploadApi;
 
 ///**
 // * @Route("/api/v1/")
@@ -35,9 +43,21 @@ class JobController extends AbstractFOSRestController
      */
     private $em;
 
-    public function __construct(EntityManagerInterface $em)
+    /**
+     * @var SerializerInterface
+     */
+    private $serializer;
+
+    /**
+     * JobController constructor.
+     * @param EntityManagerInterface $em
+     * @param SerializerInterface $serializer
+     */
+
+    public function __construct(EntityManagerInterface $em, SerializerInterface $serializer)
     {
         $this->em = $em;
+        $this->serializer = $serializer;
     }
 
 
@@ -70,15 +90,7 @@ class JobController extends AbstractFOSRestController
      */
     public function postJob(Request $request, SerializerInterface $serializer, ValidatorInterface $validator)
     {
-        $job = $serializer->deserialize(
-            $request->getContent(), Jobs::class, 'json'
-        );
-//        dump($job);
-//        die();
-
         $data = json_decode($request->getContent(), true);
-
-
         $form = $this->createForm(JobType::class, null, [
             'csrf_protection' => false,
         ]);
@@ -99,6 +111,12 @@ class JobController extends AbstractFOSRestController
             'errors' => $this->getErrorsFromForm($form),
         ], 400);
 
+//        $job = $serializer->deserialize(
+//            $request->getContent(), Jobs::class, 'json'
+//        );
+//        dump($job);
+//        die();
+
 //        $errors = $validator->validate($job);
 //        if (count($errors) > 0) {
 //            $response = [];
@@ -118,5 +136,63 @@ class JobController extends AbstractFOSRestController
 //        }
     }
 
+    /**
+     * @param Request            $request
+     * @param ValidatorInterface $validator
+     * @param JobSaveService     $jobService
+     *
+     * @Rest\Post("api/v1/jobsupl", name="api.jobsupl.post")
+     *
+     * @return JsonResponse
+     */
+    public function postJobUpload(Request $request, JobSaveService $jobService, ValidatorInterface $validator)
+    {
+        $uploadApi = $this->serializer->deserialize(
+            $request->getContent(),
+//                JobUploadApi::class,
+            Jobs::class,
+            'json'
+        );
+
+        $errors = $validator->validate($uploadApi);
+        if (count($errors) > 0) {
+            $response = [];
+            foreach ($errors as $error) {
+                /** ConstraintViolation $error */
+                $response[] = [
+                    'name' => $error->getPropertyPath(),
+                    'message' => $error->getMessage()
+                ];
+            }
+            return $this->json([
+                'status' => 'error',
+                'errors' => $response,
+            ], 400);
+        }
+
+
+        $status = 201;
+        try {
+            $jobService->saveJob($uploadApi);
+
+            $response = ['status' => 'success', 'message' => 'Entry success'];
+        } catch (\Exception $e) {
+            $status = 400;
+            $response = [
+                'status' => 'error',
+                'message' => $e->getMessage(),
+            ];
+        }
+
+        return $this->json($response, $status);
+
+//            /** @var UploadedFile|null $logoFile */
+//            $logoFile = $form->get('logo')->getData();
+//            if ($logoFile instanceof UploadedFile) {
+//                $fileName = $fileUploader->upload($logoFile);
+//                $job->setLogo($fileName);
+//            }
+
+    }
 
 }
