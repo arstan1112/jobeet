@@ -149,7 +149,6 @@ class JobController extends AbstractFOSRestController
     {
         $uploadApi = $this->serializer->deserialize(
             $request->getContent(),
-//                JobUploadApi::class,
             Jobs::class,
             'json'
         );

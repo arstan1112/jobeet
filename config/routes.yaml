@@ -4,6 +4,11 @@
 #blog_list:
 #  path: /job
 #  controller: App\Controller\JobController::index
+
+gesdinet_jwt_refresh_token:
+  path:       /api/token/refresh
+  controller: gesdinet.jwtrefreshtoken::refresh
+
 fos_user:
   resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 #  prefix: /%locale%
@@ -14,3 +19,5 @@ fos_user:
 #    en: ''
 #    ru: '/ru'
 
+api_login_check:
+  path: /api/login_check

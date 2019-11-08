@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Hshn\Base64EncodedFile\HttpFoundation\File\Base64EncodedFile;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\JobsRepository")
@@ -213,15 +215,16 @@ class Jobs
      */
     private $logodata;
 
-    /**
-     * @var string
-     */
-    public $decodedLogodata;
+//    /**
+//     * @var string
+//     */
+//    public $decodedLogodata;
 
     public function setLogodata(?string $logodata)
     {
         $this->logodata = $logodata;
-        $this->decodedLogodata = base64_decode($logodata);
+//        $this->decodedLogodata = base64_decode($logodata);
+//        $this->decodedLogodata = new Base64EncodedFile($logodata);
     }
 
     public function getLogodata(): ?string
@@ -229,10 +232,10 @@ class Jobs
         return $this->logodata;
     }
 
-    public function getDecodedlogodata(): ?string
-    {
-        return $this->decodedLogodata;
-    }
+//    public function getDecodedlogodata(): ?string
+//    {
+//        return $this->decodedLogodata;
+//    }
 
     public function getId(): ?int
     {

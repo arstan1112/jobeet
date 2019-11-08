@@ -44,7 +44,7 @@ class JobController extends AbstractController implements VisitInterface
     /**
      * Lists all job entities.
      *
-     * @Route("/", name="job.list", methods="GET")
+     * @Route("job/", name="job.list", methods="GET")
      *
      * @param JobHistoryService $jobHistoryService
      *
