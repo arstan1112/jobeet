@@ -40,6 +40,13 @@ services:
         arguments:
             $targetDirectory: '%jobs_directory%'
 
+    category_handler:
+#        class: JMS\Serializer\Handler\JobCategoryHandler
+        class: App\JMSHandlers\JobCategoryHandler
+#        arguments: ['@doctrine.orm.entity_manager', '@jms_serializer']
+        tags:
+            - { name: jms_serializer.subscribing_handler }
+
     App\EventListener\JobUploadListener:
         tags:
             - { name: doctrine.event_listener, event: prePersist }

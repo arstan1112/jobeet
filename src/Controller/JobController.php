@@ -9,6 +9,7 @@ use App\Repository\CategoriesRepository;
 use App\Form\JobType;
 use App\Entity\Jobs;
 use App\Service\FileUploader;
+use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -30,26 +31,39 @@ class JobController extends AbstractController implements VisitInterface
      * @var EntityManagerInterface
      */
     private $em;
+
     /**
      * @var EventDispatcherInterface
      */
     private $dispatcher;
 
+//    /**
+//     * @var Request
+//     */
+//    private $request;
+
+    /**
+     * JobController constructor.
+     * @param EntityManagerInterface $em
+     * @param EventDispatcherInterface $dispatcher
+     * @param Request $request
+     */
     public function __construct(EntityManagerInterface $em, EventDispatcherInterface $dispatcher)
     {
-        $this->em = $em;
+        $this->em         = $em;
         $this->dispatcher = $dispatcher;
+//        $this->request    = $request;
     }
 
     /**
      * Lists all job entities.
      *
-     * @Route("job/", name="job.list", methods="GET")
+     * @Route("/", name="job.list", methods="GET")
      *
      * @param JobHistoryService $jobHistoryService
      *
      * @return Response
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      */
 //    public function list(EntityManagerInterface $em) : Response
     public function list(JobHistoryService $jobHistoryService) : Response
@@ -62,7 +76,6 @@ class JobController extends AbstractController implements VisitInterface
 //        $categories = $repository->findWithActiveJobs();
 //        dump($jobHistoryService->getJobs());
 //        die;
-
 
 //        $event = new VisitCreatedEvent('job_list');
 //        $this->dispatcher->dispatch($event);
@@ -80,7 +93,7 @@ class JobController extends AbstractController implements VisitInterface
      *
      * @Entity("jobs", expr="repository.findActiveJob(id)")
      *
-     * @param Jobs $job
+     * @param Jobs              $job
      * @param JobHistoryService $jobHistoryService
      *
      * @return Response
@@ -97,19 +110,17 @@ class JobController extends AbstractController implements VisitInterface
         ]);
     }
 
-    // ...
-
     /**
      * Creates a new job entity.
      *
      * @Route("job/create", name="job.create", methods={"GET", "POST"})
      *
-     * @param Request $request
      * @param FileUploader $fileUploader
+     * @param Request      $request
      *
      * @return Response
      */
-    public function create(Request $request, FileUploader $fileUploader) : Response
+    public function create(FileUploader $fileUploader, Request $request) : Response
     {
         $job = new Jobs();
         $form = $this->createForm(JobType::class, $job);
@@ -145,12 +156,12 @@ class JobController extends AbstractController implements VisitInterface
      *
      * @Route("/job/{token}/edit", name="job.edit", methods={"GET", "POST"}, requirements={"token" = "\w+"})
      *
+     * @param Jobs    $job
      * @param Request $request
-     * @param Jobs $job
      *
      * @return Response
      */
-    public function edit(Request $request, Jobs $job) : Response
+    public function edit(Jobs $job, Request $request) : Response
     {
         $form = $this->createForm(JobType::class, $job);
         $form->handleRequest($request);
@@ -211,12 +222,12 @@ class JobController extends AbstractController implements VisitInterface
      *
      * @Route("job/{token}/delete", name="job.delete", methods="DELETE", requirements={"token" = "\w+"})
      *
+     * @param Jobs    $job
      * @param Request $request
-     * @param Jobs $job
      *
      * @return Response
      */
-    public function delete(Request $request, Jobs $job) : Response
+    public function delete(Jobs $job, Request $request) : Response
     {
         $form = $this->createDeleteForm($job);
         $form->handleRequest($request);
@@ -234,12 +245,12 @@ class JobController extends AbstractController implements VisitInterface
      *
      * @Route("job/{token}/publish", name="job.publish", methods="POST", requirements={"token" = "\w+"})
      *
+     * @param Jobs    $job
      * @param Request $request
-     * @param Jobs $job
      *
      * @return Response
      */
-    public function publish(Request $request, Jobs $job) : Response
+    public function publish(Jobs $job, Request $request) : Response
     {
         $form = $this->createPublishForm($job);
         $form->handleRequest($request);
@@ -256,7 +267,6 @@ class JobController extends AbstractController implements VisitInterface
             'token' => $job->getToken(),
         ]);
     }
-
 
     /**
      * Creates a form to publish a job entity.

@@ -60,14 +60,12 @@ class JobController extends AbstractFOSRestController
         $this->serializer = $serializer;
     }
 
-
     /**
      * @Rest\Get("/api/v1/{token}/jobs", name="api.job.list")
      *
      * @Entity("affiliate", expr="repository.findOneActiveByToken(token)")
      *
      * @param Affiliates $affiliate
-     * @param EntityManagerInterface $em
      *
      * @return Response
      */
@@ -78,62 +76,6 @@ class JobController extends AbstractFOSRestController
         $jobs = $this->em->getRepository(Jobs::class)->findActiveJobsForAffiliate($affiliate);
 
         return $this->handleView($this->view($jobs, Response::HTTP_OK));
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @param SerializerInterface $serializer
-     * @param ValidatorInterface $validator
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     * @Rest\Post("/api/v1/jobs", name="api.job.post")
-     */
-    public function postJob(Request $request, SerializerInterface $serializer, ValidatorInterface $validator)
-    {
-        $data = json_decode($request->getContent(), true);
-        $form = $this->createForm(JobType::class, null, [
-            'csrf_protection' => false,
-        ]);
-
-        $form->submit($data);
-
-        if ($form->isSubmitted() and $form->isValid()) {
-            $this->em->persist($form->getData());
-            $this->em->flush();
-
-            return $this->json([
-                'status' => 'success',
-            ]);
-        }
-
-        return $this->json([
-            'status' => 'error',
-            'errors' => $this->getErrorsFromForm($form),
-        ], 400);
-
-//        $job = $serializer->deserialize(
-//            $request->getContent(), Jobs::class, 'json'
-//        );
-//        dump($job);
-//        die();
-
-//        $errors = $validator->validate($job);
-//        if (count($errors) > 0) {
-//            $response = [];
-//            foreach ($errors as $error) {
-//                /** @var ConstraintViolation $error */
-//                $response[] = [
-//                    'name' => $error->getPropertyPath(),
-//                    'message' => $error->getMessage()
-//                ];
-//            }
-//
-//
-//            return $this->json([
-//                'status' => 'error',
-//                'errors' => $response,
-//            ], 400);
-//        }
     }
 
     /**
@@ -169,7 +111,6 @@ class JobController extends AbstractFOSRestController
             ], 400);
         }
 
-
         $status = 201;
         try {
             $jobService->saveJob($uploadApi);
@@ -178,20 +119,46 @@ class JobController extends AbstractFOSRestController
         } catch (\Exception $e) {
             $status = 400;
             $response = [
-                'status' => 'error',
+                'status' => 'ErrorException',
                 'message' => $e->getMessage(),
             ];
         }
 
         return $this->json($response, $status);
 
-//            /** @var UploadedFile|null $logoFile */
-//            $logoFile = $form->get('logo')->getData();
-//            if ($logoFile instanceof UploadedFile) {
-//                $fileName = $fileUploader->upload($logoFile);
-//                $job->setLogo($fileName);
-//            }
-
     }
+
+//    /**
+//     * @param Request $request
+//     *
+//     * @param SerializerInterface $serializer
+//     * @param ValidatorInterface $validator
+//     * @return \Symfony\Component\HttpFoundation\JsonResponse
+//     * @Rest\Post("/api/v1/jobs", name="api.job.post")
+//     */
+//    public function postJob(Request $request, SerializerInterface $serializer, ValidatorInterface $validator)
+//    {
+//        $data = json_decode($request->getContent(), true);
+//        $form = $this->createForm(JobType::class, null, [
+//            'csrf_protection' => false,
+//        ]);
+//
+//        $form->submit($data);
+//
+//        if ($form->isSubmitted() and $form->isValid()) {
+//            $this->em->persist($form->getData());
+//            $this->em->flush();
+//
+//            return $this->json([
+//                'status' => 'success',
+//            ]);
+//        }
+//
+//        return $this->json([
+//            'status' => 'error',
+//            'errors' => $this->getErrorsFromForm($form),
+//        ], 400);
+//
+//    }
 
 }

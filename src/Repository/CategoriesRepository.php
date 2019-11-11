@@ -35,21 +35,21 @@ class CategoriesRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    /**
-     * @param int $id
-     *
-     * @return Categories|null
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     */
-    public function findCategoryById(int $id) : ?Categories
-    {
-        return $this->createQueryBuilder('c')
-            ->select('c')
-            ->where('c.id = :id')
-            ->setParameter('id', $id)
-            ->getQuery()
-            ->getOneOrNullResult();
-    }
+//    /**
+//     * @param int $id
+//     *
+//     * @return Categories|null
+//     * @throws \Doctrine\ORM\NonUniqueResultException
+//     */
+//    public function findCategoryById(int $id) : ?Categories
+//    {
+//        return $this->createQueryBuilder('c')
+//            ->select('c')
+//            ->where('c.id = :id')
+//            ->setParameter('id', $id)
+//            ->getQuery()
+//            ->getOneOrNullResult();
+//    }
 
     // /**
     //  * @return Categories[] Returns an array of Categories objects

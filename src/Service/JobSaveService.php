@@ -48,21 +48,21 @@ class JobSaveService
      */
     public function saveJob(Jobs $uploadApi)
     {
-        $category = $this
-            ->em
-            ->getRepository(Categories::class)
-            ->find(
-                $uploadApi->getCategoryId()
-            );
+//        $id = $uploadApi->getCategoryId();
+//        $category = $this
+//            ->em
+//            ->getRepository(Categories::class)
+//            ->find(
+//                $uploadApi->getCategoryId()
+//            );
+//        $category = $uploadApi->getCategories();
+//        if ($category == null) {
+//            throw new Exception('Category not found.');
+//        }
+//        $uploadApi->setCategories($category);
 
-        if ($category == null) {
-            throw new Exception('Category not found.');
-        }
-
-        $uploadApi->setCategories($category);
         $fileEncoded = $uploadApi->getLogodata();
         $file = new UploadedBase64EncodedFile(new Base64EncodedFile($fileEncoded));
-
 
 //        $tmpPath = sys_get_temp_dir().'/sf_upload'.uniqid();
 //        file_put_contents($tmpPath, $uploadApi->getDecodedLogodata());

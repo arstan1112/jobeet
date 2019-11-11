@@ -185,8 +185,7 @@ class Jobs
      * @ORM\ManyToOne(targetEntity="App\Entity\Categories", inversedBy="jobs", cascade={"persist"})
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id", nullable=false)
      * @JMS\Expose()
-     * @JMS\Type("integer")
-     *
+     * @JMS\Type("Category")
      * @Assert\NotBlank(message="Categories cannot be blank")
      */
     private $categories;
@@ -448,11 +447,19 @@ class Jobs
         return $this;
     }
 
+//    /**
+//     * @return Categories|int
+//     */
     public function getCategories(): ?Categories
+//    public function getCategories()
     {
         return $this->categories;
     }
 
+    /**
+     * @param Categories $categories
+     * @return $this
+     */
     public function setCategories(?Categories $categories): self
     {
         $this->categories = $categories;
@@ -485,7 +492,6 @@ class Jobs
     public function getCategoryId()
     {
         return $this->categories;
-
     }
 
 //    public function getCategory(): ?Categories
