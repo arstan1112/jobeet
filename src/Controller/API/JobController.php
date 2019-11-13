@@ -17,6 +17,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use JMS\Serializer\Serializer;
 use JMS\Serializer\SerializerInterface;
+use Monolog\Logger;
 use PhpParser\Node\Scalar\MagicConst\File;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Component\Form\FormErrorIterator;
@@ -29,6 +30,7 @@ use Symfony\Component\HttpFoundation\File\File as FileObject;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use App\API\JobUploadApi;
+use Psr\Log\LoggerInterface;
 
 ///**
 // * @Route("/api/v1/")
@@ -49,15 +51,21 @@ class JobController extends AbstractFOSRestController
     private $serializer;
 
     /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    /**
      * JobController constructor.
      * @param EntityManagerInterface $em
      * @param SerializerInterface $serializer
      */
 
-    public function __construct(EntityManagerInterface $em, SerializerInterface $serializer)
+    public function __construct(EntityManagerInterface $em, SerializerInterface $serializer, LoggerInterface $logger)
     {
         $this->em = $em;
         $this->serializer = $serializer;
+        $this->logger = $logger;
     }
 
     /**
@@ -112,11 +120,16 @@ class JobController extends AbstractFOSRestController
         }
 
         $status = 201;
+
         try {
             $jobService->saveJob($uploadApi);
 
             $response = ['status' => 'success', 'message' => 'Entry success'];
+
+//            throw new \Exception('test_message');
+
         } catch (\Exception $e) {
+//            $this->logger->info($e->getMessage());
             $status = 400;
             $response = [
                 'status' => 'ErrorException',
