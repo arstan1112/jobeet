@@ -60,3 +60,7 @@ services:
     App\EventListener\AffiliateTokenListener:
         tags:
             - { name: doctrine.event_listener, event: prePersist}
+
+    App\Controller\API\JobController:
+        arguments:
+            $logger: '@monolog.logger.tester_channel'

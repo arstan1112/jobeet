@@ -36,8 +36,8 @@ class JobSaveService
      */
     public function __construct(EntityManagerInterface $em, FileUploader $fileUploader, string $targetDirectory)
     {
-        $this->em = $em;
-        $this->fileUploader = $fileUploader;
+        $this->em              = $em;
+        $this->fileUploader    = $fileUploader;
         $this->targetDirectory = $targetDirectory;
     }
 

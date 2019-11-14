@@ -59,13 +59,14 @@ class JobController extends AbstractFOSRestController
      * JobController constructor.
      * @param EntityManagerInterface $em
      * @param SerializerInterface $serializer
+     * @param LoggerInterface $logger
      */
 
     public function __construct(EntityManagerInterface $em, SerializerInterface $serializer, LoggerInterface $logger)
     {
-        $this->em = $em;
+        $this->em         = $em;
         $this->serializer = $serializer;
-        $this->logger = $logger;
+        $this->logger     = $logger;
     }
 
     /**
@@ -97,47 +98,47 @@ class JobController extends AbstractFOSRestController
      */
     public function postJobUpload(Request $request, JobSaveService $jobService, ValidatorInterface $validator)
     {
-        $uploadApi = $this->serializer->deserialize(
-            $request->getContent(),
-            Jobs::class,
-            'json'
-        );
-
-        $errors = $validator->validate($uploadApi);
-        if (count($errors) > 0) {
-            $response = [];
-            foreach ($errors as $error) {
-                /** ConstraintViolation $error */
-                $response[] = [
-                    'name' => $error->getPropertyPath(),
-                    'message' => $error->getMessage()
-                ];
-            }
-            return $this->json([
-                'status' => 'error',
-                'errors' => $response,
-            ], 400);
-        }
-
-        $status = 201;
+//        $uploadApi = $this->serializer->deserialize(
+//            $request->getContent(),
+//            Jobs::class,
+//            'json'
+//        );
+//
+//        $errors = $validator->validate($uploadApi);
+//        if (count($errors) > 0) {
+//            $response = [];
+//            foreach ($errors as $error) {
+//                /** ConstraintViolation $error */
+//                $response[] = [
+//                    'name' => $error->getPropertyPath(),
+//                    'message' => $error->getMessage()
+//                ];
+//            }
+//            return $this->json([
+//                'status' => 'error',
+//                'errors' => $response,
+//            ], 400);
+//        }
+//
+//        $status = 201;
 
         try {
-            $jobService->saveJob($uploadApi);
+//            $jobService->saveJob($uploadApi);
 
-            $response = ['status' => 'success', 'message' => 'Entry success'];
+//            $response = ['status' => 'success', 'message' => 'Entry success'];
 
-//            throw new \Exception('test_message');
+            throw new \Exception('test_message');
 
         } catch (\Exception $e) {
-//            $this->logger->info($e->getMessage());
-            $status = 400;
-            $response = [
-                'status' => 'ErrorException',
-                'message' => $e->getMessage(),
-            ];
+            $this->logger->info($e->getMessage());
+//            $status = 400;
+//            $response = [
+//                'status' => 'ErrorException',
+//                'message' => $e->getMessage(),
+//            ];
         }
 
-        return $this->json($response, $status);
+//        return $this->json($response, $status);
 
     }
 
