@@ -175,7 +175,6 @@ class Jobs
 
     /**
      * @var \DateTime
-     *
      * @ORM\Column(type="datetime")
      */
     private $updatedAt;

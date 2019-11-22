@@ -20,6 +20,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Component\Form\FormInterface;
 use App\Service\JobHistoryService;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use Symfony\Contracts\Cache\ItemInterface;
 
 ///**
 // * @Route("job")
@@ -64,10 +66,19 @@ class JobController extends AbstractController implements VisitInterface
      *
      * @return Response
      * @throws NonUniqueResultException
+     * @throws \Psr\Cache\InvalidArgumentException
      */
 //    public function list(EntityManagerInterface $em) : Response
     public function list(JobHistoryService $jobHistoryService) : Response
     {
+//        $cache = new FilesystemAdapter();
+//        $cache->delete('test_caching');
+//        $cache->get('test_caching', function (ItemInterface $item) {
+//            $item->expiresAfter(5);
+//            $computedValue = 'new_foobar_value';
+//            return $computedValue;
+//        });
+
 //        $jobs = $this->getDoctrine()->getRepository(Jobs::class)->findAll();
 //        $jobs = $em->getRepository(Jobs::class)->findActiveJobs();
 //        $categories = $this->getDoctrine()->getRepository(Jobs::class)->findAll();
@@ -93,15 +104,25 @@ class JobController extends AbstractController implements VisitInterface
      *
      * @Entity("jobs", expr="repository.findActiveJob(id)")
      *
-     * @param Jobs              $job
+     * @param Jobs $job
      * @param JobHistoryService $jobHistoryService
      *
      * @return Response
+     * @throws \Psr\Cache\InvalidArgumentException
      */
     public function show(Jobs $job, JobHistoryService $jobHistoryService) : Response
     {
-        $jobHistoryService->addJob($job);
+//        $cache = new FilesystemAdapter();
+//        $value = $cache->get('test_caching', function (ItemInterface $item) {
+//            $item->expiresAfter(3600);
+//            $computedValue = 'no_value';
+//
+//            return $computedValue;
+//        });
+//        dump($value);
+//        die();
 
+        $jobHistoryService->addJob($job);
 //        $event = new VisitCreatedEvent('job_show');
 //        $this->dispatcher->dispatch($event);
 
