@@ -10,6 +10,6 @@ api_controllers:
     type: annotation
 #    prefix: /api/v1/
 
-bundle_controllers:
-    resource: ../../src/Bundles/
-    type: annotation
+#bundle_controllers:
+#    resource: ../../src/Bundles/
+#    type: annotation

@@ -1,13 +1,6 @@
-{% extends '@Blog/base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block body %}
-{#    {% if hasControlAccess is defined and hasControlAccess %}#}
-{#        {% include 'job/control_panel.html.twig' with {#}
-{#            'job': job,#}
-{#            'deleteForm': deleteForm,#}
-{#            'publishForm': publishForm#}
-{#        } only %}#}
-{#    {% endif %}#}
 
     <h2>{{'Blog'|trans}}</h2>
 
@@ -39,7 +32,7 @@
                 </div>
             </div>
 
-            {% include '@Blog/comments/comments.html.twig' with {
+            {% include 'blog/comments/comments.html.twig' with {
                 'comments': topic.blogComment|slice(0, max_jobs_on_homepage)
             } only %}
 

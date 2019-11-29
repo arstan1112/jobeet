@@ -1,20 +1,18 @@
 <?php
 
 
-namespace App\Bundles\BlogBundle\Controller;
+namespace App\Controller\Blog;
 
-use App\Bundles\BlogBundle\Form\BlogTopicType;
 use App\Entity\BlogTopic;
 use App\Entity\User;
-use FOS\RestBundle\Controller\Annotations as Rest;
-use phpDocumentor\Reflection\Types\This;
+use App\Form\Blog\TopicType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
-class BlogTopicController extends AbstractController
+class TopicController extends AbstractController
 {
     /**
      * @var EntityManagerInterface
@@ -36,7 +34,7 @@ class BlogTopicController extends AbstractController
     public function list() : Response
     {
         $topics = $this->em->getRepository(BlogTopic::class)->findAll();
-        return $this->render('@Blog/topic/list.html.twig', [
+        return $this->render('blog/topic/list.html.twig', [
             'topics' => $topics,
         ]);
     }
@@ -48,7 +46,7 @@ class BlogTopicController extends AbstractController
      */
     public function show(BlogTopic $blogTopic) : Response
     {
-        return $this->render('@Blog/topic/show.html.twig', [
+        return $this->render('blog/topic/show.html.twig', [
             'topic' => $blogTopic,
         ]);
     }
@@ -62,7 +60,7 @@ class BlogTopicController extends AbstractController
     public function create(Request $request) : Response
     {
         $topic = new BlogTopic();
-        $form = $this->createForm(BlogTopicType::class, $topic);
+        $form = $this->createForm(TopicType::class, $topic);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -79,7 +77,7 @@ class BlogTopicController extends AbstractController
             );
         }
 
-        return $this->render('@Blog/topic/create.html.twig', [
+        return $this->render('blog/topic/create.html.twig', [
             'form' => $form->createView(),
         ]);
     }
