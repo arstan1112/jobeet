@@ -6,7 +6,7 @@ use FOS\UserBundle\Model\User as BasuUser;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="App\Repository\UsersRepository")
  * @ORM\Table(name="users")
  */
 class User extends BasuUser
@@ -21,12 +21,12 @@ class User extends BasuUser
     protected $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\BlogTopic", mappedBy="author", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="App\Entity\BlogTopic", mappedBy="author", cascade={"persist", "remove"})
      */
     private $blogTopic;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\BlogComment", mappedBy="UserId", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="App\Entity\BlogComment", mappedBy="user", cascade={"persist", "remove"})
      */
     private $blogComment;
 

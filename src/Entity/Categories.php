@@ -49,7 +49,7 @@ class Categories
 
     public function __construct()
     {
-        $this->jobs = new ArrayCollection();
+        $this->jobs       = new ArrayCollection();
         $this->affiliates = new ArrayCollection();
     }
 
@@ -83,7 +83,7 @@ class Categories
      */
     public function getActiveJobs()
     {
-        return $this->jobs->filter(function(Jobs $job) {
+        return $this->jobs->filter(function (Jobs $job) {
             return $job->getExpiresAt() > new \DateTime() && $job->isActivated();
         });
     }

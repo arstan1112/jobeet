@@ -1,0 +1,10 @@
+{% extends '@Blog/base.html.twig' %}
+
+{% block body %}
+        <h2>{{'Blog'|trans}}</h2>
+
+        {% include '@Blog/topic/table.html.twig' with {
+            'topics': topics|slice(0, max_jobs_on_homepage)
+        } only %}
+
+{% endblock %}

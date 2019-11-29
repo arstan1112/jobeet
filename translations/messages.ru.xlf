@@ -25,10 +25,6 @@
         <source>Post a Job</source>
         <target>Опубликовать вакансию</target>
       </trans-unit>
-      <trans-unit id="ACcM9j_" resname="logout">
-        <source>logout</source>
-        <target>Выйти</target>
-      </trans-unit>
       <trans-unit id="bVBmzKs" resname="Jobs in the %category% category">
         <source>Jobs in the %category% category</source>
         <target>Вакансии в категории %category%</target>
@@ -36,10 +32,6 @@
       <trans-unit id="QkolUdN" resname="Expired">
         <source>Expired</source>
         <target>Истекло</target>
-      </trans-unit>
-      <trans-unit id="PV5l7l_" resname="Expires in %days% days">
-        <source>Expires in %days% days</source>
-        <target>Истекает через %days% дней</target>
       </trans-unit>
       <trans-unit id="A_xhM2L" resname="Extend (for another 30 days)">
         <source>Extend (for another 30 days)</source>
@@ -213,10 +205,6 @@
         <source>Deactivate</source>
         <target>Деактивировать</target>
       </trans-unit>
-      <trans-unit id="EMeHmDG" resname="Activat">
-        <source>Activat</source>
-        <target>Активировать</target>
-      </trans-unit>
       <trans-unit id="wcIksDz" resname="Admin">
         <source>Admin</source>
         <target>Панель управления</target>
@@ -248,6 +236,10 @@
       <trans-unit id="nWMiwfT" resname="Login">
         <source>Login</source>
         <target>Войти</target>
+      </trans-unit>
+      <trans-unit id="jGvAmVN" resname="Blog">
+        <source>Blog</source>
+        <target>Blog</target>
       </trans-unit>
     </body>
   </file>

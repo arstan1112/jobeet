@@ -19,6 +19,8 @@ class BlogTopicRepository extends ServiceEntityRepository
         parent::__construct($registry, BlogTopic::class);
     }
 
+
+
     // /**
     //  * @return BlogTopic[] Returns an array of BlogTopic objects
     //  */

@@ -21,3 +21,7 @@ fos_user:
 
 api_login_check:
   path: /api/login_check
+
+blog_show:
+  path: /blog/{id}
+  controller: App\Bundles\BlogBundle\Controller\TopicController::show

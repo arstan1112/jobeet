@@ -25,10 +25,6 @@
         <source>Post a Job</source>
         <target>Post a Job</target>
       </trans-unit>
-      <trans-unit id="ACcM9j_" resname="logout">
-        <source>logout</source>
-        <target>logout</target>
-      </trans-unit>
       <trans-unit id="bVBmzKs" resname="Jobs in the %category% category">
         <source>Jobs in the %category% category</source>
         <target>Jobs in the %category% category</target>
@@ -37,21 +33,9 @@
         <source>Expired</source>
         <target>Expired</target>
       </trans-unit>
-      <trans-unit id="PV5l7l_" resname="Expires in %days% days">
-        <source>Expires in %days% days</source>
-        <target>Expires in %days% days</target>
-      </trans-unit>
-      <trans-unit id="hDTa85S" resname="]-Inf,0] Expired|{1}Expires in 1 day|]1,Inf[ Expires in %days% days">
-        <source>]-Inf,0] Expired|{1}Expires in 1 day|]1,Inf[ Expires in %days% days</source>
-        <target>]-Inf,0] Expired|{1}Expires in 1 day|]1,Inf[ Expires in %days% days</target>
-      </trans-unit>
       <trans-unit id="A_xhM2L" resname="Extend (for another 30 days)">
         <source>Extend (for another 30 days)</source>
         <target>Extend (for another 30 days)</target>
-      </trans-unit>
-      <trans-unit id="0xrLENC" resname="[Bookmark this &lt;a href=&quot;%url%&gt;URL&lt;/a&gt; to manage this job in the future]">
-        <source>[Bookmark this &lt;a href="%url%&gt;URL&lt;/a&gt; to manage this job in the future]</source>
-        <target><![CDATA[[Bookmark this <a href="%url%>URL</a> to manage this job in the future]]]></target>
       </trans-unit>
       <trans-unit id="4tKEDjQ" resname="Recent viewed jobs">
         <source>Recent viewed jobs</source>
@@ -221,10 +205,6 @@
         <source>Deactivate</source>
         <target>Deactivate</target>
       </trans-unit>
-      <trans-unit id="EMeHmDG" resname="Activat">
-        <source>Activat</source>
-        <target>Activat</target>
-      </trans-unit>
       <trans-unit id="wcIksDz" resname="Admin">
         <source>Admin</source>
         <target>Admin</target>
@@ -241,10 +221,6 @@
         <source>[Bookmark this &lt;a href="%url%"&gt;URL&lt;/a&gt; to manage this job in the future]</source>
         <target><![CDATA[[Bookmark this <a href="%url%">URL</a> to manage this job in the future]]]></target>
       </trans-unit>
-      <trans-unit id="eXV8O72" resname="[-Inf,0] Expired|{1}Expires in 1 day|[1,Inf] Expires in %days% days">
-        <source>[-Inf,0] Expired|{1}Expires in 1 day|[1,Inf] Expires in %days% days</source>
-        <target>[-Inf,0] Expired|{1}Expires in 1 day|[1,Inf] Expires in %days% days</target>
-      </trans-unit>
       <trans-unit id="4cz1wsk" resname="]-Inf,0] Expired|{1}Expires in 1 day|]1,4] Expires in %days% days|[5,Inf[ Expires in %days% days">
         <source>]-Inf,0] Expired|{1}Expires in 1 day|]1,4] Expires in %days% days|[5,Inf[ Expires in %days% days</source>
         <target>]-Inf,0] Expired|{1}Expires in 1 day|]1,4] Expires in %days% days|[5,Inf[ Expires in %days% days</target>
@@ -260,6 +236,10 @@
       <trans-unit id="nWMiwfT" resname="Login">
         <source>Login</source>
         <target>Login</target>
+      </trans-unit>
+      <trans-unit id="jGvAmVN" resname="Blog">
+        <source>Blog</source>
+        <target>Blog</target>
       </trans-unit>
     </body>
   </file>

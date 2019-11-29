@@ -1,0 +1,66 @@
+{% extends '@Blog/base.html.twig' %}
+
+{% block body %}
+{#    {% if hasControlAccess is defined and hasControlAccess %}#}
+{#        {% include 'job/control_panel.html.twig' with {#}
+{#            'job': job,#}
+{#            'deleteForm': deleteForm,#}
+{#            'publishForm': publishForm#}
+{#        } only %}#}
+{#    {% endif %}#}
+
+    <h2>{{'Blog'|trans}}</h2>
+
+    <div class="media" style="margin-top: 60px;">
+        <div class="media-body">
+            <div class="row">
+                <div class="col-sm-10">
+                    <h3 class="media-heading">
+                        <strong>{{ topic.name }}</strong><br>
+                    </h3>
+                    <h5>
+                        <i>{{ 'Author: '|trans }}({{ topic.author }})</i>
+                    </h5>
+                </div>
+
+                <div class="col-sm-2">
+                    <i class="pull-right">{{ 'posted on %date%'|trans({'%date%':topic.createdat|date('m/d/y')}) }}</i>
+                </div>
+            </div>
+
+            <p>{{ topic.text|nl2br }}</p>
+
+            <div class="row">
+                <div class="col-sm-12 text-right">
+                    <a class="btn btn-default" href="{{ path('blog.list') }}">
+                        <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
+                        {{'Back to list'|trans}}
+                    </a>
+                </div>
+            </div>
+
+            {% include '@Blog/comments/comments.html.twig' with {
+                'comments': topic.blogComment|slice(0, max_jobs_on_homepage)
+            } only %}
+
+            {% if app.user %}
+                <div class="row">
+                    <div class="col-sm-12 text-right">
+                        <a class="btn btn-default" href="{{ path('blog.comment.create', {id: topic.id}) }}">
+                            {{'Add comment'|trans}}
+                        </a>
+                    </div>
+                </div>
+            {% else %}
+                <div class="row">
+                    <div class="col-sm-12 text-right">
+                        <a class="btn btn-default" href="{{ path('fos_user_security_login') }}">
+                            {{'Log in to leave a comment'|trans}}
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+{% endblock %}
