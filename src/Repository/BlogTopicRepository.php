@@ -14,12 +14,26 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  */
 class BlogTopicRepository extends ServiceEntityRepository
 {
+    /**
+     * BlogTopicRepository constructor.
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, BlogTopic::class);
     }
 
-
+    /**
+     * @return BlogTopic[]
+     */
+    public function findRecentTopics()
+    {
+        return $this->createQueryBuilder('bt')
+            ->select('bt')
+            ->orderBy('bt.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 
     // /**
     //  * @return BlogTopic[] Returns an array of BlogTopic objects

@@ -289,6 +289,10 @@
         <source>Post a blog</source>
         <target>Post a blog</target>
       </trans-unit>
+      <trans-unit id="p7Ih8ZG" resname="Post a comment">
+        <source>Post a comment</source>
+        <target>Post a comment</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

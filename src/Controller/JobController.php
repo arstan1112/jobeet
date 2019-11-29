@@ -48,7 +48,6 @@ class JobController extends AbstractController implements VisitInterface
      * JobController constructor.
      * @param EntityManagerInterface $em
      * @param EventDispatcherInterface $dispatcher
-     * @param Request $request
      */
     public function __construct(EntityManagerInterface $em, EventDispatcherInterface $dispatcher)
     {
@@ -66,7 +65,6 @@ class JobController extends AbstractController implements VisitInterface
      *
      * @return Response
      * @throws NonUniqueResultException
-     * @throws \Psr\Cache\InvalidArgumentException
      */
 //    public function list(EntityManagerInterface $em) : Response
     public function list(JobHistoryService $jobHistoryService) : Response
@@ -108,7 +106,6 @@ class JobController extends AbstractController implements VisitInterface
      * @param JobHistoryService $jobHistoryService
      *
      * @return Response
-     * @throws \Psr\Cache\InvalidArgumentException
      */
     public function show(Jobs $job, JobHistoryService $jobHistoryService) : Response
     {
@@ -213,7 +210,7 @@ class JobController extends AbstractController implements VisitInterface
      */
     public function preview(Jobs $job) : Response
     {
-        $deleteForm = $this->createDeleteForm($job);
+        $deleteForm  = $this->createDeleteForm($job);
         $publishForm = $this->createPublishForm($job);
         return $this->render('job/show.html.twig', [
             'job' => $job,

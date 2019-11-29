@@ -52,7 +52,8 @@ class CommentController extends AbstractController
             $this->em->flush();
 
             return $this->redirectToRoute(
-                'blog.list'
+                'blog.show',
+                ['id' => $blogTopic->getId()]
             );
         }
 

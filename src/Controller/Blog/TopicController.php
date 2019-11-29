@@ -7,6 +7,7 @@ use App\Entity\BlogTopic;
 use App\Entity\User;
 use App\Form\Blog\TopicType;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,11 +30,19 @@ class TopicController extends AbstractController
     }
 
     /**
-     * @Route("/blog/list", name="blog.list")
+     * @Route("/blog/list/{page}", name="blog.list", defaults={"page":1}, requirements={"page" = "\d+"})
+     * @param PaginatorInterface $paginator
+     * @param int $page
+     * @return Response
      */
-    public function list() : Response
+    public function list(PaginatorInterface $paginator, int $page) : Response
     {
-        $topics = $this->em->getRepository(BlogTopic::class)->findAll();
+        $topics = $paginator->paginate(
+            $this->getDoctrine()->getRepository(BlogTopic::class)->findRecentTopics(),
+            $page,
+            $this->getParameter('max_per_page')
+        );
+//        $topics = $this->em->getRepository(BlogTopic::class)->findAll();
         return $this->render('blog/topic/list.html.twig', [
             'topics' => $topics,
         ]);
@@ -65,7 +74,7 @@ class TopicController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $userId = $this->getUser()->getId();
-            $user  = $this->em->getRepository(User::class)->find($userId);
+            $user   = $this->em->getRepository(User::class)->find($userId);
             $topic->setCreatedAt(new \DateTime());
             $topic->setUpdatedAt(new \DateTime());
             $topic->setAuthor($user);
@@ -73,7 +82,8 @@ class TopicController extends AbstractController
             $this->em->flush();
 
             return $this->redirectToRoute(
-                'blog.list'
+                'blog.show',
+                ['id' => $topic->getId()]
             );
         }
 

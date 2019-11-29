@@ -21,6 +21,7 @@ class CategoriesRepository extends ServiceEntityRepository
 
     /**
      * @return Categories[]
+     * @throws \Exception
      */
     public function findWithActiveJobs()
     {

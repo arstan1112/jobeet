@@ -27,6 +27,7 @@ class JobsRepository extends ServiceEntityRepository
      * @param int|null $categoryId
      *
      * @return Jobs[]
+     * @throws \Exception
      */
     public function findActiveJobs(int $categoryId = null)
     {
@@ -39,7 +40,7 @@ class JobsRepository extends ServiceEntityRepository
 
         if ($categoryId) {
             $qb->andWhere('j.category = :categoryId')
-                ->setParameter('categoryId', $categoryId);
+               ->setParameter('categoryId', $categoryId);
         }
 
         return $qb->getQuery()->getResult();
@@ -87,6 +88,7 @@ class JobsRepository extends ServiceEntityRepository
      * @param Affiliates $affiliate
      *
      * @return Jobs[]
+     * @throws \Exception
      */
     public function findActiveJobsForAffiliate(Affiliates $affiliate)
     {

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Categories;
 use App\Entity\Jobs;
 use App\Repository\JobsRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 //use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -13,36 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Service\JobHistoryService;
 
 class CategoryController extends AbstractController implements VisitInterface
-//class CategoryController extends Controller
 {
-
-//    /**
-//     * Finds and displays a category entity.
-//     *
-//     * @Route("/category/{slug}", name="category.show", methods="GET")
-//     *
-//     * @param Categories $category
-//     * @param PaginatorInterface $paginator
-//     *
-//     *
-//     * @return Response
-//     */
-//    public function show(Categories $category) : Response
-//    {
-//        $activeJobs = $paginator->paginate(
-//            $this->getDoctrine()->getRepository(Jobs::class)->getPaginatedActiveJobsByCategoryQuery($category),
-//            $this->$repository->getPaginatedActiveJobsByCategoryQuery($category),
-//            $this->$repository->getPaginatedActiveJobsByCategoryQuery($category),
-//            1, // page
-//            10 // elements per page
-//        );
-
-//        return $this->render('category/show.html.twig', [
-//            'category' => $category,
-//            'activeJobs' => $activeJobs,
-//        ]);
-//    }
-
     /**
      * Finds and displays a category entity.
      *
@@ -59,13 +31,14 @@ class CategoryController extends AbstractController implements VisitInterface
      * @param JobHistoryService $jobHistoryService
      *
      * @return Response
+     * @throws NonUniqueResultException
      */
     public function show(
-        Categories $category,
+        Categories         $category,
         PaginatorInterface $paginator,
-        int $page,
-        JobHistoryService $jobHistoryService
-    ) : Response  {
+        int                $page,
+        JobHistoryService  $jobHistoryService
+    ) : Response {
         $activeJobs = $paginator->paginate(
             $this->getDoctrine()->getRepository(Jobs::class)->getPaginatedActiveJobsByCategoryQuery($category),
             $page,
@@ -73,11 +46,9 @@ class CategoryController extends AbstractController implements VisitInterface
         );
 
         return $this->render('category/show.html.twig', [
-            'category' => $category,
-            'activeJobs' => $activeJobs,
+            'category'    => $category,
+            'activeJobs'  => $activeJobs,
             'historyJobs' => $jobHistoryService->getJobs(),
         ]);
     }
-
-
 }
