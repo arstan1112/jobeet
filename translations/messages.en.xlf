@@ -241,6 +241,54 @@
         <source>Blog</source>
         <target>Blog</target>
       </trans-unit>
+      <trans-unit id="fmGEfWH" resname="Topic">
+        <source>Topic</source>
+        <target>Topic</target>
+      </trans-unit>
+      <trans-unit id="2VCCou5" resname="Author">
+        <source>Author</source>
+        <target>Author</target>
+      </trans-unit>
+      <trans-unit id=".0jzLSA" resname="Create new topic">
+        <source>Create new topic</source>
+        <target>Create new topic</target>
+      </trans-unit>
+      <trans-unit id="laP8ZYf" resname="Author:">
+        <source>Author:</source>
+        <target>Author:</target>
+      </trans-unit>
+      <trans-unit id="xNiR6ah" resname="Add comment">
+        <source>Add comment</source>
+        <target>Add comment</target>
+      </trans-unit>
+      <trans-unit id="kovyuFz" resname="Log in to leave a comment">
+        <source>Log in to leave a comment</source>
+        <target>Log in to leave a comment</target>
+      </trans-unit>
+      <trans-unit id="NV958p1" resname="Comments">
+        <source>Comments</source>
+        <target>Comments</target>
+      </trans-unit>
+      <trans-unit id="k9az6bh" resname="User:">
+        <source>User:</source>
+        <target>User:</target>
+      </trans-unit>
+      <trans-unit id="h16XilN" resname="Leave a comment">
+        <source>Leave a comment</source>
+        <target>Leave a comment</target>
+      </trans-unit>
+      <trans-unit id="RPXj__x" resname="Comment">
+        <source>Comment</source>
+        <target>Comment</target>
+      </trans-unit>
+      <trans-unit id="Pbkpz9d" resname="Back to topic">
+        <source>Back to topic</source>
+        <target>Back to topic</target>
+      </trans-unit>
+      <trans-unit id="D5.5iKg" resname="Post a blog">
+        <source>Post a blog</source>
+        <target>Post a blog</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -239,7 +239,55 @@
       </trans-unit>
       <trans-unit id="jGvAmVN" resname="Blog">
         <source>Blog</source>
-        <target>Blog</target>
+        <target>Блог</target>
+      </trans-unit>
+      <trans-unit id="fmGEfWH" resname="Topic">
+        <source>Topic</source>
+        <target>Темы</target>
+      </trans-unit>
+      <trans-unit id="2VCCou5" resname="Author">
+        <source>Author</source>
+        <target>Автор</target>
+      </trans-unit>
+      <trans-unit id=".0jzLSA" resname="Create new topic">
+        <source>Create new topic</source>
+        <target>Создать новую тему</target>
+      </trans-unit>
+      <trans-unit id="laP8ZYf" resname="Author:">
+        <source>Author:</source>
+        <target>Автор:</target>
+      </trans-unit>
+      <trans-unit id="xNiR6ah" resname="Add comment">
+        <source>Add comment</source>
+        <target>Добавить комментарий</target>
+      </trans-unit>
+      <trans-unit id="kovyuFz" resname="Log in to leave a comment">
+        <source>Log in to leave a comment</source>
+        <target>Зарегистрируйтесть для добавления комментария</target>
+      </trans-unit>
+      <trans-unit id="NV958p1" resname="Comments">
+        <source>Comments</source>
+        <target>Комментарии</target>
+      </trans-unit>
+      <trans-unit id="k9az6bh" resname="User:">
+        <source>User:</source>
+        <target>Пользователь:</target>
+      </trans-unit>
+      <trans-unit id="h16XilN" resname="Leave a comment">
+        <source>Leave a comment</source>
+        <target>Оставить комментарий</target>
+      </trans-unit>
+      <trans-unit id="RPXj__x" resname="Comment">
+        <source>Comment</source>
+        <target>Комментарии</target>
+      </trans-unit>
+      <trans-unit id="Pbkpz9d" resname="Back to topic">
+        <source>Back to topic</source>
+        <target>Назад к темам</target>
+      </trans-unit>
+      <trans-unit id="D5.5iKg" resname="Post a blog">
+        <source>Post a blog</source>
+        <target>Добавить новый блог</target>
       </trans-unit>
     </body>
   </file>
