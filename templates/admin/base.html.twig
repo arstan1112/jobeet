@@ -43,10 +43,13 @@
                 <li role="presentation" {% if currentRouteName starts with 'admin.affiliate.' %}class="active"{% endif %}>
                     <a href="{{ path('admin.affiliates.list') }}">{{'Affiliates'|trans}}</a>
                 </li>
+                <li role="presentation" {% if currentRouteName starts with 'admin.blog.' %}class="active"{% endif %}>
+                    <a href="{{ path('admin.blog.list') }}">{{'Blog'|trans}}</a>
+                </li>
                 <li role="presentation">
                     <a href="{{ path('job.list') }}">
                         <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
-                        {{'Back to list'|trans}}
+                        {{'Back to main page'|trans}}
                     </a>
                 </li>
             </ul>

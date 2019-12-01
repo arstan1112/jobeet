@@ -15,6 +15,20 @@ use App\Form\Admin\CategoryType;
 class CategoryController extends AbstractController implements VisitInterface
 {
     /**
+     * @var EntityManagerInterface
+     */
+    private $em;
+
+    /**
+     * CategoryController constructor.
+     * @param EntityManagerInterface $em
+     */
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em=$em;
+    }
+
+    /**
      * Lists all categories entities.
      *
      * @Route("/admin/categories", name="admin.category.list", methods="GET")
@@ -63,7 +77,7 @@ class CategoryController extends AbstractController implements VisitInterface
     /**
      * Edit category
      *
-     * @Route("/admin/category/{id}/edit", name="admin.category,edit", methods="GET|POST", requirements={"id" = "\d+"})
+     * @Route("/admin/category/{id}/edit", name="admin.category.edit", methods="GET|POST", requirements={"id" = "\d+"})
      *
      * @param Request $request
      * @param EntityManagerInterface $em
@@ -84,7 +98,7 @@ class CategoryController extends AbstractController implements VisitInterface
 
         return $this->render('admin/category/edit.html.twig', [
             'category'=> $category,
-            'form' => $form->createView()
+            'form'    => $form->createView()
         ]);
     }
 

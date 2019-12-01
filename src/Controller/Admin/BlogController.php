@@ -1,10 +1,17 @@
 <?php
 
-
 namespace App\Controller\Admin;
 
+use App\Entity\BlogTopic;
+use App\Entity\User;
+use App\Form\Admin\BlogType;
 use Doctrine\ORM\EntityManagerInterface;
+use FOS\RestBundle\Controller\Annotations as Rest;
+use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class BlogController extends AbstractController
 {
@@ -22,8 +29,84 @@ class BlogController extends AbstractController
         $this->em = $em;
     }
 
+    /**
+     * @Route("admin/blog/list", name="admin.blog.list", methods="GET")
+     * @return Response
+     */
+    public function list() : Response
+    {
+        $topics = $this->em->getRepository(BlogTopic::class)->findAll();
 
+        return $this->render('admin/blog/list.html.twig', [
+            'topics' => $topics,
+        ]);
+    }
 
+    /**
+     * @Route("admin/blog/create", name="admin.blog.create", methods={"GET", "POST"})
+     * @param Request $request
+     * @return Response
+     * @throws \Exception
+     */
+    public function create(Request $request) : Response
+    {
+        $topic = new BlogTopic();
+        $form = $this->createForm(BlogType::class, $topic);
+        $form->handleRequest($request);
 
+        if ($form->isSubmitted() && $form->isValid()) {
+            $userId = $this->getUser()->getId();
+            $user   = $this->em->getRepository(User::class)->find($userId);
+            $topic->setCreatedAt(new \DateTime());
+            $topic->setUpdatedAt(new \DateTime());
+            $topic->setAuthor($user);
+            $this->em->persist($topic);
+            $this->em->flush();
 
+            return $this->redirectToRoute('admin.blog.list');
+        }
+
+        return $this->render('admin/blog/create.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("admin/blog/{id}/edit", name="admin.blog.edit", methods={"GET", "POST"}, requirements={"id"="\d+"})
+     * @param Request $request
+     * @param BlogTopic $topic
+     * @return Response
+     */
+    public function edit(Request $request, BlogTopic $topic) : Response
+    {
+        $form = $this->createForm(BlogType::class, $topic);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->em->flush();
+
+            return $this->redirectToRoute('admin.blog.list');
+        }
+
+        return $this->render('admin/blog/edit.html.twig', [
+            'topic' => $topic,
+            'form'  => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("admin/blog/{id}/delete", name="admin.blog.delete", methods={"DELETE"}, requirements={"id" = "\d+"})
+     * @param Request $request
+     * @param BlogTopic $topic
+     * @return Response
+     */
+    public function delete(Request $request, BlogTopic $topic) : Response
+    {
+        if ($this->isCsrfTokenValid('delete' . $topic->getId(), $request->request->get('_token'))) {
+            $this->em->remove($topic);
+            $this->em->flush();
+        }
+
+        return $this->redirectToRoute('admin.blog.list');
+    }
 }

@@ -1,0 +1,7 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block body %}
+    <h1>{{'Edit blog'|trans}} {{ topic.name }}</h1>
+    {% include 'admin/blog/_form.html.twig' with {'form': form} only %}
+
+{% endblock %}
