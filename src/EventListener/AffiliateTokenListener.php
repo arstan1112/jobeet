@@ -9,9 +9,9 @@ class AffiliateTokenListener
 {
     /**
      * @param LifecycleEventArgs
+     * @throws \Exception
      */
     public function prePersist(LifecycleEventArgs $args)
-//    public function prePersist()
     {
         $entity = $args->getEntity();
 
@@ -23,6 +23,4 @@ class AffiliateTokenListener
             $entity->setToken(\bin2hex(\random_bytes(10)));
         }
     }
-
-
 }

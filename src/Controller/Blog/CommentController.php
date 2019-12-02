@@ -44,7 +44,7 @@ class CommentController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $userId = $this->getUser()->getId();
-            $user = $this->em->getRepository(User::class)->find($userId);
+            $user   = $this->em->getRepository(User::class)->find($userId);
             $comment->setBlogTopic($blogTopic);
             $comment->setCreatedAt(new \DateTime());
             $comment->setUser($user);

@@ -30,7 +30,7 @@ class BlogController extends AbstractController
     }
 
     /**
-     * @Route("admin/blog/list", name="admin.blog.list", methods="GET")
+     * @Route("admin/blog/topics/list", name="admin.blog.topics.list", methods="GET")
      * @return Response
      */
     public function list() : Response
@@ -43,15 +43,15 @@ class BlogController extends AbstractController
     }
 
     /**
-     * @Route("admin/blog/create", name="admin.blog.create", methods={"GET", "POST"})
-     * @param Request $request
+     * @Route("admin/blog/topic/create", name="admin.blog.topic.create", methods={"GET", "POST"})
+     * @param  Request $request
      * @return Response
      * @throws \Exception
      */
     public function create(Request $request) : Response
     {
         $topic = new BlogTopic();
-        $form = $this->createForm(BlogType::class, $topic);
+        $form  = $this->createForm(BlogType::class, $topic);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -63,7 +63,7 @@ class BlogController extends AbstractController
             $this->em->persist($topic);
             $this->em->flush();
 
-            return $this->redirectToRoute('admin.blog.list');
+            return $this->redirectToRoute('admin.blog.topics.list');
         }
 
         return $this->render('admin/blog/create.html.twig', [
@@ -72,9 +72,14 @@ class BlogController extends AbstractController
     }
 
     /**
-     * @Route("admin/blog/{id}/edit", name="admin.blog.edit", methods={"GET", "POST"}, requirements={"id"="\d+"})
-     * @param Request $request
-     * @param BlogTopic $topic
+     * @Route(
+     *     "admin/blog/topic/{id}/edit",
+     *     name="admin.blog.topic.edit",
+     *     methods={"GET", "POST"},
+     *     requirements={"id"="\d+"}
+     *     )
+     * @param  Request $request
+     * @param  BlogTopic $topic
      * @return Response
      */
     public function edit(Request $request, BlogTopic $topic) : Response
@@ -85,7 +90,7 @@ class BlogController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->em->flush();
 
-            return $this->redirectToRoute('admin.blog.list');
+            return $this->redirectToRoute('admin.blog.topics.list');
         }
 
         return $this->render('admin/blog/edit.html.twig', [
@@ -95,9 +100,14 @@ class BlogController extends AbstractController
     }
 
     /**
-     * @Route("admin/blog/{id}/delete", name="admin.blog.delete", methods={"DELETE"}, requirements={"id" = "\d+"})
-     * @param Request $request
-     * @param BlogTopic $topic
+     * @Route(
+     *     "admin/blog/topic/{id}/delete",
+     *     name="admin.blog.topic.delete",
+     *     methods={"DELETE"},
+     *     requirements={"id" = "\d+"}
+     *     )
+     * @param  Request $request
+     * @param  BlogTopic $topic
      * @return Response
      */
     public function delete(Request $request, BlogTopic $topic) : Response
@@ -107,6 +117,6 @@ class BlogController extends AbstractController
             $this->em->flush();
         }
 
-        return $this->redirectToRoute('admin.blog.list');
+        return $this->redirectToRoute('admin.blog.topics.list');
     }
 }

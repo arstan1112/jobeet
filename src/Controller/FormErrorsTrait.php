@@ -3,7 +3,6 @@
 
 namespace App\Controller;
 
-
 use Symfony\Component\Form\FormInterface;
 
 trait FormErrorsTrait

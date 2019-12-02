@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\BlogTopicRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class BlogTopic
 {
@@ -49,9 +50,26 @@ class BlogTopic
      */
     private $blogComment;
 
+    /**
+     * @var
+     * @ORM\Column(type="text")
+     */
+    private $summary;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\BlogTopicHashTag", inversedBy="blogTopics", cascade={"persist"})
+     */
+    private $blogTopicHashTags;
+
+    /**
+     * @var
+     */
+    private $hash;
+
     public function __construct()
     {
-        $this->blogComment = new ArrayCollection();
+        $this->blogComment       = new ArrayCollection();
+        $this->blogTopicHashTags = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -160,6 +178,97 @@ class BlogTopic
     public function setText($text): void
     {
         $this->text = $text;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSummary()
+    {
+        return $this->summary;
+    }
+
+    /**
+     * @param mixed $summary
+     */
+    public function setSummary($summary): void
+    {
+        $this->summary = $summary;
+    }
+
+    /**
+     * @return Collection|BlogTopicHashTag[]
+     */
+    public function getBlogTopicHashTags(): Collection
+    {
+        return $this->blogTopicHashTags;
+    }
+
+    public function addBlogTopicHashTag(BlogTopicHashTag $blogTopicHashTag): self
+    {
+        if (!$this->blogTopicHashTags->contains($blogTopicHashTag)) {
+            $this->blogTopicHashTags[] = $blogTopicHashTag;
+            $blogTopicHashTag->addBlogTopic($this);
+//            $blogTopicHashTag->setBlogTopic($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBlogTopicHashTag(BlogTopicHashTag $blogTopicHashTag): self
+    {
+        if ($this->blogTopicHashTags->contains($blogTopicHashTag)) {
+            $this->blogTopicHashTags->removeElement($blogTopicHashTag);
+            $blogTopicHashTag->removeBlogTopic($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getHash()
+    {
+        return $this->hash;
+    }
+
+    /**
+     * @param mixed $hash
+     */
+    public function setHash($hash): void
+    {
+        $this->hash = $hash;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function prePersist()
+    {
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
+        $hash   = $this->getHash();
+        $hashes = preg_split('[#]', $hash);
+        array_shift($hashes);
+        foreach ($hashes as $hash) {
+            $hashTag = new BlogTopicHashTag();
+            $hashTag->setName($hash);
+            $hashTag->setCreatedAt(new \DateTime());
+            $this->addBlogTopicHashTag($hashTag);
+        }
+//        $hashTag = new BlogTopicHashTag();
+//        $hashTag->setName($this->getHash());
+//        $hashTag->setCreatedAt(new \DateTime());
+//        $this->addBlogTopicHashTag($hashTag);
+    }
+
+    /**
+     * @ORM\PreUpdate()
+     */
+    public function preUpdate()
+    {
+        $this->updatedAt = new \DateTime();
     }
 
 //    public function setBlogComments(BlogComment $blogComments): self

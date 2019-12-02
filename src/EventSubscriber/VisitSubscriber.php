@@ -18,11 +18,18 @@ class VisitSubscriber implements EventSubscriberInterface
      */
     private $visits;
 
+    /**
+     * VisitSubscriber constructor.
+     * @param VisitsRepository $visits
+     */
     public function __construct(VisitsRepository $visits)
     {
         $this->visits = $visits;
     }
 
+    /**
+     * @param VisitCreatedEvent $event
+     */
     public function onVisitCreated(VisitCreatedEvent $event)
     {
         dump($event);
@@ -38,13 +45,13 @@ class VisitSubscriber implements EventSubscriberInterface
         $this->visits->save($visit);
     }
 
+    /**
+     * @param ControllerEvent $event
+     */
     public function onResponseCreated(ControllerEvent $event)
     {
         $controller = $event->getController()[0];
-//        dump($controller);
-//        die();
-
-        if ( ! ($controller instanceof VisitInterface)) {
+        if (! ($controller instanceof VisitInterface)) {
             return;
         }
 
@@ -59,6 +66,9 @@ class VisitSubscriber implements EventSubscriberInterface
         $this->visits->save($visit);
     }
 
+    /**
+     * @return array
+     */
     public static function getSubscribedEvents()
     {
         return [

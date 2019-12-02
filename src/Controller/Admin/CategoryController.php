@@ -33,8 +33,7 @@ class CategoryController extends AbstractController implements VisitInterface
      *
      * @Route("/admin/categories", name="admin.category.list", methods="GET")
      *
-     * @param EntityManagerInterface $em
-     *
+     * @param  EntityManagerInterface $em
      * @return Response
      */
     public function list(EntityManagerInterface $em) : Response

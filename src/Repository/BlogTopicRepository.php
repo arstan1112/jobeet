@@ -35,6 +35,18 @@ class BlogTopicRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * @return BlogTopic[]
+     */
+    public function findRecentTopicsWithHashes()
+    {
+        return $this->createQueryBuilder('bt')
+            ->innerJoin('bt.blogTopicHashTags', 'h')
+            ->orderBy('bt.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return BlogTopic[] Returns an array of BlogTopic objects
     //  */

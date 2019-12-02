@@ -30,6 +30,7 @@ class MailerService
 
     /**
      * @param Affiliates $affiliate
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      */
     public function sendActivationEmail(Affiliates $affiliate) : void
     {

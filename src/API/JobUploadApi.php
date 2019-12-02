@@ -34,7 +34,9 @@ class JobUploadApi
      */
     public $decodedData;
 
-
+    /**
+     * @param string|null $data
+     */
     public function setData(?string $data)
     {
 //        $this->data = $data;
@@ -46,6 +48,9 @@ class JobUploadApi
 //        $this->decodedData = $decodedData;
 //    }
 
+    /**
+     * @return string|null
+     */
     public function getDecodedData(): ?string
     {
         return $this->decodedData;

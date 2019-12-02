@@ -3,10 +3,8 @@
 
 namespace App\Controller\Admin;
 
-
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
-
 use App\Controller\VisitInterface;
 use http\Env\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,10 +21,10 @@ class AffiliateController extends AbstractController implements VisitInterface
      * List all affiliate entities
      *
      * @Route("/admin/affiliates/{page}",
-     *     name="admin.affiliates.list",
-     *     methods="GET",
-     *     defaults={"page": 1},
-     *     requirements={"page" = "\d+"}
+     *     name         ="admin.affiliates.list",
+     *     methods      ="GET",
+     *     defaults     ={"page": 1},
+     *     requirements ={"page" = "\d+"}
      * )
      * @param EntityManagerInterface $em
      * @param PaginatorInterface $paginator
@@ -55,9 +53,9 @@ class AffiliateController extends AbstractController implements VisitInterface
      * Activate affiliate
      *
      * @Route("/admin/affiliate/{id}/activate",
-     *     name="admin.affiliate.activate",
-     *     methods="GET",
-     *     requirements={"id" = "\d+"}
+     *     name         ="admin.affiliate.activate",
+     *     methods      ="GET",
+     *     requirements ={"id" = "\d+"}
      * )
      *
      * @param EntityManagerInterface $em
@@ -80,9 +78,9 @@ class AffiliateController extends AbstractController implements VisitInterface
      * Deactivate affiliate
      *
      * @Route("/admin/affiliate/{id}/deactivate",
-     *     name="admin.affiliate.deactivate",
-     *     methods="GET",
-     *     requirements={"id" = "\d+"}
+     *     name         ="admin.affiliate.deactivate",
+     *     methods      ="GET",
+     *     requirements ={"id" = "\d+"}
      * )
      *
      * @param EntityManagerInterface $em
@@ -97,5 +95,4 @@ class AffiliateController extends AbstractController implements VisitInterface
 
         return $this->redirectToRoute('admin.affiliates.list');
     }
-
 }

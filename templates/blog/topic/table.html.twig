@@ -1,19 +1,48 @@
-<table class="table text-center">
-    <thead>
-    <tr>
-        <th class="active text-center">{{'Topic'|trans}}</th>
-        <th class="active text-center">{{'Author'|trans}}</th>
-    </tr>
-    </thead>
+{#<table class="table text-center">#}
+{#    <thead>#}
+{#    <tr>#}
+{#        <th class="active text-center">{{'Topic'|trans}}</th>#}
+{#        <th class="active text-center">{{'Author'|trans}}</th>#}
+{#    </tr>#}
+{#    </thead>#}
 
-    <tbody>
-    {% for topic in topics %}
-        <tr>
-            <td>
-                <a href="{{ path('blog.show', {id: topic.id}) }}">{{ topic.name }}</a>
-            </td>
-            <td>{{ topic.author }}</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+{#    <tbody>#}
+{#    {% for topic in topics %}#}
+{#        <tr>#}
+{#            <td>#}
+{#                <a href="{{ path('blog.show', {id: topic.id}) }}">{{ topic.name }}</a>#}
+{#            </td>#}
+{#            <td>{{ topic.author }}</td>#}
+{#        </tr>#}
+{#    {% endfor %}#}
+{#    </tbody>#}
+{#</table>#}
+
+{% for topic in topics %}
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-md-6">{{ topic.name }}</div>
+                <div class="col-md-6 text-right">{{ topic.author }}</div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div>
+                {{ topic.summary }}
+            </div>
+            <br>
+            {% for hashTags in topic.blogTopicHashTags %}
+                <a href="#">
+                    #{{ hashTags.name }}
+                </a>
+            {% endfor %}
+            <br>
+            <p>
+                <a href="{{ path('blog.show', {id: topic.id}) }}">Read more...</a>
+            </p>
+        </div>
+    </div>
+{% endfor %}
+
+

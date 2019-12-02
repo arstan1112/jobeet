@@ -293,6 +293,22 @@
         <source>Post a comment</source>
         <target>Post a comment</target>
       </trans-unit>
+      <trans-unit id="d1tb_WR" resname="Created at">
+        <source>Created at</source>
+        <target>Created at</target>
+      </trans-unit>
+      <trans-unit id="fZQLe4R" resname="Edit blog">
+        <source>Edit blog</source>
+        <target>Edit blog</target>
+      </trans-unit>
+      <trans-unit id="QhyKvBC" resname="Create new blog">
+        <source>Create new blog</source>
+        <target>Create new blog</target>
+      </trans-unit>
+      <trans-unit id="iVDGcb2" resname="Back to main page">
+        <source>Back to main page</source>
+        <target>Back to main page</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -6,7 +6,9 @@
 {#        {% include 'blog/topic/table.html.twig' with {#}
 {#            'topics': topics|slice(0, max_jobs_on_homepage)#}
 {#        } only %}       #}
+
         {% include 'blog/topic/table.html.twig' with {'topics': topics} only %}
+
          <div class="navigation text-center">
              {{ knp_pagination_render(topics) }}
          </div>

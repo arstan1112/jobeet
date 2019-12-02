@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Entity\Jobs;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class JobHistoryService
@@ -58,7 +59,7 @@ class JobHistoryService
 
     /**
      * @return Jobs[]
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      */
     public function getJobs() : array
     {

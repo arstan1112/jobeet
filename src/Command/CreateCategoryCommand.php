@@ -14,6 +14,10 @@ class CreateCategoryCommand extends Command
     /** @var CategoryService */
     private $categoryService;
 
+    /**
+     * CreateCategoryCommand constructor.
+     * @param CategoryService $categoryService
+     */
     public function __construct(CategoryService $categoryService)
     {
         $this->categoryService=$categoryService;
@@ -58,7 +62,6 @@ class CreateCategoryCommand extends Command
         $this->categoryService->create($input->getArgument('name'));
 //        $output->writeln('Category successfully created');
         $output->writeln('<fg=green>Category successfully created!</>');
-
     }
 
     /**

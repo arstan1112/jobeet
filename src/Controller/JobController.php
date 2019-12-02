@@ -90,7 +90,7 @@ class JobController extends AbstractController implements VisitInterface
 //        $this->dispatcher->dispatch($event);
 
         return $this->render('job/list.html.twig', [
-            'categories' => $categories,
+            'categories'  => $categories,
             'historyJobs' => $jobHistoryService->getJobs(),
         ]);
     }
@@ -140,7 +140,7 @@ class JobController extends AbstractController implements VisitInterface
      */
     public function create(FileUploader $fileUploader, Request $request) : Response
     {
-        $job = new Jobs();
+        $job  = new Jobs();
         $form = $this->createForm(JobType::class, $job);
         $form->handleRequest($request);
 

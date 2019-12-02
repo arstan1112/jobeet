@@ -43,8 +43,11 @@
                 <li role="presentation" {% if currentRouteName starts with 'admin.affiliate.' %}class="active"{% endif %}>
                     <a href="{{ path('admin.affiliates.list') }}">{{'Affiliates'|trans}}</a>
                 </li>
-                <li role="presentation" {% if currentRouteName starts with 'admin.blog.' %}class="active"{% endif %}>
-                    <a href="{{ path('admin.blog.list') }}">{{'Blog'|trans}}</a>
+                <li role="presentation" {% if currentRouteName starts with 'admin.blog.topic' %}class="active"{% endif %}>
+                    <a href="{{ path('admin.blog.topics.list') }}">{{'Blog topics'|trans}}</a>
+                </li>
+                <li role="presentation" {% if currentRouteName starts with 'admin.blog.comment' %}class="active"{% endif %}>
+                    <a href="{{ path('admin.blog.comments.list') }}">{{'Blog comments'|trans}}</a>
                 </li>
                 <li role="presentation">
                     <a href="{{ path('job.list') }}">

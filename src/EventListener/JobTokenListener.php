@@ -9,9 +9,9 @@ class JobTokenListener
 {
     /**
      * @param LifecycleEventArgs $args
+     * @throws \Exception
      */
     public function prePersist(LifecycleEventArgs $args)
-//    public function prePersist()
     {
         $entity = $args->getEntity();
 

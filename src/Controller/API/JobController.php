@@ -77,6 +77,7 @@ class JobController extends AbstractFOSRestController
      * @param Affiliates $affiliate
      *
      * @return Response
+     * @throws \Exception
      */
     public function getJobsAction(Affiliates $affiliate) : Response
 //    public function getJobsAction(EntityManagerInterface $em) : Response

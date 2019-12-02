@@ -293,6 +293,22 @@
         <source>Post a comment</source>
         <target>Опубликовать комментарий</target>
       </trans-unit>
+      <trans-unit id="d1tb_WR" resname="Created at">
+        <source>Created at</source>
+        <target>Создано</target>
+      </trans-unit>
+      <trans-unit id="fZQLe4R" resname="Edit blog">
+        <source>Edit blog</source>
+        <target>Редактировать блог</target>
+      </trans-unit>
+      <trans-unit id="QhyKvBC" resname="Create new blog">
+        <source>Create new blog</source>
+        <target>Создать новый блог</target>
+      </trans-unit>
+      <trans-unit id="iVDGcb2" resname="Back to main page">
+        <source>Back to main page</source>
+        <target>Назад на главную страницу</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
