@@ -1,5 +1,9 @@
 <?php
 
+/*
+ * This handler is used to change the type of data (Category) from string to object
+ * when serializing and deserializing for API controllers
+ */
 
 namespace App\JMSHandlers;
 
@@ -62,7 +66,6 @@ class JobCategoryHandler implements SubscribingHandlerInterface
      * @param array $type
      *
      * @return Categories|array
-     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function serializeMix(JsonSerializationVisitor $visitor, $category, array $type)
     {
@@ -77,7 +80,6 @@ class JobCategoryHandler implements SubscribingHandlerInterface
      * @param array $type
      *
      * @return int|Categories
-     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function deserializeMix(JsonDeserializationVisitor $visitor, $categoryId, array $type)
     {

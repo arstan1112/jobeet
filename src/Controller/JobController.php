@@ -46,7 +46,7 @@ class JobController extends AbstractController implements VisitInterface
 
     /**
      * JobController constructor.
-     * @param EntityManagerInterface $em
+     * @param EntityManagerInterface   $em
      * @param EventDispatcherInterface $dispatcher
      */
     public function __construct(EntityManagerInterface $em, EventDispatcherInterface $dispatcher)
@@ -102,7 +102,7 @@ class JobController extends AbstractController implements VisitInterface
      *
      * @Entity("jobs", expr="repository.findActiveJob(id)")
      *
-     * @param Jobs $job
+     * @param Jobs              $job
      * @param JobHistoryService $jobHistoryService
      *
      * @return Response

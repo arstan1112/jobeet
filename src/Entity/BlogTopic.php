@@ -248,15 +248,17 @@ class BlogTopic
     {
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
-        $hash   = $this->getHash();
-        $hashes = preg_split('[#]', $hash);
-        array_shift($hashes);
-        foreach ($hashes as $hash) {
-            $hashTag = new BlogTopicHashTag();
-            $hashTag->setName($hash);
-            $hashTag->setCreatedAt(new \DateTime());
-            $this->addBlogTopicHashTag($hashTag);
-        }
+
+//        $hash   = $this->getHash();
+//        $hashes = preg_split('[#]', $hash);
+//        array_shift($hashes);
+//        foreach ($hashes as $hash) {
+//            $hashTag = new BlogTopicHashTag();
+//            $hashTag->setName($hash);
+//            $hashTag->setCreatedAt(new \DateTime());
+//            $this->addBlogTopicHashTag($hashTag);
+//        }
+
 //        $hashTag = new BlogTopicHashTag();
 //        $hashTag->setName($this->getHash());
 //        $hashTag->setCreatedAt(new \DateTime());

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\BlogTopic;
+use App\Entity\BlogTopicHashTag;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -36,12 +37,15 @@ class BlogTopicRepository extends ServiceEntityRepository
     }
 
     /**
+     * @param BlogTopicHashTag $hashTag
      * @return BlogTopic[]
      */
-    public function findRecentTopicsWithHashes()
+    public function findRecentTopicsByHashTag(BlogTopicHashTag $hashTag)
     {
         return $this->createQueryBuilder('bt')
-            ->innerJoin('bt.blogTopicHashTags', 'h')
+            ->leftJoin('bt.blogTopicHashTags', 'h')
+            ->where('h.id = :hashTag')
+            ->setParameter('hashTag', $hashTag)
             ->orderBy('bt.createdAt', 'DESC')
             ->getQuery()
             ->getResult();

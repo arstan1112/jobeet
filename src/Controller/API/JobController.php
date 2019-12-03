@@ -58,8 +58,8 @@ class JobController extends AbstractFOSRestController
     /**
      * JobController constructor.
      * @param EntityManagerInterface $em
-     * @param SerializerInterface $serializer
-     * @param LoggerInterface $logger
+     * @param SerializerInterface    $serializer
+     * @param LoggerInterface        $logger
      */
 
     public function __construct(EntityManagerInterface $em, SerializerInterface $serializer, LoggerInterface $logger)
