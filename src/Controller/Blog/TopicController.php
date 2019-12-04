@@ -7,8 +7,10 @@ use App\Entity\BlogTopic;
 use App\Entity\BlogTopicHashTag;
 use App\Entity\User;
 use App\Form\Blog\TopicType;
+use App\Service\BlogTopicCreator;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use phpDocumentor\Reflection\Types\This;
 use PhpScience\TextRank\TextRankFacade;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -52,56 +54,46 @@ class TopicController extends AbstractController
     }
 
     /**
-     * @Route("/blog/{id}", name="blog.show", methods="GET", requirements={"id" = "\d+"}, defaults={"id":1})
+     * @Route(
+     *     "/blog/{id}/{hashTagId}",
+     *     name         ="blog.show",
+     *     methods      ="GET",
+     *     requirements ={"id" = "\d+"},
+     *     defaults     ={"id":1, "hashTagId":0}
+     *     )
      * @param  BlogTopic $blogTopic
+     * @param  int       $hashTagId
      * @return Response
      */
-    public function show(BlogTopic $blogTopic) : Response
+    public function show(BlogTopic $blogTopic, int $hashTagId) : Response
     {
         return $this->render('blog/topic/show.html.twig', [
-            'topic' => $blogTopic,
+            'topic'     => $blogTopic,
+            'hashTagId' => $hashTagId,
         ]);
     }
 
     /**
      * @Route("blog/topic/create/", name="blog.topic.create", methods={"GET", "POST"})
-     * @param  Request            $request
-     * @param  BlogHashTagService $hashTagService
+     * @param Request          $request
+     * @param BlogTopicCreator $topicCreator
      * @return Response
-     * @throws \Exception
      */
-    public function create(Request $request, BlogHashTagService $hashTagService) : Response
+    public function create(Request $request, BlogTopicCreator $topicCreator) : Response
     {
         $topic = new BlogTopic();
         $form  = $this->createForm(TopicType::class, $topic);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $hashTags    = $topic->getHash();
-            $checkedTags = $hashTagService->hashTagExist($hashTags);
-            foreach ($checkedTags[0] as $newTag) {
-                $hashTagObj = new BlogTopicHashTag();
-                $hashTagObj->setName($newTag);
-                $hashTagObj->setCreatedAt(new \DateTime());
-                $topic     ->addBlogTopicHashTag($hashTagObj);
-            };
-            foreach ($checkedTags[1] as $existedTag) {
-                $topic     ->addBlogTopicHashTag($existedTag);
-            };
-
-            $userId = $this->getUser()->getId();
-            $user   = $this->em->getRepository(User::class)->find($userId);
-
-            $text         = $topic->getText();
-            $api          = new TextRankFacade();
-            $summaryArray = $api->summarizeTextBasic($text);
-            $summary      = implode("", $summaryArray);
-
-            $topic->setAuthor($user);
-            $topic->setSummary($summary);
-
-            $this->em->persist($topic);
-            $this->em->flush();
+            try {
+                $user = $this->getUser();
+                $topicCreator->create($topic, $user);
+            } catch (\Exception $e) {
+                return $this->render('error.html.twig', [
+                    'error_message' => $e->getMessage(),
+                ]);
+            }
 
             return $this->redirectToRoute(
                 'blog.show',

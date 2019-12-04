@@ -12,6 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class BlogTopic
 {
+    const HASH_TAGS_LIMIT = 10;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()

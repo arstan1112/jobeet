@@ -5,6 +5,7 @@ namespace App\Form\Blog;
 
 use App\Entity\BlogTopic;
 use App\Entity\BlogTopicHashTag;
+use App\Utils\HashTagsNormalizer;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -12,9 +13,11 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class TopicType extends AbstractType
 {
@@ -44,8 +47,21 @@ class TopicType extends AbstractType
                     new NotBlank(),
                     new Regex('/^#/'),
                     new Length(['max' => 100]),
+                    new Callback([$this, 'validateHashTags'])
                 ]
             ]);
+    }
+
+    public function validateHashTags($hashTag, ExecutionContextInterface $context)
+    {
+        $hashes = HashTagsNormalizer::normalize($hashTag);
+
+        if (count($hashes) > BlogTopic::HASH_TAGS_LIMIT) {
+            $context
+                ->buildViolation("Too many tags.")
+                ->atPath('hash')
+                ->addViolation();
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -3,7 +3,7 @@
 {% block body %}
     <h2>{{'Blogs of '|trans}}<a href="{{ path('blog.hash.show', {id:hashTag.id}) }}">{{ '#%hashTag%'|trans({'%hashTag%':hashTag.name}) }}</a></h2>
 
-    {% include 'blog/hashtags/table.html.twig' with {'topics': topicsOfHashTag} only %}
+    {% include 'blog/hashtags/table.html.twig' with {'topics': topicsOfHashTag, 'hashTagId':hashTag.id} only %}
 
     <div class="navigation text-center">
         {{ knp_pagination_render(topicsOfHashTag) }}

@@ -3,8 +3,9 @@
 
 namespace App\Service;
 
-use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\BlogTopicHashTag;
+use App\Utils\HashTagsNormalizer;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
 
 class BlogHashTagService
@@ -30,8 +31,10 @@ class BlogHashTagService
      */
     public function hashTagExist(string $hashTag) : array
     {
-        $hashes = preg_split('[#]', $hashTag);
-        array_shift($hashes);
+//        $hashes = preg_split('[#]', $hashTag);
+//        array_shift($hashes);
+
+        $hashes = HashTagsNormalizer::normalize($hashTag);
         $checkedTags = [];
         $newTags     = [];
         $existedTags = [];
@@ -45,6 +48,7 @@ class BlogHashTagService
         }
         $checkedTags[] = $newTags;
         $checkedTags[] = $existedTags;
+
         return $checkedTags;
     }
 }
