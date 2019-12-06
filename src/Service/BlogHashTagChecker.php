@@ -8,7 +8,7 @@ use App\Utils\HashTagsNormalizer;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
 
-class BlogHashTagService
+class BlogHashTagChecker
 {
     /**
      * @var EntityManagerInterface
@@ -31,9 +31,6 @@ class BlogHashTagService
      */
     public function hashTagExist(string $hashTag) : array
     {
-//        $hashes = preg_split('[#]', $hashTag);
-//        array_shift($hashes);
-
         $hashes = HashTagsNormalizer::normalize($hashTag);
         $checkedTags = [];
         $newTags     = [];

@@ -19,16 +19,16 @@ class BlogTopicCreator
     private $em;
 
     /**
-     * @var BlogHashTagService
+     * @var BlogHashTagChecker
      */
     private $hashTagService;
 
     /**
      * BlogTopicCreator constructor.
      * @param EntityManagerInterface $em
-     * @param BlogHashTagService     $hashTagService
+     * @param BlogHashTagChecker     $hashTagService
      */
-    public function __construct(EntityManagerInterface $em, BlogHashTagService $hashTagService)
+    public function __construct(EntityManagerInterface $em, BlogHashTagChecker $hashTagService)
     {
         $this->em             = $em;
         $this->hashTagService = $hashTagService;
@@ -54,6 +54,10 @@ class BlogTopicCreator
         foreach ($checkedTags[1] as $existedTag) {
             $topic->addBlogTopicHashTag($existedTag);
         };
+
+        // 1 2 3
+        // 1 2 3 4
+        // 1 4 3
 
         $text         = $topic->getText();
         $api          = new TextRankFacade();

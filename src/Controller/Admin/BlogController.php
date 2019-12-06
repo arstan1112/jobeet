@@ -3,9 +3,15 @@
 namespace App\Controller\Admin;
 
 use App\Entity\BlogTopic;
+use App\Entity\BlogTopicHashTag;
 use App\Entity\User;
 use App\Form\Admin\BlogType;
+use App\Form\Blog\TopicType;
+use App\Service\BlogHashTagChecker;
+use App\Service\BlogHashTagService;
+use App\Utils\HashTagsNormalizer;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NonUniqueResultException;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -78,16 +84,38 @@ class BlogController extends AbstractController
      *     methods={"GET", "POST"},
      *     requirements={"id"="\d+"}
      *     )
-     * @param  Request $request
-     * @param  BlogTopic $topic
+     * @param Request $request
+     * @param BlogTopic $topic
+     * @param BlogHashTagChecker $hashTagService
+     *
      * @return Response
+     * @throws NonUniqueResultException
      */
-    public function edit(Request $request, BlogTopic $topic) : Response
+    public function edit(Request $request, BlogTopic $topic, BlogHashTagChecker $hashTagService): Response
     {
-        $form = $this->createForm(BlogType::class, $topic);
+//        $form = $this->createForm(BlogType::class, $topic);
+        $form = $this->createForm(TopicType::class, $topic);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $hashTags    = $topic->getHash();
+            $checkedTags = $hashTagService->hashTagExist($hashTags);
+
+            $old = $topic->getBlogTopicHashTags();
+            foreach ($old->getValues() as $oldTag) {
+                $topic->removeBlogTopicHashTag($oldTag);
+            }
+
+            foreach ($checkedTags[0] as $newTag) {
+                $hashTagObj = new BlogTopicHashTag();
+                $hashTagObj->setName($newTag);
+                $hashTagObj->setCreatedAt(new \DateTime());
+                $topic->addBlogTopicHashTag($hashTagObj);
+            };
+
+            foreach ($checkedTags[1] as $existedTag) {
+                $topic->addBlogTopicHashTag($existedTag);
+            };
             $this->em->flush();
 
             return $this->redirectToRoute('admin.blog.topics.list');
@@ -108,6 +136,7 @@ class BlogController extends AbstractController
      *     )
      * @param  Request $request
      * @param  BlogTopic $topic
+     *
      * @return Response
      */
     public function delete(Request $request, BlogTopic $topic) : Response

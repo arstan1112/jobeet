@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h2>{{'Hash Tags'|trans}}</h2>
+
+    {% include 'blog/hashtags/tags.table.html.twig' with {'hashTags': hashTags} only %}
+
+    <div class="navigation text-center">
+        {{ knp_pagination_render(hashTags) }}
+    </div>
+
+{% endblock %}

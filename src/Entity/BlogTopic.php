@@ -49,6 +49,7 @@ class BlogTopic
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\BlogComment", mappedBy="blogTopic", cascade={"persist", "remove"})
+     * @ORM\OrderBy({"createdAt"="DESC"})
      */
     private $blogComment;
 

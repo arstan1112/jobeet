@@ -27,7 +27,6 @@ class TopicController extends AbstractController
     private $em;
 
     /**
-     * TopicController constructor.
      * @param EntityManagerInterface $em
      */
     public function __construct(EntityManagerInterface $em)
@@ -39,6 +38,7 @@ class TopicController extends AbstractController
      * @Route("/blog/list/{page}", name="blog.list", defaults={"page":1}, requirements={"page" = "\d+"})
      * @param  PaginatorInterface $paginator
      * @param  int                $page
+     *
      * @return Response
      */
     public function list(PaginatorInterface $paginator, int $page) : Response
@@ -63,6 +63,7 @@ class TopicController extends AbstractController
      *     )
      * @param  BlogTopic $blogTopic
      * @param  int       $hashTagId
+     *
      * @return Response
      */
     public function show(BlogTopic $blogTopic, int $hashTagId) : Response
@@ -77,6 +78,7 @@ class TopicController extends AbstractController
      * @Route("blog/topic/create/", name="blog.topic.create", methods={"GET", "POST"})
      * @param Request          $request
      * @param BlogTopicCreator $topicCreator
+     *
      * @return Response
      */
     public function create(Request $request, BlogTopicCreator $topicCreator) : Response

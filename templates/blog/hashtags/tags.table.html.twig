@@ -1,0 +1,21 @@
+{% for hashTag in hashTags %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-md-6">{{ hashTag.name }}</div>
+                <div class="col-md-6 text-right">{{ hashTag.createdat|date('m/d/y') }}</div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div>
+                <a href="{{ path('blog.hash.show', {id:hashTag.id, hashTagList:1}) }}">
+                    #{{ hashTag.name }}
+                </a>
+            </div>
+            <br>
+            <p>
+                <a href="{{ path('blog.hash.show', {id:hashTag.id, hashTagList:1}) }}">Read topics...</a>
+            </p>
+        </div>
+    </div>
+{% endfor %}

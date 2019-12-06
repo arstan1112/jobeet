@@ -12,6 +12,8 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Length;
@@ -42,6 +44,7 @@ class TopicType extends AbstractType
                 ]
             ])
             ->add('hash', TextType::class, [
+//            ->add('blogTopicHashTags', TextType::class, [
                 'label'       => 'HashTag',
                 'constraints' => [
                     new NotBlank(),
@@ -50,6 +53,71 @@ class TopicType extends AbstractType
                     new Callback([$this, 'validateHashTags'])
                 ]
             ]);
+
+
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+            /** @var BlogTopic $data */
+            $data = $event->getData();
+            $tags = '';
+
+            foreach ($data->getBlogTopicHashTags()->toArray() as $tag) {
+                $tags .= "#{$tag->getName()} ";
+            }
+
+            $data->setHash($tags);
+        });
+
+
+//        $builder->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) {
+//            /** @var BlogTopic $data */
+//            $data = $event->getData();
+//            $form = $event->getForm();
+//
+//            $tags = $data->getHash();
+//            $tags = HashTagsNormalizer::normalize($tags);
+//            dump($tags);
+////            dump($data->getBlogTopicHashTags()->toArray());
+//            $missing = [];
+////            $existedTags = $data->getBlogTopicHashTags()->getValues()->toArray();
+////            $existedTags = $data->getBlogTopicHashTags()->getValues();
+////            $existedTags = $data->getBlogTopicHashTags()->toArray();
+////            dump($existedTags);
+////            foreach ($existedTags as $existedTag) {
+////                $ab = $existedTags->getName();
+////                dump($ab);
+////            }
+//            $old = [];
+//            foreach ($data->getBlogTopicHashTags()->toArray() as $blogTopicTag) {
+////            foreach ($tags as $submittedTag) {
+////                dump($blogTopicTag->getName());
+//                $old[] = $blogTopicTag->getName();
+//
+//            }
+////            dump($missing);
+//            dump($old);
+//            $existing = [];
+//            foreach ($tags as $tag) {
+//                if (in_array($tag, $old)) {
+////                    $blogTopicTag->getName();
+////                    dump($blogTopicTag->getName());
+//                    $existing[] = $tag;
+//                }
+//            }
+//            dump($existing);
+////            $data->addBlogTopicHashTag();
+////            dump($data);
+////            die();
+//
+//            $tags = $data->getBlogTopicHashTags()->filter(function ($hash) use ($tags) {
+//
+//                dump($hash->getName());
+//                dump($tags);
+//            });
+//
+//            dump($tags);
+//            dump($data->getBlogTopicHashTags()->toArray());
+//            die;
+//        });
     }
 
     public function validateHashTags($hashTag, ExecutionContextInterface $context)
