@@ -3,6 +3,8 @@
 {% block body %}
     <h2>{{'Hash Tags'|trans}}</h2>
 
+    {% include 'blog/hashtags/search.html.twig' %}
+
     {% include 'blog/hashtags/tags.table.html.twig' with {'hashTags': hashTags} only %}
 
     <div class="navigation text-center">

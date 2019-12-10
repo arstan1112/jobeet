@@ -3,10 +3,10 @@
 
 namespace App\Controller\Admin;
 
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use App\Controller\VisitInterface;
-use http\Env\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Affiliates;
 use Doctrine\ORM\EntityManagerInterface;
@@ -63,6 +63,7 @@ class AffiliateController extends AbstractController implements VisitInterface
      * @param MailerService $mailerService
      *
      * @return Response
+     * @throws TransportExceptionInterface
      */
     public function activate(EntityManagerInterface $em, Affiliates $affiliate, MailerService $mailerService) : Response
     {

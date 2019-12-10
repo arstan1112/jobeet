@@ -24,16 +24,21 @@ class BlogTopicRepository extends ServiceEntityRepository
         parent::__construct($registry, BlogTopic::class);
     }
 
-    /**
-     * @return BlogTopic[]
-     */
-    public function findRecentTopics()
+
+    public function findRecentTopics($tag = null)
     {
-        return $this->createQueryBuilder('bt')
-            ->select('bt')
-            ->orderBy('bt.createdAt', 'DESC')
-            ->getQuery()
-            ->getResult();
+        $qb = $this
+            ->createQueryBuilder('topic')
+            ->orderBy('topic.createdAt', 'DESC');
+
+        if ($tag) {
+            $qb
+                ->innerJoin('topic.blogTopicHashTags', 'tags')
+                ->where('tags.name = :name')
+                ->setParameter('name', $tag);
+        }
+
+        return $qb;
     }
 
     /**

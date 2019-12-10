@@ -6,9 +6,11 @@ namespace App\Controller\Blog;
 use App\Entity\BlogTopic;
 use App\Entity\BlogTopicHashTag;
 use App\Entity\User;
+use App\Form\Blog\HashTagSearchType;
 use App\Form\Blog\TopicType;
 use App\Service\BlogTopicCreator;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NonUniqueResultException;
 use Knp\Component\Pager\PaginatorInterface;
 use phpDocumentor\Reflection\Types\This;
 use PhpScience\TextRank\TextRankFacade;
@@ -17,7 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use PhpScience\TextRank\Tool\StopWords\English;
-use App\Service\BlogHashTagService;
+use App\Service\BlogHashTagChecker;
 
 class TopicController extends AbstractController
 {
@@ -36,20 +38,69 @@ class TopicController extends AbstractController
 
     /**
      * @Route("/blog/list/{page}", name="blog.list", defaults={"page":1}, requirements={"page" = "\d+"})
-     * @param  PaginatorInterface $paginator
-     * @param  int                $page
+     * @param Request $request
+     * @param PaginatorInterface $paginator
+     * @param int $page
      *
      * @return Response
      */
-    public function list(PaginatorInterface $paginator, int $page) : Response
+    public function list(Request $request, PaginatorInterface $paginator, int $page) : Response
     {
+//        $form = $this->createForm(HashTagSearchType::class);
+//        $form->handleRequest($request);
+
+        $searchTag = $request->query->get('search', null);
+//        dump($request);
+//        dump($request->query);
+//        dump($request->query->get('q'));
+//        dump($request->query->get('qw'));
+//        die();
+
+        $topicQuery = $this
+            ->getDoctrine()
+            ->getRepository(BlogTopic::class)
+            ->findRecentTopics($searchTag);
+
+//        dump($topicQuery);
+//        die();
+
         $topics = $paginator->paginate(
-            $this->getDoctrine()->getRepository(BlogTopic::class)->findRecentTopics(),
+            $topicQuery,
             $page,
             $this->getParameter('max_per_page')
         );
+//        dump($topics);
+        if (!($topics->getItems())) {
+            return $this->render('blog/topic/list.html.twig', [
+                'topics' => $topics,
+                'data' => 0,
+            ]);
+        }
+
+//        if ($form->isSubmitted() && $form->isValid()) {
+//            if ($form->getData()->getName()) {
+//                $hashTag = $this->em->getRepository(BlogTopicHashTag::class)->findByName($form->getData()->getName());
+//                if ($hashTag) {
+//                    return $this->redirectToRoute(
+//                        'blog.hash.show',
+//                        ['id' => $hashTag ->getId()]
+//                    );
+//                } else {
+//                    return $this->render('error.html.twig', [
+//                        'error_message' => 'Hash Tag not found',
+//                    ]);
+//                }
+//            }
+//            return $this->render('blog/topic/list.html.twig', [
+//                'topics' => $topics,
+//                'form'     => $form->createView(),
+//            ]);
+//        }
+
         return $this->render('blog/topic/list.html.twig', [
             'topics' => $topics,
+            'data' => 1,
+//            'form'     => $form->createView(),
         ]);
     }
 

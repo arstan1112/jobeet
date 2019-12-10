@@ -26,13 +26,26 @@ class BlogTopicHashTagRepository extends ServiceEntityRepository
      * @return BlogTopicHashTag|null
      * @throws NonUniqueResultException
      */
-    public function findByName(string $hashTagName) : ?BlogTopicHashTag
+    public function findByName(string $hashTagName)
+    {
+        return $this->createQueryBuilder('h')
+            ->where('h.name = :hashTagName')
+            ->setParameter('hashTagName', $hashTagName);
+//            ->getQuery()
+//            ->getOneOrNullResult();
+    }
+
+    /**
+     * @param string $hashTagName
+     * @return BlogTopicHashTag[]
+     */
+    public function findByNameAll(string $hashTagName) : array
     {
         return $this->createQueryBuilder('h')
             ->where('h.name = :hashTagName')
             ->setParameter('hashTagName', $hashTagName)
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getResult();
     }
 
     // /**

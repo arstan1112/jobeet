@@ -8,7 +8,6 @@ use App\Entity\User;
 use App\Form\Admin\BlogType;
 use App\Form\Blog\TopicType;
 use App\Service\BlogHashTagChecker;
-use App\Service\BlogHashTagService;
 use App\Utils\HashTagsNormalizer;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
@@ -19,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class BlogController extends AbstractController
+class BlogTopicController extends AbstractController
 {
     /**
      * @var EntityManagerInterface
@@ -84,8 +83,8 @@ class BlogController extends AbstractController
      *     methods={"GET", "POST"},
      *     requirements={"id"="\d+"}
      *     )
-     * @param Request $request
-     * @param BlogTopic $topic
+     * @param Request            $request
+     * @param BlogTopic          $topic
      * @param BlogHashTagChecker $hashTagService
      *
      * @return Response

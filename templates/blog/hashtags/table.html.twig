@@ -3,7 +3,10 @@
         <div class="panel-heading">
             <div class="row">
                 <div class="col-md-6">{{ topic.name }}</div>
-                <div class="col-md-6 text-right">{{ topic.author }}</div>
+                <div class="col-md-6 text-right">
+                    {{ topic.author }}<br>
+                    {{ topic.createdat|date('d/m/y') }}
+                </div>
             </div>
         </div>
         <div class="panel-body">
