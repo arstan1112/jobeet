@@ -6,6 +6,7 @@ use App\Entity\BlogTopic;
 use App\Entity\BlogTopicHashTag;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query;
 
 /**
  * @method BlogTopic|null find($id, $lockMode = null, $lockVersion = null)
@@ -39,6 +40,31 @@ class BlogTopicRepository extends ServiceEntityRepository
         }
 
         return $qb;
+    }
+
+    public function findRecentTopicsByTag($tag = null)
+    {
+        return $this
+            ->createQueryBuilder('topic')
+            ->orderBy('topic.createdAt', 'DESC')
+            ->innerJoin('topic.blogTopicHashTags', 'tags')
+            ->where('tags.name = :name')
+            ->setParameter('name', $tag)
+            ->getQuery()
+    //                ->getResult(Query::HYDRATE_ARRAY);
+            ->getResult();
+
+//        if ($tag) {
+//            $qb
+//                ->innerJoin('topic.blogTopicHashTags', 'tags')
+//                ->where('tags.name = :name')
+//                ->setParameter('name', $tag)
+//                ->getQuery()
+//                ->getResult(Query::HYDRATE_ARRAY);
+//                ->getResult();
+//        }
+
+//        return $qb;
     }
 
     /**

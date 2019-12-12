@@ -9,6 +9,7 @@ use App\Form\JobType;
 use App\Service\FileUploader;
 use App\Service\JobSaveService;
 use Doctrine\ORM\NonUniqueResultException;
+use Exception;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use App\Entity\Jobs;
 use Doctrine\ORM\EntityManagerInterface;
@@ -77,12 +78,11 @@ class JobController extends AbstractFOSRestController
      * @param Affiliates $affiliate
      *
      * @return Response
-     * @throws \Exception
+     * @throws Exception
      */
-    public function getJobsAction(Affiliates $affiliate) : Response
-//    public function getJobsAction(EntityManagerInterface $em) : Response
+    public function getJobsAction(Affiliates $affiliate)
     {
-//        $jobs = $em->getRepository(Jobs::class)->findActiveJobs();
+//        $jobs = $this->em->getRepository(Jobs::class)->findActiveJobs();
         $jobs = $this->em->getRepository(Jobs::class)->findActiveJobsForAffiliate($affiliate);
 
         return $this->handleView($this->view($jobs, Response::HTTP_OK));
@@ -99,48 +99,49 @@ class JobController extends AbstractFOSRestController
      */
     public function postJobUpload(Request $request, JobSaveService $jobService, ValidatorInterface $validator)
     {
-//        $uploadApi = $this->serializer->deserialize(
-//            $request->getContent(),
-//            Jobs::class,
-//            'json'
-//        );
-//
-//        $errors = $validator->validate($uploadApi);
-//        if (count($errors) > 0) {
-//            $response = [];
-//            foreach ($errors as $error) {
-//                /** ConstraintViolation $error */
-//                $response[] = [
-//                    'name' => $error->getPropertyPath(),
-//                    'message' => $error->getMessage()
-//                ];
-//            }
-//            return $this->json([
-//                'status' => 'error',
-//                'errors' => $response,
-//            ], 400);
-//        }
-//
-//        $status = 201;
+        $uploadApi = $this->serializer->deserialize(
+            $request->getContent(),
+            Jobs::class,
+            'json'
+        );
+//        dump($uploadApi);
+//        dump($request->getContent());
+//        die();
 
-        try {
-//            $jobService->saveJob($uploadApi);
-
-//            $response = ['status' => 'success', 'message' => 'Entry success'];
-
-            throw new \Exception('test_message');
-
-        } catch (\Exception $e) {
-            $this->logger->info($e->getMessage());
-//            $status = 400;
-//            $response = [
-//                'status' => 'ErrorException',
-//                'message' => $e->getMessage(),
-//            ];
+        $errors = $validator->validate($uploadApi);
+        if (count($errors) > 0) {
+            $response = [];
+            foreach ($errors as $error) {
+                /** ConstraintViolation $error */
+                $response[] = [
+                    'name' => $error->getPropertyPath(),
+                    'message' => $error->getMessage()
+                ];
+            }
+            return $this->json([
+                'status' => 'error',
+                'errors' => $response,
+            ], 400);
         }
 
-//        return $this->json($response, $status);
+        $status = 201;
 
+        try {
+            $jobService->saveJob($uploadApi);
+//
+            $response = ['status' => 'success', 'message' => 'Entry success'];
+
+//            throw new \Exception('test_message');
+        } catch (Exception $e) {
+//            $this->logger->info($e->getMessage());
+            $status = 400;
+            $response = [
+                'status' => 'ErrorException',
+                'message' => $e->getMessage(),
+            ];
+        }
+
+        return $this->json($response, $status);
     }
 
 //    /**
@@ -175,5 +176,4 @@ class JobController extends AbstractFOSRestController
 //        ], 400);
 //
 //    }
-
 }

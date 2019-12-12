@@ -9,6 +9,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\NonUniqueResultException;
 use App\Entity\Affiliates;
+use Exception;
 
 /**
  * @method Jobs|null find($id, $lockMode = null, $lockVersion = null)
@@ -27,7 +28,7 @@ class JobsRepository extends ServiceEntityRepository
      * @param int|null $categoryId
      *
      * @return Jobs[]
-     * @throws \Exception
+     * @throws Exception
      */
     public function findActiveJobs(int $categoryId = null)
     {
@@ -70,7 +71,7 @@ class JobsRepository extends ServiceEntityRepository
      * @param Categories $category
      *
      * @return AbstractQuery
-     * @throws \Exception
+     * @throws Exception
      */
     public function getPaginatedActiveJobsByCategoryQuery(Categories $category) : AbstractQuery
     {
@@ -88,7 +89,7 @@ class JobsRepository extends ServiceEntityRepository
      * @param Affiliates $affiliate
      *
      * @return Jobs[]
-     * @throws \Exception
+     * @throws Exception
      */
     public function findActiveJobsForAffiliate(Affiliates $affiliate)
     {

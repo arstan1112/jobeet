@@ -16,12 +16,22 @@
 
 //require jquery normally
 var $ = require('jquery');
+// import $ from 'jquery';
 
 //create global $ and jquery variables
 global.$ =  global.jQuery = $;
 
 require('bootstrap');
+// import('bootstrap');
+
+require('./searchTag');
+// import searchTag from './searchTag';
+// import searchTag from "./searchTag";
+
 
 $(document).ready(function () {
     $(".dropdown-toggle").dropdown();
+    // console.log('console log from app.js');
 });
+
+

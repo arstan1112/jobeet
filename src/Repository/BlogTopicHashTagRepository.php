@@ -30,9 +30,9 @@ class BlogTopicHashTagRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('h')
             ->where('h.name = :hashTagName')
-            ->setParameter('hashTagName', $hashTagName);
-//            ->getQuery()
-//            ->getOneOrNullResult();
+            ->setParameter('hashTagName', $hashTagName)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
     /**

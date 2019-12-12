@@ -46,18 +46,17 @@ class BlogTopicCreator
         $checkedTags = $this->hashTagService->hashTagExist($hashTags);
 
         foreach ($checkedTags[0] as $newTag) {
+            dump('inforeach');
+            dump($newTag);
             $hashTagObj = new BlogTopicHashTag();
             $hashTagObj->setName($newTag);
             $hashTagObj->setCreatedAt(new \DateTime());
             $topic->addBlogTopicHashTag($hashTagObj);
+            dump($topic);
         };
         foreach ($checkedTags[1] as $existedTag) {
             $topic->addBlogTopicHashTag($existedTag);
         };
-
-        // 1 2 3
-        // 1 2 3 4
-        // 1 4 3
 
         $text         = $topic->getText();
         $api          = new TextRankFacade();

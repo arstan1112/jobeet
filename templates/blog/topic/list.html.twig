@@ -4,26 +4,16 @@
         <h2>{{'Blog'|trans}}</h2>
         {% include 'blog/hashtags/search.html.twig' %}
 
-   {#        {% include 'blog/topic/table.html.twig' with {#}
+{#        {% include 'blog/topic/table.html.twig' with {#}
 {#            'topics': topics|slice(0, max_jobs_on_homepage)#}
 {#        } only %}       #}
 
-        {% if data==0 %}
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-md-6">
-                            No results found
-                        </div>
-                    </div>
-                </div>
-            </div>
-        {% endif %}
+        <div class="topics-container">
+            {% include 'blog/topic/table.html.twig' with {'topics': topics} only %}
+{#            <div class="navigation text-center">#}
+{#                {{ knp_pagination_render(topics) }}#}
+{#            </div>#}
+        </div>
 
-        {% include 'blog/topic/table.html.twig' with {'topics': topics} only %}
-
-         <div class="navigation text-center">
-             {{ knp_pagination_render(topics) }}
-         </div>
 
 {% endblock %}

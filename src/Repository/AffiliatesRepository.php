@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Affiliates;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\NonUniqueResultException;
 
 //use Doctrine\ORM\EntityRepository;
 
@@ -27,7 +28,7 @@ class AffiliatesRepository extends ServiceEntityRepository
      * @param string $token
      *
      * @return Affiliates|null
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      */
     public function findOneActiveByToken(string $token) : ?Affiliates
     {

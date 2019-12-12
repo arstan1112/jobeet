@@ -118,36 +118,36 @@ class HashTagController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("blog/hashtag/search", name="blog.hashtag.search", methods={"GET", "POST"})
-     *
-     * @param Request $request
-     *
-     * @return Response
-     *
-     * @throws NonUniqueResultException
-     */
-    public function search(Request $request) : Response
-    {
-        $form = $this->createForm(HashTagSearchType::class);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $hashTag = $this->em->getRepository(BlogTopicHashTag::class)->findByName($form->getData()->getName());
-            if ($hashTag) {
-                return $this->redirectToRoute(
-                    'blog.hash.show',
-                    ['id' => $hashTag ->getId()]
-                );
-            } else {
-                return $this->render('error.html.twig', [
-                    'error_message' => 'Hash Tag not found',
-                ]);
-            }
-        }
-
-        return $this->render('blog/hashtags/search.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
+//    /**
+//     * @Route("blog/hashtag/search", name="blog.hashtag.search", methods={"GET", "POST"})
+//     *
+//     * @param Request $request
+//     *
+//     * @return Response
+//     *
+//     * @throws NonUniqueResultException
+//     */
+//    public function search(Request $request) : Response
+//    {
+//        $form = $this->createForm(HashTagSearchType::class);
+//        $form->handleRequest($request);
+//
+//        if ($form->isSubmitted() && $form->isValid()) {
+//            $hashTag = $this->em->getRepository(BlogTopicHashTag::class)->findByName($form->getData()->getName());
+//            if ($hashTag) {
+//                return $this->redirectToRoute(
+//                    'blog.hash.show',
+//                    ['id' => $hashTag ->getId()]
+//                );
+//            } else {
+//                return $this->render('error.html.twig', [
+//                    'error_message' => 'Hash Tag not found',
+//                ]);
+//            }
+//        }
+//
+//        return $this->render('blog/hashtags/search.html.twig', [
+//            'form' => $form->createView(),
+//        ]);
+//    }
 }
