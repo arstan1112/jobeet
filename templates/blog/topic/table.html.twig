@@ -46,6 +46,4 @@
         </div>
     </div>
 {% endfor %}
-<div class="navigation text-center">
-    {{ knp_pagination_render(topics) }}
-</div>
+{% include 'partials/pagination.html.twig' %}

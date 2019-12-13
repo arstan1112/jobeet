@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $('#searchInput').on('keyup', function (e) {
+    $('#searchInput').on('input', function (e) {
         let $this = $(this);
 
         // let value = $this.val();
@@ -10,8 +10,7 @@ $(document).ready(function () {
             return false;
         }
 
-        // $.post('/blog/ajax/list/'+$this.val())
-        $.post('/blog/ajax/list/'+value)
+        $.post('/blog/list/'+value)
             .then(function (response) {
                 $('.topics-container').html(response['content']);
             })
@@ -21,28 +20,26 @@ $(document).ready(function () {
                 $('.topics-container').html(response['message']);
             })
         ;
-        // $(".page-link").attr("href", "#");
     });
-    // $(".page-link").attr("href", "#");
 
-    $("#ajaxButton").on("click", function (event) {
-        let searchInput = $("#searchInput").val();
-
-        $.ajax({
-            url:        '/blog/ajax/list/'+searchInput,
-            type:       'POST',
-            dataType:   'json',
-            // async:      true,
-
-            success: function (data, status) {
-                console.log('ajax success');
-                console.log(searchInput);
-                // console.log(data.topics);
-                $("body").empty().append(data.list);
-            },
-            error : function (xhr, textStatus, errorThrown) {
-                console.log('ajax failed');
-            }
-        });
-    });
+    // $("#ajaxButton").on("click", function (event) {
+    //     let searchInput = $("#searchInput").val();
+    //
+    //     $.ajax({
+    //         url:        '/blog/ajax/list/'+searchInput,
+    //         type:       'POST',
+    //         dataType:   'json',
+    //         // async:      true,
+    //
+    //         success: function (data, status) {
+    //             console.log('ajax success');
+    //             console.log(searchInput);
+    //             // console.log(data.topics);
+    //             $("body").empty().append(data.list);
+    //         },
+    //         error : function (xhr, textStatus, errorThrown) {
+    //             console.log('ajax failed');
+    //         }
+    //     });
+    // });
 });

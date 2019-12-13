@@ -4,23 +4,24 @@
 namespace App\Controller\Blog;
 
 use App\Entity\BlogTopic;
-use App\Entity\BlogTopicHashTag;
-use App\Entity\User;
-use App\Form\Blog\HashTagSearchType;
+//use App\Entity\BlogTopicHashTag;
+//use App\Entity\User;
+//use App\Form\Blog\HashTagSearchType;
 use App\Form\Blog\TopicType;
 use App\Service\BlogTopicCreator;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\NonUniqueResultException;
+//use Doctrine\ORM\NonUniqueResultException;
 use Knp\Component\Pager\PaginatorInterface;
-use phpDocumentor\Reflection\DocBlock\Serializer;
-use phpDocumentor\Reflection\Types\This;
-use PhpScience\TextRank\TextRankFacade;
+//use phpDocumentor\Reflection\DocBlock\Serializer;
+//use phpDocumentor\Reflection\Types\This;
+//use PhpScience\TextRank\TextRankFacade;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use PhpScience\TextRank\Tool\StopWords\English;
-use App\Service\BlogHashTagChecker;
+
+//use PhpScience\TextRank\Tool\StopWords\English;
+//use App\Service\BlogHashTagChecker;
 
 class TopicController extends AbstractController
 {
@@ -28,136 +29,64 @@ class TopicController extends AbstractController
      * @var EntityManagerInterface
      */
     private $em;
+    /**
+     * @var PaginatorInterface
+     */
+    private $paginator;
 
     /**
      * @param EntityManagerInterface $em
+     * @param PaginatorInterface     $paginator
      */
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $em, PaginatorInterface $paginator)
     {
-        $this->em = $em;
-    }
-
-    /**
-     * @Route("/blog/list/{page}", name="blog.list", defaults={"page":1}, requirements={"page" = "\d+"})
-     * @param Request            $request
-     * @param PaginatorInterface $paginator
-     * @param int                $page
-     *
-     * @return Response
-     */
-    public function list(Request $request, PaginatorInterface $paginator, int $page) : Response
-    {
-        $searchTag = $request->query->get('search', null);
-        $topicQuery = $this
-            ->getDoctrine()
-            ->getRepository(BlogTopic::class)
-            ->findRecentTopics($searchTag);
-
-        $topics = $paginator->paginate(
-            $topicQuery,
-            $page,
-            //            $this->getParameter('max_per_page')
-            3
-        );
-
-        return $this->render('blog/topic/list.html.twig', [
-            'topics' => $topics,
-        ]);
+        $this->em        = $em;
+        $this->paginator = $paginator;
     }
 
     /**
      * @Route(
-     *     "/blog/ajax/list/{hashTag}/{page}",
-     *     name="blog.ajax.list",
-     *     methods={"GET", "POST"},
-     *     defaults={"hashTag":"", "page":1},
-     *     requirements={"hashTag" = "\w+", "page" = "\d+"}
+     *     "/blog/list/{hashTag}",
+     *     name     = "blog.list",
+     *     methods  = {"GET", "POST"},
+     *     defaults = {"hashTag":""},
      *     )
      * @param Request $request
-     * @param PaginatorInterface $paginator
      * @param string $hashTag
-     * @param int $page
      *
      * @return Response
      */
-
-    public function ajaxList(Request $request, PaginatorInterface $paginator, string $hashTag, int $page) : Response
+    public function list(Request $request, string $hashTag) : Response
     {
+        $topicQuery = $this
+            ->getDoctrine()
+            ->getRepository(BlogTopic::class)
+            ->findRecentTopics($hashTag);
+
+        $topics = $this->paginator->paginate(
+            $topicQuery,
+            $request->query->getInt('page', 1),
+            $this->getParameter('max_per_page')
+        );
+
         if ($request->isXmlHttpRequest()) {
-            $topicQuery = $this
-                ->getDoctrine()
-                ->getRepository(BlogTopic::class)
-                ->findRecentTopics($hashTag);
-
-            $topics = $paginator->paginate(
-                $topicQuery,
-                $page,
-                //            $this->getParameter('max_per_page')
-                3
-            );
-
             if (count($topics) === 0) {
                 return $this->json(['message' => 'No posts found.'], 500);
             }
 
-            $rendered = $this->renderView('blog/topic/_topics.html.twig', [
+            $rendered = $this->renderView('blog/topic/table.html.twig', [
                 'topics' => $topics,
             ]);
 
             return $this->json([
                 'content' => $rendered,
             ]);
-        } else {
-            $topicQuery = $this
-                ->getDoctrine()
-                ->getRepository(BlogTopic::class)
-                ->findRecentTopics($hashTag);
-
-            $topics = $paginator->paginate(
-                $topicQuery,
-                $page,
-                //            $this->getParameter('max_per_page')
-                3
-            );
-
-            return $this->render('blog/topic/list.html.twig', [
-                'topics' => $topics,
-            ]);
         }
-    }
 
-//    /**
-//     * @Route(
-//     *     "/blog/ajax/list/{hashTag}",
-//     *     name="blog.ajax.list",
-//     *     methods={"GET", "POST"},
-//     *     defaults={"hashTag":""},
-//     *     requirements={"hashTag" = "\w+"}
-//     *     )
-//     * @param Request $request
-//     * @param string $hashTag
-//     *
-//     * @return Response
-//     */
-//    public function ajaxList(Request $request, string $hashTag) : Response
-//    {
-//        $topics = $this
-//            ->em
-//            ->getRepository(BlogTopic::class)
-//            ->findRecentTopicsByTag($hashTag);
-//
-//        if (count($topics) === 0) {
-//            return $this->json(['message' => 'No posts found.'], 500);
-//        }
-//
-//        $rendered = $this->renderView('blog/topic/_topics.html.twig', [
-//            'topics' => $topics,
-//        ]);
-//
-//        return $this->json([
-//            'content' => $rendered,
-//        ]);
-//    }
+        return $this->render('blog/topic/list.html.twig', [
+            'topics' => $topics,
+        ]);
+    }
 
     /**
      * @Route(
@@ -192,7 +121,6 @@ class TopicController extends AbstractController
         $topic = new BlogTopic();
         $form  = $this->createForm(TopicType::class, $topic);
         $form->handleRequest($request);
-
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {

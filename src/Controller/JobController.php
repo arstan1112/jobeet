@@ -39,11 +39,6 @@ class JobController extends AbstractController implements VisitInterface
      */
     private $dispatcher;
 
-//    /**
-//     * @var Request
-//     */
-//    private $request;
-
     /**
      * JobController constructor.
      * @param EntityManagerInterface   $em
@@ -53,7 +48,6 @@ class JobController extends AbstractController implements VisitInterface
     {
         $this->em         = $em;
         $this->dispatcher = $dispatcher;
-//        $this->request    = $request;
     }
 
     /**
