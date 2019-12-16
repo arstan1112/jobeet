@@ -39,28 +39,28 @@
                 </div>
             </div>
 
-            {% include 'blog/comments/comments.html.twig' with {
-                'comments': topic.blogComment
-            } only %}
+            <div class="media" style="margin-top: 60px;">
+                <h2 class="media-heading">
+                    <strong>{{'Comments'|trans}}</strong><br>
+                </h2>
+                <br>
+                {% include 'blog/comments/input.html.twig' with {'topicId': topic.id} only %}
+            </div>
+            <div class="comments-container">
+                {% include 'blog/comments/comments.html.twig' with {
+                    'comments': topic.blogComment|slice(0, 5)
+                } only %}
+            </div>
 
-            {% if app.user %}
-                <div class="row">
-                    <div class="col-sm-12 text-right">
-                        <a class="btn btn-default" href="{{ path('blog.comment.create', {id: topic.id}) }}">
-                            {{'Add comment'|trans}}
-                        </a>
-                    </div>
+            <div class="row">
+                <div class="col-lg-6 col-lg-offset-3 text-center">
+                    <span style="display: none" class="glyphicon glyphicon-repeat" aria-hidden="true" id="spinner"></span>
                 </div>
-            {% else %}
-                <div class="row">
-                    <div class="col-sm-12 text-right">
-                        <a class="btn btn-default" href="{{ path('fos_user_security_login') }}">
-                            {{'Log in to leave a comment'|trans}}
-                        </a>
-                    </div>
-                </div>
-            {% endif %}
+            </div>
+            <br>
+            <br>
 
         </div>
     </div>
+
 {% endblock %}

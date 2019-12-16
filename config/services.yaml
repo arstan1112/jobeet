@@ -6,11 +6,12 @@
 parameters:
     locale: 'en'
     locales: ['en', 'ru']
+    max_per_page: 3
     max_jobs_on_homepage: 10
     max_jobs_on_category: 10
     jobs_directory: '%kernel.project_dir%/public/uploads/jobs'
     jobs_web_directory: '/uploads/jobs'
-    max_per_page: 3
+
 
 services:
     # default configuration for services in *this* file

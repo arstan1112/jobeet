@@ -21,17 +21,17 @@ class BlogTopicCreator
     /**
      * @var BlogHashTagChecker
      */
-    private $hashTagService;
+    private $hashTagChecker;
 
     /**
      * BlogTopicCreator constructor.
      * @param EntityManagerInterface $em
-     * @param BlogHashTagChecker     $hashTagService
+     * @param BlogHashTagChecker     $hashTagChecker
      */
-    public function __construct(EntityManagerInterface $em, BlogHashTagChecker $hashTagService)
+    public function __construct(EntityManagerInterface $em, BlogHashTagChecker $hashTagChecker)
     {
         $this->em             = $em;
-        $this->hashTagService = $hashTagService;
+        $this->hashTagChecker = $hashTagChecker;
     }
 
     /**
@@ -43,16 +43,13 @@ class BlogTopicCreator
     public function create(BlogTopic $topic, User $user)
     {
         $hashTags    = $topic->getHash();
-        $checkedTags = $this->hashTagService->hashTagExist($hashTags);
+        $checkedTags = $this->hashTagChecker->hashTagExist($hashTags);
 
         foreach ($checkedTags[0] as $newTag) {
-            dump('inforeach');
-            dump($newTag);
             $hashTagObj = new BlogTopicHashTag();
             $hashTagObj->setName($newTag);
             $hashTagObj->setCreatedAt(new \DateTime());
             $topic->addBlogTopicHashTag($hashTagObj);
-            dump($topic);
         };
         foreach ($checkedTags[1] as $existedTag) {
             $topic->addBlogTopicHashTag($existedTag);

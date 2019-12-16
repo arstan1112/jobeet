@@ -52,7 +52,7 @@ class TopicController extends AbstractController
      *     defaults = {"hashTag":""},
      *     )
      * @param Request $request
-     * @param string $hashTag
+     * @param string  $hashTag
      *
      * @return Response
      */
@@ -91,10 +91,10 @@ class TopicController extends AbstractController
     /**
      * @Route(
      *     "/blog/{id}/{hashTagId}",
-     *     name         ="blog.show",
-     *     methods      ="GET",
-     *     requirements ={"id" = "\d+"},
-     *     defaults     ={"id":1, "hashTagId":0}
+     *     name         = "blog.show",
+     *     methods      = "GET",
+     *     requirements = {"id" = "\d+"},
+     *     defaults     = {"id":1, "hashTagId":0}
      *     )
      * @param  BlogTopic $blogTopic
      * @param  int       $hashTagId

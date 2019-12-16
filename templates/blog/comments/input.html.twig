@@ -1,0 +1,22 @@
+<form method="post">
+    <div class="form-group">
+        <label for="commentInput"></label>
+        <textarea class="form-control" placeholder="Enter comment here..." name="comment" id="commentInput"></textarea><br>
+        <input type="hidden" id="topicId" value="{{ topicId }}">
+
+        {% if app.user %}
+            <input type="button" class="btn btn-default pull-right" id="commentButton" value="{{ 'Add comment'|trans }}">
+        {% else %}
+            <div class="row">
+                <div class="col-sm-12 text-right">
+                    <a class="btn btn-default" href="{{ path('fos_user_security_login') }}">
+                        {{'Log in to leave a comment'|trans}}
+                    </a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</form>
+<br>
+<br>
+{{ encore_entry_script_tags('commentType') }}

@@ -19,6 +19,30 @@ class BlogCommentRepository extends ServiceEntityRepository
         parent::__construct($registry, BlogComment::class);
     }
 
+    /**
+     * @param int $id
+     * @param null $counter
+     * @return BlogComment[] Returns an array of BlogComment objects
+     */
+    public function findByTopicId(int $id, $counter = null)
+    {
+        if ($counter) {
+            $offset = $counter;
+        } else {
+            $offset = 0;
+        }
+        return $this
+            ->createQueryBuilder('b')
+            ->innerJoin('b.blogTopic', 'topic')
+            ->where('topic.id = :id')
+            ->setParameter('id', $id)
+            ->orderBy('b.createdAt', 'DESC')
+            ->setMaxResults(5)
+            ->setFirstResult($offset)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return BlogComment[] Returns an array of BlogComment objects
     //  */
