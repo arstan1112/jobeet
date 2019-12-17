@@ -35,7 +35,7 @@ class BlogHashTagChecker
     public function hashTagExist(array $hashTag) : array
     {
 //        $hashes = HashTagsNormalizer::normalize($hashTag);
-        $hashes = $hashTag;
+        $hashes = HashTagsNormalizer::normalizeArray($hashTag);
         $checkedTags = [];
         $newTags     = [];
         $existedTags = [];
