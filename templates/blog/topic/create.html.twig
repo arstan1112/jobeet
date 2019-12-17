@@ -1,5 +1,9 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
+{% endblock %}
+
 {% block body %}
     <h1>{{'Create new topic'|trans}}</h1>
 
@@ -20,4 +24,13 @@
             </a>
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
+    <script>
+        $(".select2-example").select2({
+            tags: true
+        });
+    </script>
 {% endblock %}

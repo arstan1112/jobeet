@@ -7,6 +7,7 @@ use App\Entity\BlogTopicHashTag;
 use App\Utils\HashTagsNormalizer;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
+use phpDocumentor\Reflection\Types\Mixed_;
 
 class BlogHashTagChecker
 {
@@ -25,13 +26,16 @@ class BlogHashTagChecker
     }
 
     /**
-     * @param string $hashTag
+     * @param array $hashTag
      * @return array
      * @throws NonUniqueResultException
      */
-    public function hashTagExist(string $hashTag) : array
+
+//    public function hashTagExist(mixed $hashTag) : array
+    public function hashTagExist(array $hashTag) : array
     {
-        $hashes = HashTagsNormalizer::normalize($hashTag);
+//        $hashes = HashTagsNormalizer::normalize($hashTag);
+        $hashes = $hashTag;
         $checkedTags = [];
         $newTags     = [];
         $existedTags = [];

@@ -8,6 +8,7 @@ use App\Entity\BlogTopicHashTag;
 use App\Utils\HashTagsNormalizer;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -23,6 +24,12 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class TopicType extends AbstractType
 {
+
+    /**
+     * @var
+     */
+    private $tags;
+
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -43,23 +50,30 @@ class TopicType extends AbstractType
                     new NotBlank(),
                 ]
             ])
-            ->add('hash', TextType::class, [
-//            ->add('blogTopicHashTags', TextType::class, [
-                'label'       => 'HashTag',
-                'constraints' => [
-                    new NotBlank(),
-                    new Regex('/^#/'),
-                    new Length(['max' => 100]),
-                    new Callback([$this, 'validateHashTags'])
+
+//            ->add('hash', TextType::class, [
+//                'label'       => 'HashTag',
+//                'constraints' => [
+//                    new NotBlank(),
+//                    new Regex('/^#/'),
+//                    new Length(['max' => 100]),
+//                    new Callback([$this, 'validateHashTags'])
+//                ]
+//            ])
+
+            ->add('hash', ChoiceType::class, [
+                'choices'  => [],
+                'mapped' => false,
+                'multiple' => true,
+                'attr' => [
+                    'class' => 'select2-example'
                 ]
             ]);
-
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
             /** @var BlogTopic $data */
             $data = $event->getData();
             $tags = '';
-
             foreach ($data->getBlogTopicHashTags()->toArray() as $tag) {
                 $tags .= "#{$tag->getName()} ";
             }
@@ -67,57 +81,24 @@ class TopicType extends AbstractType
             $data->setHash($tags);
         });
 
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+        /** @var BlogTopic $data */
+            $data  = $event->getData();
+            $topic = $event->getForm()->getData();
+            $form  = $event->getForm();
 
-//        $builder->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) {
-//            /** @var BlogTopic $data */
-//            $data = $event->getData();
-//            $form = $event->getForm();
-//
-//            $tags = $data->getHash();
-//            $tags = HashTagsNormalizer::normalize($tags);
-//            dump($tags);
-////            dump($data->getBlogTopicHashTags()->toArray());
-//            $missing = [];
-////            $existedTags = $data->getBlogTopicHashTags()->getValues()->toArray();
-////            $existedTags = $data->getBlogTopicHashTags()->getValues();
-////            $existedTags = $data->getBlogTopicHashTags()->toArray();
-////            dump($existedTags);
-////            foreach ($existedTags as $existedTag) {
-////                $ab = $existedTags->getName();
-////                dump($ab);
-////            }
-//            $old = [];
-//            foreach ($data->getBlogTopicHashTags()->toArray() as $blogTopicTag) {
-////            foreach ($tags as $submittedTag) {
-////                dump($blogTopicTag->getName());
-//                $old[] = $blogTopicTag->getName();
-//
-//            }
-////            dump($missing);
-//            dump($old);
-//            $existing = [];
-//            foreach ($tags as $tag) {
-//                if (in_array($tag, $old)) {
-////                    $blogTopicTag->getName();
-////                    dump($blogTopicTag->getName());
-//                    $existing[] = $tag;
-//                }
-//            }
-//            dump($existing);
-////            $data->addBlogTopicHashTag();
-////            dump($data);
-////            die();
-//
-//            $tags = $data->getBlogTopicHashTags()->filter(function ($hash) use ($tags) {
-//
-//                dump($hash->getName());
-//                dump($tags);
-//            });
-//
-//            dump($tags);
-//            dump($data->getBlogTopicHashTags()->toArray());
-//            die;
-//        });
+            $topic->setHash($data['hash']);
+
+            $form->add('hash', ChoiceType::class, [
+                'choices'  => [$data['hash']],
+                'mapped' => false,
+                'multiple' => true,
+                'empty_data' => $data['hash'],
+                'attr' => [
+                    'class' => 'select2-example'
+                ]
+            ]);
+        });
     }
 
     public function validateHashTags($hashTag, ExecutionContextInterface $context)
