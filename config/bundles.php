@@ -23,5 +23,5 @@ return [
     Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle::class => ['all' => true],
     Gesdinet\JWTRefreshTokenBundle\GesdinetJWTRefreshTokenBundle::class => ['all' => true],
     FOS\UserBundle\FOSUserBundle::class => ['all' => true],
-//    App\Bundles\BlogBundle\BlogBundle::class => ['all' => true],
+    Stfalcon\Bundle\TinymceBundle\StfalconTinymceBundle::class => ['all' => true],
 ];

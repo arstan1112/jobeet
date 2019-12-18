@@ -46,6 +46,10 @@ class TopicType extends AbstractType
             ])
             ->add('text', TextareaType::class, [
                 'label'       => 'Text',
+                'attr' => [
+                    'class' => 'tinymce',
+                    'data-theme' => 'bbcode'
+                ],
                 'constraints' => [
                     new NotBlank(),
                 ]
@@ -87,13 +91,44 @@ class TopicType extends AbstractType
             $topic = $event->getForm()->getData();
             $form  = $event->getForm();
 
-            $topic->setHash($data['hash']);
+            if (!(isset($data['hash']))) {
+                $data['hash'] = "";
+            }
+
+            if ($data['hash']) {
+                $topic->setHash($data['hash']);
+            }
 
             $form->add('hash', ChoiceType::class, [
                 'choices'  => [$data['hash']],
                 'mapped' => false,
                 'multiple' => true,
                 'empty_data' => $data['hash'],
+                'attr' => [
+                    'class' => 'select2-example'
+                ]
+            ]);
+        });
+
+        $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
+        /** @var BlogTopic $data */
+            $data  = $event->getData();
+            $form  = $event->getForm();
+
+            $tags = [];
+            if (is_array($data->getHash())) {
+                foreach ($data->getHash() as $tag) {
+                    $tags[$tag] = $tag;
+                }
+            } else {
+                $tags[$data->getHash()] = $data->getHash();
+            }
+
+            $form->add('hash', ChoiceType::class, [
+                'choices'  => $tags,
+                'mapped' => false,
+                'multiple' => true,
+                'empty_data' => 'yes',
                 'attr' => [
                     'class' => 'select2-example'
                 ]

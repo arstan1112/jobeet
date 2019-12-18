@@ -26,6 +26,7 @@ Encore
     .addEntry('app', './assets/js/app.js')
     .addEntry('searchTag', './assets/js/searchTag.js')
     .addEntry('commentType', './assets/js/commentType.js')
+    .addEntry('topicCreate', './assets/js/topicCreate.js')
     //.addEntry('page2', './assets/js/page2.js')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.

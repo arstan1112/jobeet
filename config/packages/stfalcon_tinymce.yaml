@@ -1,0 +1,21 @@
+stfalcon_tinymce:
+  include_jquery: true
+  tinymce_jquery: true
+  selector: ".tinymce"
+  language: "%locale%"
+#  use_callback_tinymce_init: true
+  tinymce_buttons:
+    stfalcon: # Id of the first button
+      title: "Stfalcon"
+      image: "http://stfalcon.com/favicon.ico"
+    hello_world: # Id of the second button
+      title: "Google"
+      image: "http://google.com/favicon.ico"
+#      image: "asset[bundles/somebundle/images/icon.ico]"
+  theme:
+    simple:
+      theme: "modern"
+#      content_css: "asset[css/app.css]"
+#      toolbar1: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+#      toolbar2: "print preview media | forecolor backcolor emoticons | stfalcon | hello_world"
+#      content_css: "asset[css/app.css]"
