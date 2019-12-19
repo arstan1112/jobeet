@@ -21,7 +21,8 @@
                 </div>
             </div>
 
-            <p>{{ topic.text|nl2br }}</p>
+{#                {{ topic.text|nl2br }}#}
+                {{ topic.text|raw }}
 
             <div class="row">
                 <div class="col-sm-12 text-right">

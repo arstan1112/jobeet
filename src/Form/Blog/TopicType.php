@@ -45,10 +45,9 @@ class TopicType extends AbstractType
                 ]
             ])
             ->add('text', TextareaType::class, [
-                'label'       => 'Text',
-                'attr' => [
+                'label' => 'Text',
+                'attr'  => [
                     'class' => 'tinymce',
-                    'data-theme' => 'bbcode'
                 ],
                 'constraints' => [
                     new NotBlank(),
@@ -67,47 +66,33 @@ class TopicType extends AbstractType
 
             ->add('hash', ChoiceType::class, [
                 'choices'  => [],
-                'mapped' => false,
                 'multiple' => true,
                 'attr' => [
                     'class' => 'select2-example'
                 ]
             ]);
 
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
-            /** @var BlogTopic $data */
-            $data = $event->getData();
-            $tags = '';
-            foreach ($data->getBlogTopicHashTags()->toArray() as $tag) {
-                $tags .= "#{$tag->getName()} ";
-            }
-
-            $data->setHash($tags);
-        });
+//        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+//            /** @var BlogTopic $data */
+//            $data = $event->getData();
+//            $tags = '';
+//            foreach ($data->getBlogTopicHashTags()->toArray() as $tag) {
+//                $tags .= "#{$tag->getName()} ";
+//            }
+//
+//            $data->setHash($tags);
+//        });
 
         $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
         /** @var BlogTopic $data */
             $data  = $event->getData();
             $topic = $event->getForm()->getData();
-            $form  = $event->getForm();
 
             if (!(isset($data['hash']))) {
                 $data['hash'] = "";
             }
 
-            if ($data['hash']) {
-                $topic->setHash($data['hash']);
-            }
-
-            $form->add('hash', ChoiceType::class, [
-                'choices'  => [$data['hash']],
-                'mapped' => false,
-                'multiple' => true,
-                'empty_data' => $data['hash'],
-                'attr' => [
-                    'class' => 'select2-example'
-                ]
-            ]);
+            $topic->setHash($data['hash']);
         });
 
         $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
@@ -126,9 +111,8 @@ class TopicType extends AbstractType
 
             $form->add('hash', ChoiceType::class, [
                 'choices'  => $tags,
-                'mapped' => false,
                 'multiple' => true,
-                'empty_data' => 'yes',
+                'empty_data' => $tags,
                 'attr' => [
                     'class' => 'select2-example'
                 ]
@@ -136,17 +120,16 @@ class TopicType extends AbstractType
         });
     }
 
-    public function validateHashTags($hashTag, ExecutionContextInterface $context)
-    {
-        $hashes = HashTagsNormalizer::normalize($hashTag);
-
-        if (count($hashes) > BlogTopic::HASH_TAGS_LIMIT) {
-            $context
-                ->buildViolation("Too many tags.")
-                ->atPath('hash')
-                ->addViolation();
-        }
-    }
+//    public function validateHashTags($hashTag, ExecutionContextInterface $context)
+//    {
+//        $hashes = HashTagsNormalizer::normalizeArray($hashTag);
+//        if (count($hashes) > BlogTopic::HASH_TAGS_LIMIT) {
+//            $context
+//                ->buildViolation("Too many tags.")
+//                ->atPath('hash')
+//                ->addViolation();
+//        }
+//    }
 
     public function configureOptions(OptionsResolver $resolver)
     {

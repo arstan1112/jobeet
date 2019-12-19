@@ -2,9 +2,12 @@
 
 namespace App\Entity;
 
+use App\Utils\HashTagsNormalizer;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\BlogTopicRepository")
@@ -12,7 +15,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class BlogTopic
 {
-    const HASH_TAGS_LIMIT = 10;
+    const HASH_TAGS_LIMIT      = 3;
+    const HASH_TAGS_CHAR_LIMIT = 10;
 
     /**
      * @ORM\Id()
@@ -66,6 +70,7 @@ class BlogTopic
 
     /**
      * @var
+     * @Assert\NotBlank(message="Hash tag connot be blank")
      */
     private $hash;
 
@@ -287,4 +292,29 @@ class BlogTopic
 //
 //        return $this;
 //    }
+
+    /**
+     * @param ExecutionContextInterface $context
+     *
+     * @Assert\Callback()
+     */
+    public function validateHashTags(ExecutionContextInterface $context)
+    {
+        $hashes = HashTagsNormalizer::normalizeArray($this->hash);
+        if (count($hashes) > BlogTopic::HASH_TAGS_LIMIT) {
+            $context
+                ->buildViolation("Too many tags. Less than 3 is allowed")
+                ->atPath('hash')
+                ->addViolation();
+        }
+
+        foreach ($hashes as $hash) {
+            if (strlen($hash) > BlogTopic::HASH_TAGS_CHAR_LIMIT) {
+                $context
+                    ->buildViolation("Hash tag length cannot be more than 10 characters")
+                    ->atPath('hash')
+                    ->addViolation();
+            }
+        }
+    }
 }

@@ -25,6 +25,14 @@ class BlogTopicRepository extends ServiceEntityRepository
         parent::__construct($registry, BlogTopic::class);
     }
 
+    public function findAllDesc()
+    {
+        return $this
+            ->createQueryBuilder('topic')
+            ->orderBy('topic.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 
     public function findRecentTopics($tag = null)
     {
@@ -51,7 +59,6 @@ class BlogTopicRepository extends ServiceEntityRepository
             ->where('tags.name = :name')
             ->setParameter('name', $tag)
             ->getQuery()
-    //                ->getResult(Query::HYDRATE_ARRAY);
             ->getResult();
 
 //        if ($tag) {

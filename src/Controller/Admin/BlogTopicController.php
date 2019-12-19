@@ -40,8 +40,7 @@ class BlogTopicController extends AbstractController
      */
     public function list() : Response
     {
-        $topics = $this->em->getRepository(BlogTopic::class)->findAll();
-
+        $topics = $this->em->getRepository(BlogTopic::class)->findAllDesc();
         return $this->render('admin/blog/list.html.twig', [
             'topics' => $topics,
         ]);

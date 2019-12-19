@@ -55,9 +55,12 @@ class BlogTopicCreator
             $topic->addBlogTopicHashTag($existedTag);
         };
 
-        $text         = $topic->getText();
+        $content = strip_tags($topic->getText());
+        $content = str_replace("\n", "", $content);
+        $content = str_replace("\r", "", $content);
+        $content = preg_replace("/&nbsp;/", '', $content);
         $api          = new TextRankFacade();
-        $summaryArray = $api->summarizeTextBasic($text);
+        $summaryArray = $api->summarizeTextBasic($content);
         $summary      = implode("", $summaryArray);
 
         $topic->setAuthor($user);

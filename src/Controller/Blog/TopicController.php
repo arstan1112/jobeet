@@ -122,10 +122,7 @@ class TopicController extends AbstractController
         $form  = $this->createForm(TopicType::class, $topic);
         $form->handleRequest($request);
 
-
         if ($form->isSubmitted() && $form->isValid()) {
-//            dump($topic);
-//            die();
             try {
                 $user = $this->getUser();
 

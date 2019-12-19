@@ -25,7 +25,7 @@ require('bootstrap');
 // import('bootstrap');
 
 require('./searchTag');
-require('./topicCreate');
+// require('./topicCreate');
 // import searchTag from './searchTag';
 // import searchTag from "./searchTag";
 
