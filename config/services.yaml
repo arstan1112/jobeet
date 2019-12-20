@@ -10,7 +10,9 @@ parameters:
     max_jobs_on_homepage: 10
     max_jobs_on_category: 10
     jobs_directory: '%kernel.project_dir%/public/uploads/jobs'
+    blog_directory: '%kernel.project_dir%/public/uploads/blog'
     jobs_web_directory: '/uploads/jobs'
+    blog_web_directory: '/uploads/blog'
 
 
 services:
@@ -36,6 +38,7 @@ services:
     App\Service\FileUploader:
         arguments:
             $targetDirectory: '%jobs_directory%'
+            $blogDirectory: '%blog_directory%'
 
     App\Service\JobSaveService:
         arguments:

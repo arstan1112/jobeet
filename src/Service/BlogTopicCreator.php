@@ -8,8 +8,6 @@ use App\Entity\BlogTopicHashTag;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
-use PhpScience\TextRank\TextRankFacade;
-use PhpScience\TextRank\Tool\StopWords\English;
 
 class BlogTopicCreator
 {
@@ -24,14 +22,24 @@ class BlogTopicCreator
     private $hashTagChecker;
 
     /**
+     * @var TextSummarizer
+     */
+    private $summarizer;
+
+    /**
      * BlogTopicCreator constructor.
      * @param EntityManagerInterface $em
      * @param BlogHashTagChecker     $hashTagChecker
+     * @param TextSummarizer         $summarizer
      */
-    public function __construct(EntityManagerInterface $em, BlogHashTagChecker $hashTagChecker)
-    {
+    public function __construct(
+        EntityManagerInterface $em,
+        BlogHashTagChecker     $hashTagChecker,
+        TextSummarizer         $summarizer
+    ) {
         $this->em             = $em;
         $this->hashTagChecker = $hashTagChecker;
+        $this->summarizer     = $summarizer;
     }
 
     /**
@@ -49,19 +57,14 @@ class BlogTopicCreator
             $hashTagObj = new BlogTopicHashTag();
             $hashTagObj->setName($newTag);
             $hashTagObj->setCreatedAt(new \DateTime());
+
             $topic->addBlogTopicHashTag($hashTagObj);
         };
         foreach ($checkedTags[1] as $existedTag) {
             $topic->addBlogTopicHashTag($existedTag);
         };
 
-        $content = strip_tags($topic->getText());
-        $content = str_replace("\n", "", $content);
-        $content = str_replace("\r", "", $content);
-        $content = preg_replace("/&nbsp;/", '', $content);
-        $api          = new TextRankFacade();
-        $summaryArray = $api->summarizeTextBasic($content);
-        $summary      = implode("", $summaryArray);
+        $summary = $this->summarizer->summarize($topic);
 
         $topic->setAuthor($user);
         $topic->setSummary($summary);

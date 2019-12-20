@@ -30,9 +30,22 @@
             </div>
         </div>
         <div class="panel-body">
-            <div>
-                {{ topic.summary }}
+            <div class="row">
+                <div class="col-md-10">
+                    <div>
+                        {{ topic.summary }}
+                    </div>
+                </div>
+
+                <div class="col-md-2 text-right">
+                    {% for image in topic.blogImages %}
+                        <img class="media-object" style="width:100px; height:100px;" src="{{ asset(blog_web_directory ~ '/' ~ image.name) }}">
+                        <br>
+                    {% endfor %}
+                </div>
             </div>
+
+
             <br>
             {% for hashTag in topic.blogTopicHashTags %}
                 <a href="{{ path('blog.hash.show', {id:hashTag.id}) }}">

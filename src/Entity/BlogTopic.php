@@ -74,10 +74,16 @@ class BlogTopic
      */
     private $hash;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\BlogImage", mappedBy="topicId", orphanRemoval=true, cascade={"persist"})
+     */
+    private $blogImages;
+
     public function __construct()
     {
         $this->blogComment       = new ArrayCollection();
         $this->blogTopicHashTags = new ArrayCollection();
+        $this->blogImages        = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -316,5 +322,36 @@ class BlogTopic
                     ->addViolation();
             }
         }
+    }
+
+    /**
+     * @return Collection|BlogImage[]
+     */
+    public function getBlogImages(): Collection
+    {
+        return $this->blogImages;
+    }
+
+    public function addBlogImage(BlogImage $blogImage): self
+    {
+        if (!$this->blogImages->contains($blogImage)) {
+            $this->blogImages[] = $blogImage;
+            $blogImage->setTopicId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBlogImage(BlogImage $blogImage): self
+    {
+        if ($this->blogImages->contains($blogImage)) {
+            $this->blogImages->removeElement($blogImage);
+            // set the owning side to null (unless already changed)
+            if ($blogImage->getTopicId() === $this) {
+                $blogImage->setTopicId(null);
+            }
+        }
+
+        return $this;
     }
 }
