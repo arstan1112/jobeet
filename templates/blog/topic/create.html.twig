@@ -2,7 +2,7 @@
 
 {% block stylesheets %}
     <link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
-    {{ encore_entry_link_tags('app') }}
+{#    {{ encore_entry_link_tags('app') }}#}
 {% endblock %}
 
 {% block body %}
@@ -29,13 +29,16 @@
 
 {% block javascripts %}
 
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
+{#    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>#}
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.5.6/tinymce.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/tinymce/4.5.6/jquery.tinymce.min.js"></script>
 
-{#    <script>#}
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
+
+
+    {#    <script>#}
 {#        window.onsubmit = function() {#}
 {#            tinymce.activeEditor.selection.select(tinymce.activeEditor.dom.select('p')[0]);#}
 {#            alert(tinymce.activeEditor.selection.getContent());#}
@@ -43,16 +46,20 @@
 {#            form.addEventListener('submit', alert('submitted tinymce'));#}
 {#        };#}
 {#    </script>#}
-
     <script>
+        $(document).ready(function () {
+            $(".select2-example").select2({
+                tags: true
+            });
+        });
+    </script>
 
-      </script>
+{#    {{ encore_entry_script_tags('hashTagAdd') }}#}
 
 {#    {{ tinymce_init() }};#}
 
     {{ encore_entry_script_tags('tinyMCE') }}
 
-    {{ encore_entry_script_tags('hashTagAdd') }}
 
 {% endblock %}
 

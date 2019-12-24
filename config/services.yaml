@@ -11,8 +11,9 @@ parameters:
     max_jobs_on_category: 10
     jobs_directory: '%kernel.project_dir%/public/uploads/jobs'
     blog_directory: '%kernel.project_dir%/public/uploads/blog'
-    jobs_web_directory: '/uploads/jobs'
-    blog_web_directory: '/uploads/blog'
+    jobs_web_directory:  '/uploads/jobs'
+    blog_web_directory:  '/uploads/blog'
+    utils_web_directory: '/uploads/utils'
 
 
 services:

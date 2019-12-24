@@ -25,14 +25,15 @@ require('bootstrap');
 // import('bootstrap');
 
 require('./searchTag');
+// require('./tinyMCE');
+// require('./hashTagAdd');
 // require('./topicCreate');
 // import searchTag from './searchTag';
 // import searchTag from "./searchTag";
 
-
 $(document).ready(function () {
     $(".dropdown-toggle").dropdown();
-    // console.log('console log from app.js');
+    console.log('console log from app.js');
 });
 
 

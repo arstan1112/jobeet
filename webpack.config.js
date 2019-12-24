@@ -28,6 +28,8 @@ Encore
     .addEntry('commentType', './assets/js/commentType.js')
     .addEntry('tinyMCE', './assets/js/tinyMCE.js')
     .addEntry('hashTagAdd', './assets/js/hashTagAdd.js')
+    .addEntry('slider', './assets/js/slider.js')
+
     //.addEntry('page2', './assets/js/page2.js')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
