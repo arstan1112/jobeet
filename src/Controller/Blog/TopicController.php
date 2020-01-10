@@ -69,6 +69,8 @@ class TopicController extends AbstractController
      */
     public function list(Request $request, string $hashTag) : Response
     {
+//        dump($GLOBALS);
+//        die();
         $topicQuery = $this
             ->getDoctrine()
             ->getRepository(BlogTopic::class)

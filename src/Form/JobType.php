@@ -13,6 +13,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
@@ -116,6 +118,17 @@ class JobType extends AbstractType
                     new Length(['max' => 255]),
                 ]
             ]);
+
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+            /** @var Jobs $data */
+            $data  = $event->getData();
+            $job = $event->getForm()->getData();
+            $job->setLogodata($job->getLogo()->getFilename());
+            $job->setLogoname($job->getLogo()->getFilename());
+
+            dump($job);
+//            die();
+        });
     }
 
     /**

@@ -5,8 +5,10 @@
 {% endblock %}
 
 {% block body %}
-
     <h2>{{'Blog'|trans}}</h2>
+    {% for hash in topic.blogTopicHashTags %}
+        <a href="{{ path('blog.hash.show', {id: hash.id}) }}" style="font-size: 20px">#{{ hash.name }}</a>
+    {% endfor %}
 
     <div class="media" style="margin-top: 60px;">
         <div class="media-body">
@@ -25,47 +27,41 @@
                 </div>
             </div>
 
-{#                {{ topic.text|nl2br }}#}
-              <div>
-                  {{ topic.text|raw }}
-              </div>
-
-            {#                  <img id="Next" src="{{ asset(utils_web_directory ~ '/' ~ 'right.png') }}"#}
-            <br>
-            <br>
             <div class="row">
                 <div class="col-sm-12">
-                    <!-- Slideshow container -->
                     <div class="slideshow-container">
-                        {% set counter = 0 %}
+                        {#                        {% set counter = 0 %}#}
                         {% for image in topic.blogImages %}
-                        <!-- Full-width images with number and caption text -->
-                        <div class="mySlides fade">
-                            {#                                                <div class="numbertext">1 / 3</div>#}
-{#                            <img class="media-object" src="{{ asset(blog_web_directory ~ '/' ~ image.name) }}">#}
-                            <img src="{{ asset(blog_web_directory ~ '/' ~ image.name) }}">
-                            {#                                                <div class="text">Caption Text</div>#}
-                        </div>
-                        <!-- Next and previous buttons -->
-{#                                                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>#}
-{#                                                <a class="prev">&#10094;</a>#}
-{#                                                <a class="next" onclick="plusSlides(1)">&#10095;</a>#}
-{#                                                <a class="next"">&#10095;</a>#}
-
-                    {% endfor %}
+                            <div class="mySlides fade">
+                                <img src="{{ asset(blog_web_directory ~ '/' ~ image.name) }}">
+                            </div>
+                            <a style="text-decoration: none;" class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                            <a style="text-decoration: none;" class="prev">&#10094;</a>
+                            <a style="text-decoration: none;" class="next" onclick="plusSlides(1)">&#10095;</a>
+                            <a style="text-decoration: none;" class="next">&#10095;</a>
+                        {% endfor %}
                     </div>
                     <br>
 
-                    <!-- The dots/circles -->
                     <div style="text-align:center">
                         {% for image in topic.blogImages %}
-                            {% set counter = counter + 1 %}
-                            <span class="dot" onclick="currentSlide({{ counter }})"></span>
+                            {#                            {% set counter = counter + 1 %}#}
+                            {#                            <span class="dot" onclick="currentSlide({{ counter }})"></span>#}
+                            <span class="dot"></span>
                         {% endfor %}
                     </div>
 
                 </div>
             </div>
+
+              <div>
+{#                {{ topic.text|nl2br }}#}
+                  {{ topic.text|raw }}
+              </div>
+
+            <br>
+            <br>
+
             <br>
             <br>
 
@@ -98,11 +94,6 @@
                 } only %}
             </div>
 
-            <div class="row">
-                <div class="col-lg-6 col-lg-offset-3 text-center">
-                    <span style="display: none" class="glyphicon glyphicon-repeat" aria-hidden="true" id="spinner"></span>
-                </div>
-            </div>
             <br>
             <br>
 

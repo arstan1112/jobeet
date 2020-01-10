@@ -8,10 +8,12 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\BlogTopicRepository")
  * @ORM\HasLifecycleCallbacks()
+ * @JMS\ExclusionPolicy("all")
  */
 class BlogTopic
 {
@@ -22,27 +24,37 @@ class BlogTopic
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @JMS\Expose()
+     * @JMS\Type("int")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @JMS\Expose()
+     * @JMS\Type("string")
      */
     private $name;
 
     /**
      * @ORM\Column(type="text")
+     * @JMS\Expose()
+     * @JMS\Type("string")
      */
     private $text;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="blogTopic", cascade={"persist", "persist"})
      * @ORM\JoinColumn(nullable=false)
+     * @JMS\Expose()
+     * @JMS\Type("string")
      */
     private $author;
 
     /**
      * @ORM\Column(type="datetime")
+     * @JMS\Expose()
+     * @JMS\Type("DateTime")
      */
     private $createdAt;
 
@@ -60,6 +72,8 @@ class BlogTopic
     /**
      * @var
      * @ORM\Column(type="text")
+     * @JMS\Expose()
+     * @JMS\Type("string")
      */
     private $summary;
 
@@ -71,11 +85,15 @@ class BlogTopic
     /**
      * @var
      * @Assert\NotBlank(message="Hash tag connot be blank")
+     * @JMS\Expose()
+     * @JMS\Type("string")
      */
     private $hash;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\BlogImage", mappedBy="topicId", orphanRemoval=true, cascade={"persist"})
+     * @JMS\Expose()
+     * @JMS\Type("BlogImages")
      */
     private $blogImages;
 
@@ -346,7 +364,7 @@ class BlogTopic
     {
         if ($this->blogImages->contains($blogImage)) {
             $this->blogImages->removeElement($blogImage);
-            // set the owning side to null (unless already changed)
+
             if ($blogImage->getTopicId() === $this) {
                 $blogImage->setTopicId(null);
             }
@@ -354,4 +372,37 @@ class BlogTopic
 
         return $this;
     }
+
+//    /**
+//     * @JMS\VirtualProperty()
+//     * @JMS\SerializedName("images")
+//     *
+//     * @return array
+//     */
+//    public function getBlogImageApi()
+//    {
+//        $images = $this->blogImages->getValues();
+//        $data = [];
+//        foreach ($images as $image) {
+//            $data[] = 'http://jobeet.loc/uploads/blog/'.$image->getName();
+//        }
+//        return $data;
+//    }
+
+    /**
+     * @JMS\VirtualProperty()
+     * @JMS\SerializedName("hashtag")
+     *
+     * @return array
+     */
+    public function getHashApi()
+    {
+        $hashes = $this->getBlogTopicHashTags()->getValues();
+        $data = [];
+        foreach ($hashes as $hash) {
+            $data[] = $hash->getName();
+        }
+        return $data;
+    }
+
 }

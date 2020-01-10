@@ -197,7 +197,7 @@ class Jobs
 
     /**
      * @var string
-     * @Assert\NotBlank()
+//     * @Assert\NotBlank()
      * @JMS\Expose()
      * @JMS\Type("string")
      */
@@ -223,6 +223,11 @@ class Jobs
         $this->logodata = $logodata;
 //        $this->decodedLogodata = base64_decode($logodata);
 //        $this->decodedLogodata = new Base64EncodedFile($logodata);
+    }
+
+    public function setLogoname(?string $logoname)
+    {
+        $this->logoname = $logoname;
     }
 
     public function getLogodata(): ?string

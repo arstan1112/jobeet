@@ -104,9 +104,6 @@ class JobController extends AbstractFOSRestController
             Jobs::class,
             'json'
         );
-//        dump($uploadApi);
-//        dump($request->getContent());
-//        die();
 
         $errors = $validator->validate($uploadApi);
         if (count($errors) > 0) {

@@ -5,9 +5,11 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\BlogCommentRepository")
+ * @JMS\ExclusionPolicy("all")
  */
 class BlogComment
 {
@@ -20,6 +22,8 @@ class BlogComment
 
     /**
      * @ORM\Column(type="text")
+     * @JMS\Expose()
+     * @JMS\Type("string")
      */
     private $text;
 
@@ -32,11 +36,16 @@ class BlogComment
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="blogComment", cascade={"persist", "persist"})
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+     * @JMS\Expose()
+     * @JMS\Type("string")
+     * @JMS\SerializedName("author")
      */
     private $user;
 
     /**
      * @ORM\Column(type="datetime")
+     * @JMS\Expose()
+     * @JMS\Type("DateTime")
      */
     private $createdAt;
 

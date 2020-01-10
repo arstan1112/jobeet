@@ -43,6 +43,21 @@ class BlogCommentRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * @param int $id
+     * @return BlogComment[] Returns an array of BlogComment objects
+     */
+    public function findByTopicIdApi(int $id)
+    {
+        return $this
+            ->createQueryBuilder('c')
+            ->innerJoin('c.blogTopic', 'topic')
+            ->where('topic.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return BlogComment[] Returns an array of BlogComment objects
     //  */

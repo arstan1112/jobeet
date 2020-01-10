@@ -10,6 +10,7 @@ use App\Form\JobType;
 use App\Entity\Jobs;
 use App\Service\FileUploader;
 use Doctrine\ORM\NonUniqueResultException;
+use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -59,6 +60,7 @@ class JobController extends AbstractController implements VisitInterface
      *
      * @return Response
      * @throws NonUniqueResultException
+     * @throws \Exception
      */
 //    public function list(EntityManagerInterface $em) : Response
     public function list(JobHistoryService $jobHistoryService) : Response
@@ -82,12 +84,31 @@ class JobController extends AbstractController implements VisitInterface
 
 //        $event = new VisitCreatedEvent('job_list');
 //        $this->dispatcher->dispatch($event);
+//        dump($categories);
+//        die();
 
         return $this->render('job/list.html.twig', [
             'categories'  => $categories,
             'historyJobs' => $jobHistoryService->getJobs(),
         ]);
     }
+
+//    /**
+//     * @Route("job/editall")
+//     */
+//    public function editAll()
+//    {
+//        $data = [];
+//        $all = $this->em->getRepository(Jobs::class)->findAll();
+//        foreach ($all as $job) {
+//            $job->setExpiresAt(new \DateTime('+60 days'));
+//            $data[] = $job->getExpiresAt();
+//        }
+//        $this->em->flush();
+//
+//        dump($data);
+//        die();
+//    }
 
     /**
      * Finds and displays a job entity.

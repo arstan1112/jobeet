@@ -104,12 +104,16 @@ class JobController extends AbstractController implements VisitInterface
      * @Route("/admin/job/{id}/edit", name="admin.job.edit", methods="GET|POST", requirements={"id" = "\d+"})
      *
      * @param Request $request
-     * @param Jobs $job
+     * @param Jobs    $job
+     *
      * @return Response
      */
     public function edit(Request $request, Jobs $job) : Response
     {
         $form = $this->createForm(JobType::class, $job);
+//        dump($form->getData());
+//        dump($request);
+//        die();
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

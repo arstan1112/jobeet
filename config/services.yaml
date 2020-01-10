@@ -6,7 +6,7 @@
 parameters:
     locale: 'en'
     locales: ['en', 'ru']
-    max_per_page: 3
+    max_per_page: 5
     max_jobs_on_homepage: 10
     max_jobs_on_category: 10
     jobs_directory: '%kernel.project_dir%/public/uploads/jobs'
@@ -14,6 +14,8 @@ parameters:
     jobs_web_directory:  '/uploads/jobs'
     blog_web_directory:  '/uploads/blog'
     utils_web_directory: '/uploads/utils'
+
+    domain: '%env(DOMAIN)%'
 
 
 services:
@@ -49,6 +51,11 @@ services:
 #        class: JMS\Serializer\Handler\JobCategoryHandler
         class: App\JMSHandlers\JobCategoryHandler
 #        arguments: ['@doctrine.orm.entity_manager', '@jms_serializer']
+        tags:
+            - { name: jms_serializer.subscribing_handler }
+
+    blog_image_handler:
+        class: App\JMSHandlers\BlogImageHandler
         tags:
             - { name: jms_serializer.subscribing_handler }
 

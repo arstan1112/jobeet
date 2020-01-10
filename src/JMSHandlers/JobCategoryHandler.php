@@ -18,6 +18,7 @@ use JMS\Serializer\JsonDeserializationVisitor;
 use JMS\Serializer\JsonSerializationVisitor;
 use JMS\Serializer\SerializerInterface;
 use phpDocumentor\Reflection\Types\Context as Context;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**

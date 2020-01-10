@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Categories;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Exception;
 
 /**
  * @method Categories|null find($id, $lockMode = null, $lockVersion = null)
@@ -21,7 +22,7 @@ class CategoriesRepository extends ServiceEntityRepository
 
     /**
      * @return Categories[]
-     * @throws \Exception
+     * @throws Exception
      */
     public function findWithActiveJobs()
     {

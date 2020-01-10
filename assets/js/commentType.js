@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var counter = 5;
+    var counter = 0;
 
     $('#commentButton').on('click', function (e) {
         let value   = $('#commentInput').val();
@@ -19,9 +19,11 @@ $(document).ready(function () {
                 $('.comments-container').html(response['message']);
             })
         ;
+        console.log('comment console');
     });
 
     $(window).scroll(function (event) {
+
         if ($(window).scrollTop() + $(window).height() === $(document).height()) {
             let topicId = $('#topicId').val();
             counter = counter+5;
@@ -33,9 +35,10 @@ $(document).ready(function () {
                     }
                     if (xhr.status===201) {
                         $('#commentInput').val("");
-                        $("#spinner").show().delay(2000).fadeOut(500);
                         $('.comments-container').append(response['content']);
                     }
+                    console.log('bottom event');
+
                 })
                 .fail(function (xhr) {
                     let response = JSON.parse(xhr.responseText);
