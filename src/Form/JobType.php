@@ -120,14 +120,15 @@ class JobType extends AbstractType
             ]);
 
         $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
-            /** @var Jobs $data */
-            $data  = $event->getData();
             $job = $event->getForm()->getData();
-            $job->setLogodata($job->getLogo()->getFilename());
-            $job->setLogoname($job->getLogo()->getFilename());
 
-            dump($job);
-//            die();
+            if (!($job->getLogo())) {
+                $job->setLogodata('not_submitted');
+                $job->setLogoname('not_submitted');
+            } else {
+                $job->setLogodata($job->getLogo()->getFilename());
+                $job->setLogoname($job->getLogo()->getFilename());
+            }
         });
     }
 

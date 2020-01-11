@@ -111,12 +111,11 @@ class JobController extends AbstractController implements VisitInterface
     public function edit(Request $request, Jobs $job) : Response
     {
         $form = $this->createForm(JobType::class, $job);
-//        dump($form->getData());
-//        dump($request);
-//        die();
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $this->em->flush();
 
             return $this->redirectToRoute('admin.job.list');

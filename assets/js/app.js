@@ -33,7 +33,7 @@ require('./searchTag');
 
 $(document).ready(function () {
     $(".dropdown-toggle").dropdown();
-    console.log('console log from app.js');
+    console.log('log app.js');
 });
 
 

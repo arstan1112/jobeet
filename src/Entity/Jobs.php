@@ -197,7 +197,7 @@ class Jobs
 
     /**
      * @var string
-//     * @Assert\NotBlank()
+     * @Assert\NotBlank()
      * @JMS\Expose()
      * @JMS\Type("string")
      */

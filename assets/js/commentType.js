@@ -1,5 +1,6 @@
 $(document).ready(function () {
     var counter = 0;
+    console.log('comment scroll console');
 
     $('#commentButton').on('click', function (e) {
         let value   = $('#commentInput').val();
@@ -25,8 +26,10 @@ $(document).ready(function () {
     $(window).scroll(function (event) {
 
         if ($(window).scrollTop() + $(window).height() === $(document).height()) {
+        // if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
             let topicId = $('#topicId').val();
             counter = counter+5;
+            console.log('scroll down event');
 
             $.post('/blog/comments/up/'+topicId+'/'+counter)
                 .then(function (response, textStatus, xhr) {
@@ -37,7 +40,7 @@ $(document).ready(function () {
                         $('#commentInput').val("");
                         $('.comments-container').append(response['content']);
                     }
-                    console.log('bottom event');
+                    console.log('post success event');
 
                 })
                 .fail(function (xhr) {

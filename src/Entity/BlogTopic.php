@@ -39,7 +39,7 @@ class BlogTopic
     /**
      * @ORM\Column(type="text")
      * @JMS\Expose()
-     * @JMS\Type("string")
+     * @JMS\Type("BlogText")
      */
     private $text;
 

@@ -15,10 +15,6 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class BlogImageHandler implements SubscribingHandlerInterface
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    private $em;
 
     /**
      * @var ParameterBagInterface
@@ -27,12 +23,10 @@ class BlogImageHandler implements SubscribingHandlerInterface
 
     /**
      * BlogImageHandler constructor.
-     * @param EntityManagerInterface $em
      * @param ParameterBagInterface  $bag
      */
-    public function __construct(EntityManagerInterface $em, ParameterBagInterface $bag)
+    public function __construct(ParameterBagInterface $bag)
     {
-        $this->em  = $em;
         $this->bag = $bag;
     }
 
