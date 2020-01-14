@@ -45,8 +45,6 @@
 
                     <div style="text-align:center">
                         {% for image in topic.blogImages %}
-                            {#                            {% set counter = counter + 1 %}#}
-                            {#                            <span class="dot" onclick="currentSlide({{ counter }})"></span>#}
                             <span class="dot"></span>
                         {% endfor %}
                     </div>
@@ -64,6 +62,30 @@
 
             <br>
             <br>
+
+            <div class="row">
+                <div class="col-sm-12 text-left">
+                    {% if app.user %}
+                        {% if userImpressionType == 1 %}
+                            <input id="likeButton" class="btn btn-light active" type="button" value="Like" data-toggle="button" aria-pressed="true" autocomplete="on"><span class="text-muted likeCounter" style="margin: 7px">{{ topic.likes }}</span>
+                            <input id="dislikeButton" class="btn btn-light" type="button" value="Dislike" data-toggle="button" aria-pressed="true" autocomplete="on" disabled><span class="text-muted dislikeCounter" style="margin: 7px">{{ topic.dislikes }}</span>
+                            <input id="userImpressionId" type="hidden" value="{{ userImpressionId }}">
+                        {% elseif userImpressionType == 2 %}
+                            <input id="likeButton" class="btn btn-light" type="button" value="Like" data-toggle="button" aria-pressed="true" autocomplete="on" disabled><span class="text-muted likeCounter" style="margin: 7px">{{ topic.likes }}</span>
+                            <input id="dislikeButton" class="btn btn-light active" type="button" value="Dislike" data-toggle="button" aria-pressed="true" autocomplete="on"><span class="text-muted dislikeCounter" style="margin: 7px">{{ topic.dislikes }}</span>
+                            <input id="userImpressionId" type="hidden" value="{{ userImpressionId }}">
+                        {% else %}
+                            <input id="likeButton" class="btn btn-light" type="button" value="Like" data-toggle="button" aria-pressed="true" autocomplete="on"><span class="text-muted likeCounter" style="margin: 7px">{{ topic.likes }}</span>
+                            <input id="dislikeButton" class="btn btn-light" type="button" value="Dislike" data-toggle="button" aria-pressed="true" autocomplete="on"><span class="text-muted dislikeCounter" style="margin: 7px">{{ topic.dislikes }}</span>
+                        {% endif %}
+                    {% else %}
+                        <input class="btn btn-light" type="button" value="Like" disabled><span class="text-muted likeCounter" style="margin: 7px">{{ topic.likes }}</span>
+                        <input class="btn btn-light" type="button" value="Dislike" disabled><span class="text-muted dislikeCounter" style="margin: 7px">{{ topic.dislikes }}</span>
+                    {% endif %}
+                    <br>
+                    <input type="hidden" id="topicId" value="{{ topic.id }}">
+                </div>
+            </div>
 
             <div class="row">
                 <div class="col-sm-12 text-right">
@@ -99,6 +121,8 @@
 
         </div>
     </div>
+
+    {{ encore_entry_script_tags('likes') }}
 
     {{ encore_entry_script_tags('slider') }}
 

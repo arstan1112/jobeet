@@ -97,11 +97,27 @@ class BlogTopic
      */
     private $blogImages;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\BlogImpressions", mappedBy="blogTopic", orphanRemoval=true)
+     */
+    private $blogImpressions;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $likes;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $dislikes;
+
     public function __construct()
     {
         $this->blogComment       = new ArrayCollection();
         $this->blogTopicHashTags = new ArrayCollection();
         $this->blogImages        = new ArrayCollection();
+        $this->blogImpressions   = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -403,6 +419,61 @@ class BlogTopic
             $data[] = $hash->getName();
         }
         return $data;
+    }
+
+    /**
+     * @return Collection|BlogImpressions[]
+     */
+    public function getBlogImpressions(): Collection
+    {
+        return $this->blogImpressions;
+    }
+
+    public function addBlogImpression(BlogImpressions $blogImpression): self
+    {
+        if (!$this->blogImpressions->contains($blogImpression)) {
+            $this->blogImpressions[] = $blogImpression;
+            $blogImpression->setBlogTopic($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBlogImpression(BlogImpressions $blogImpression): self
+    {
+        if ($this->blogImpressions->contains($blogImpression)) {
+            $this->blogImpressions->removeElement($blogImpression);
+            // set the owning side to null (unless already changed)
+            if ($blogImpression->getBlogTopic() === $this) {
+                $blogImpression->setBlogTopic(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getLikes(): ?int
+    {
+        return $this->likes;
+    }
+
+    public function setLikes(?int $likes): self
+    {
+        $this->likes = $likes;
+
+        return $this;
+    }
+
+    public function getDislikes(): ?int
+    {
+        return $this->dislikes;
+    }
+
+    public function setDislikes(?int $dislikes): self
+    {
+        $this->dislikes = $dislikes;
+
+        return $this;
     }
 
 }

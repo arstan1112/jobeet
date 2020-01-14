@@ -29,6 +29,7 @@ Encore
     .addEntry('tinyMCE', './assets/js/tinyMCE.js')
     .addEntry('hashTagAdd', './assets/js/hashTagAdd.js')
     .addEntry('slider', './assets/js/slider.js')
+    .addEntry('likes', './assets/js/likes.js')
 
     //.addEntry('page2', './assets/js/page2.js')
 

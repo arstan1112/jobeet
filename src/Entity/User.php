@@ -30,6 +30,11 @@ class User extends BasuUser
      */
     private $blogComment;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\BlogImpressions", mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $blogImpression;
+
     public function getBlogTopic(): ?BlogTopic
     {
         return $this->blogTopic;
@@ -59,6 +64,23 @@ class User extends BasuUser
         // set the owning side of the relation if necessary
         if ($blogComment->getUser() !== $this) {
             $blogComment->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function getBlogImpression(): ?BlogImpressions
+    {
+        return $this->blogImpression;
+    }
+
+    public function setBlogImpression(BlogImpressions $blogImpression): self
+    {
+        $this->blogImpression = $blogImpression;
+
+        // set the owning side of the relation if necessary
+        if ($blogImpression->getUser() !== $this) {
+            $blogImpression->setUser($this);
         }
 
         return $this;

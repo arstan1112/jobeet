@@ -73,6 +73,13 @@ services:
         tags:
             - { name: doctrine.event_listener, event: prePersist}
 
+    App\EventSubscriber\BlogImpressionSubscriber:
+        tags:
+            - { name: doctrine.event_subscriber, event: prePersist }
+            - { name: doctrine.event_subscriber, event: preRemove }
+            - { name: doctrine.event_subscriber, event: postUpdate }
+
     App\Controller\API\JobController:
         arguments:
             $logger: '@monolog.logger.tester_channel'
+

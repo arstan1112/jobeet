@@ -4,6 +4,7 @@
 namespace App\Controller\Blog;
 
 use App\Entity\BlogImage;
+use App\Entity\BlogImpressions;
 use App\Entity\BlogTopic;
 //use App\Entity\BlogTopicHashTag;
 //use App\Entity\User;
@@ -14,6 +15,7 @@ use App\Service\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
 //use Doctrine\ORM\NonUniqueResultException;
 use Exception;
+use FOS\RestBundle\Controller\Annotations as Rest;
 use Knp\Component\Pager\PaginatorInterface;
 //use phpDocumentor\Reflection\DocBlock\Serializer;
 //use phpDocumentor\Reflection\Types\This;
@@ -69,8 +71,6 @@ class TopicController extends AbstractController
      */
     public function list(Request $request, string $hashTag) : Response
     {
-//        dump($GLOBALS);
-//        die();
         $topicQuery = $this
             ->getDoctrine()
             ->getRepository(BlogTopic::class)
@@ -116,9 +116,26 @@ class TopicController extends AbstractController
      */
     public function show(BlogTopic $blogTopic, int $hashTagId) : Response
     {
+        $user = $this->getUser();
+        $userImpressionType = 0;
+        $userImpressionId = 0;
+        if ($user) {
+            $userImpression = $this
+                ->em
+                ->getRepository(BlogImpressions::class)
+                ->findWithUser($blogTopic->getId(), $user->getId());
+
+            if ($userImpression) {
+                $userImpressionType = $userImpression[0]->getType();
+                $userImpressionId   = $userImpression[0]->getId();
+            }
+        }
+
         return $this->render('blog/topic/show.html.twig', [
             'topic'     => $blogTopic,
             'hashTagId' => $hashTagId,
+            'userImpressionType' => $userImpressionType,
+            'userImpressionId'   => $userImpressionId,
         ]);
     }
 
@@ -168,5 +185,47 @@ class TopicController extends AbstractController
         return $this->render('blog/topic/create.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route(
+     *     "blog/evaluate/{id}/{type}/{impressionId}",
+     *     name         = "blog.evaluate",
+     *     methods      = {"GET", "POST"},
+     *     requirements = {"id" = "\d+", "type" = "\d+", "impressionId" = "\d+"},
+     *     defaults={"impressionId":0}
+     *     )
+     *
+     * @param BlogTopic $topic
+     * @param int $type
+     * @param int $impressionId
+     *
+     * @return null
+     * @throws Exception
+     */
+    public function evaluate(BlogTopic $topic, int $type, int $impressionId)
+    {
+        if ($impressionId>0) {
+            $impression = $this->em->getRepository(BlogImpressions::class)->find($impressionId);
+            if ($type == 0) {
+                $this->em->remove($impression);
+            } else {
+                $impression->setType($type);
+            }
+
+        } else {
+            $impression = new BlogImpressions();
+            $impression
+                ->setBlogTopic($topic)
+                ->setUser($this->getUser())
+                ->setType($type)
+                ->setCreatedAt(new \DateTime());
+            $this->em->persist($impression);
+        }
+        $this->em->flush();
+
+        return $this->json([
+            'message' => 'success',
+        ], 201);
     }
 }
