@@ -67,23 +67,29 @@
                 <div class="col-sm-12 text-left">
                     {% if app.user %}
                         {% if userImpressionType == 1 %}
-                            <input id="likeButton" class="btn btn-light active" type="button" value="Like" data-toggle="button" aria-pressed="true" autocomplete="on"><span class="text-muted likeCounter" style="margin: 7px">{{ topic.likes }}</span>
-                            <input id="dislikeButton" class="btn btn-light" type="button" value="Dislike" data-toggle="button" aria-pressed="true" autocomplete="on" disabled><span class="text-muted dislikeCounter" style="margin: 7px">{{ topic.dislikes }}</span>
+                            <input id="likeButton" class="btn btn-light active" type="button" value="Like" data-toggle="button" aria-pressed="true" autocomplete="on"><span id="likeCounter" class="text-muted" style="margin: 7px">{{ topic.likes }}</span>
+                            <input id="dislikeButton" class="btn btn-light" type="button" value="Dislike" data-toggle="button" aria-pressed="true" autocomplete="on" disabled><span id="dislikeCounter" class="text-muted" style="margin: 7px">{{ topic.dislikes }}</span>
                             <input id="userImpressionId" type="hidden" value="{{ userImpressionId }}">
                         {% elseif userImpressionType == 2 %}
-                            <input id="likeButton" class="btn btn-light" type="button" value="Like" data-toggle="button" aria-pressed="true" autocomplete="on" disabled><span class="text-muted likeCounter" style="margin: 7px">{{ topic.likes }}</span>
-                            <input id="dislikeButton" class="btn btn-light active" type="button" value="Dislike" data-toggle="button" aria-pressed="true" autocomplete="on"><span class="text-muted dislikeCounter" style="margin: 7px">{{ topic.dislikes }}</span>
+                            <input id="likeButton" class="btn btn-light" type="button" value="Like" data-toggle="button" aria-pressed="true" autocomplete="on" disabled><span id="likeCounter" class="text-muted" style="margin: 7px">{{ topic.likes }}</span>
+                            <input id="dislikeButton" class="btn btn-light active" type="button" value="Dislike" data-toggle="button" aria-pressed="true" autocomplete="on"><span id="dislikeCounter" class="text-muted" style="margin: 7px">{{ topic.dislikes }}</span>
                             <input id="userImpressionId" type="hidden" value="{{ userImpressionId }}">
                         {% else %}
-                            <input id="likeButton" class="btn btn-light" type="button" value="Like" data-toggle="button" aria-pressed="true" autocomplete="on"><span class="text-muted likeCounter" style="margin: 7px">{{ topic.likes }}</span>
-                            <input id="dislikeButton" class="btn btn-light" type="button" value="Dislike" data-toggle="button" aria-pressed="true" autocomplete="on"><span class="text-muted dislikeCounter" style="margin: 7px">{{ topic.dislikes }}</span>
+                            <input id="likeButton" class="btn btn-light" type="button" value="Like" data-toggle="button" aria-pressed="true" autocomplete="on"><span id="likeCounter" class="text-muted" style="margin: 7px">{{ topic.likes }}</span>
+                            <input id="dislikeButton" class="btn btn-light" type="button" value="Dislike" data-toggle="button" aria-pressed="true" autocomplete="on"><span id="dislikeCounter" class="text-muted" style="margin: 7px">{{ topic.dislikes }}</span>
                         {% endif %}
                     {% else %}
-                        <input class="btn btn-light" type="button" value="Like" disabled><span class="text-muted likeCounter" style="margin: 7px">{{ topic.likes }}</span>
-                        <input class="btn btn-light" type="button" value="Dislike" disabled><span class="text-muted dislikeCounter" style="margin: 7px">{{ topic.dislikes }}</span>
+                        <input id="likeButton" class="btn btn-light" type="button" value="Like" disabled><span id="likeCounter" class="text-muted" style="margin: 7px">{{ topic.likes }}</span>
+                        <input id="dislikeButton" class="btn btn-light" type="button" value="Dislike" disabled><span id="dislikeCounter" class="text-muted" style="margin: 7px">{{ topic.dislikes }}</span>
                     {% endif %}
                     <br>
                     <input type="hidden" id="topicId" value="{{ topic.id }}">
+
+                    <br>
+                    <div class="progress" style="width: 150px; height: 5px">
+                        <div id="impressionBar" class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 50%;"></div>
+                    </div>
+
                 </div>
             </div>
 
