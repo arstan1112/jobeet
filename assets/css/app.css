@@ -84,7 +84,7 @@ div.card img.avatar,
     color: white;
     font-weight: bold;
     font-size: 18px;
-    transition: 0.6s ease;
+    transition: 0.2s ease;
     border-radius: 0 3px 3px 0;
     user-select: none;
 }
@@ -129,7 +129,7 @@ div.card img.avatar,
     background-color: #bbb;
     border-radius: 50%;
     display: inline-block;
-    transition: background-color 1.6s ease;
+    transition: background-color 1.2s ease;
 }
 
 .active, .dot:hover {
@@ -139,9 +139,9 @@ div.card img.avatar,
 /* Fading animation */
 .fade {
     -webkit-animation-name: fade;
-    -webkit-animation-duration: 4s;
+    -webkit-animation-duration: 2s;
     animation-name: fade;
-    animation-duration: 4s;
+    animation-duration: 2s;
 }
 
 @-webkit-keyframes fade {
@@ -150,6 +150,6 @@ div.card img.avatar,
 }
 
 @keyframes fade {
-    from {opacity: .3}
+    from {opacity: .2}
     to {opacity: 2}
 }

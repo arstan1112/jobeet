@@ -76,7 +76,7 @@ $(document).ready(function () {
                 clearTimeout(timer); //cancel the previous timer.
                 timer = null;
             }
-            timer = setTimeout(showSlides, 4000);
+            timer = setTimeout(showSlides, 2000);
         }
 
 

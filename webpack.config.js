@@ -26,6 +26,7 @@ Encore
     .addEntry('app', './assets/js/app.js')
     .addEntry('searchTag', './assets/js/searchTag.js')
     .addEntry('commentType', './assets/js/commentType.js')
+    .addEntry('commentAutoload', './assets/js/commentAutoload.js')
     .addEntry('tinyMCE', './assets/js/tinyMCE.js')
     .addEntry('hashTagAdd', './assets/js/hashTagAdd.js')
     .addEntry('slider', './assets/js/slider.js')

@@ -24,7 +24,8 @@ global.$ =  global.jQuery = $;
 require('bootstrap');
 // import('bootstrap');
 
-require('./searchTag');
+// require('./searchTag');
+// require('./likes');
 // require('./tinyMCE');
 // require('./hashTagAdd');
 // require('./topicCreate');
