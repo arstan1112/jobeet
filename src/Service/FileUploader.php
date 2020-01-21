@@ -27,7 +27,7 @@ class FileUploader
     /**
      * @return string
      */
-    public function getTargetDirectory() : string
+    public function getTargetDirectory(): string
     {
         return $this->targetDirectory;
     }
@@ -35,7 +35,7 @@ class FileUploader
     /**
      * @return string
      */
-    public function getBlogDirectory() : string
+    public function getBlogDirectory(): string
     {
         return $this->blogDirectory;
     }
@@ -45,7 +45,7 @@ class FileUploader
      *
      * @return string
      */
-    public function upload(UploadedFile $file) : string
+    public function upload(UploadedFile $file): string
     {
         $fileName = md5(uniqid()) . '.' . $file->guessExtension();
 
@@ -59,7 +59,7 @@ class FileUploader
      *
      * @return string
      */
-    public function uploadBlog(UploadedFile $file) : string
+    public function uploadBlog(UploadedFile $file): string
     {
         $filename = md5(uniqid()) . '.' . $file->guessExtension();
 

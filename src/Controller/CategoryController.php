@@ -20,17 +20,19 @@ class CategoryController extends AbstractController implements VisitInterface
      *
      * @Route(
      *     "/category/{slug}/{page}",
-     *     name="category.show",
-     *     methods="GET",
-     *     defaults={"page": 1},
-     *     requirements={"page" = "\d+"})
+     *     name         = "category.show",
+     *     methods      = "GET",
+     *     defaults     = {"page": 1},
+     *     requirements = {"page" = "\d+"}
+     *     )
      *
-     * @param Categories $category
+     * @param Categories         $category
      * @param PaginatorInterface $paginator
-     * @param int $page
-     * @param JobHistoryService $jobHistoryService
+     * @param int                $page
+     * @param JobHistoryService  $jobHistoryService
      *
      * @return Response
+     *
      * @throws NonUniqueResultException
      */
     public function show(
@@ -38,9 +40,9 @@ class CategoryController extends AbstractController implements VisitInterface
         PaginatorInterface $paginator,
         int                $page,
         JobHistoryService  $jobHistoryService
-    ) : Response {
+    ): Response {
         $activeJobs = $paginator->paginate(
-            $this->getDoctrine()->getRepository(Jobs::class)->getPaginatedActiveJobsByCategoryQuery($category),
+            $this->getDoctrine()->getRepository(Jobs::class)->getPaginatedActiveJobsByCategory($category),
             $page,
             $this->getParameter('max_jobs_on_category')
         );

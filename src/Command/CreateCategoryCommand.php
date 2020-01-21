@@ -15,7 +15,6 @@ class CreateCategoryCommand extends Command
     private $categoryService;
 
     /**
-     * CreateCategoryCommand constructor.
      * @param CategoryService $categoryService
      */
     public function __construct(CategoryService $categoryService)

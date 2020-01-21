@@ -22,7 +22,6 @@ class JobController extends AbstractController implements VisitInterface
     private $em;
 
     /**
-     * JobController constructor.
      * @param EntityManagerInterface $em
      */
     public function __construct(EntityManagerInterface $em)
@@ -31,20 +30,19 @@ class JobController extends AbstractController implements VisitInterface
     }
 
     /**
-     * Lists all jobs entities
-     *
      * @Route("/admin/jobs/{page}",
-     *     name="admin.job.list",
-     *     methods="GET",
-     *     defaults={"page": 1},
-     *     requirements={"page" = "\d+"}
+     *     name         = "admin.job.list",
+     *     methods      = "GET",
+     *     defaults     = {"page": 1},
+     *     requirements = {"page" = "\d+"}
      *     )
      *
      * @param PaginatorInterface $paginator
-     * @param int $page
+     * @param int                $page
+     *
      * @return Response
      */
-    public function list(PaginatorInterface $paginator, int $page) : Response
+    public function list(PaginatorInterface $paginator, int $page): Response
     {
         $jobs=$paginator->paginate(
             $this->em->getRepository(Jobs::class)->createQueryBuilder('j'),
@@ -62,15 +60,14 @@ class JobController extends AbstractController implements VisitInterface
     }
 
     /**
-     * Create job
-     *
      * @Route("/admin/job/create", name="admin.job.create", methods="GET|POST")
      *
-     * @param Request $request
+     * @param Request      $request
      * @param FileUploader $fileUploader
+     *
      * @return Response
      */
-    public function create(Request $request, FileUploader $fileUploader) : Response
+    public function create(Request $request, FileUploader $fileUploader): Response
     {
         $job  = new Jobs();
         $form = $this->createForm(JobType::class, $job);
@@ -99,8 +96,6 @@ class JobController extends AbstractController implements VisitInterface
     }
 
     /**
-     * Edit job
-     *
      * @Route("/admin/job/{id}/edit", name="admin.job.edit", methods="GET|POST", requirements={"id" = "\d+"})
      *
      * @param Request $request
@@ -108,14 +103,13 @@ class JobController extends AbstractController implements VisitInterface
      *
      * @return Response
      */
-    public function edit(Request $request, Jobs $job) : Response
+    public function edit(Request $request, Jobs $job): Response
     {
         $form = $this->createForm(JobType::class, $job);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $this->em->flush();
 
             return $this->redirectToRoute('admin.job.list');
@@ -127,15 +121,14 @@ class JobController extends AbstractController implements VisitInterface
     }
 
     /**
-     * Delete a job
-     *
      * @Route("/admin/job/{id}/delete", name="admin.job.delete", methods="DELETE", requirements={"id" = "\d+"})
      *
      * @param  Request $request
-     * @param  Jobs $job
+     * @param  Jobs    $job
+     *
      * @return Response
      */
-    public function delete(Request $request, Jobs $job) : Response
+    public function delete(Request $request, Jobs $job): Response
     {
         if ($this->isCsrfTokenValid('delete' . $job->getId(), $request->request->get('_token'))) {
             $this->em->remove($job);

@@ -20,7 +20,6 @@ class BlogHashTagController extends AbstractController
     private $em;
 
     /**
-     * BlogHashTagController constructor.
      * @param EntityManagerInterface $em
      */
     public function __construct(EntityManagerInterface $em)
@@ -42,17 +41,18 @@ class BlogHashTagController extends AbstractController
     /**
      * @Route(
      *     "admin/blog/hashtag/edit/{id}",
-     *     name="admin.blog.hashtag.edit",
-     *     methods={"GET", "POST"},
-     *     requirements={"id"="\d+"}
+     *     name         = "admin.blog.hashtag.edit",
+     *     methods      = {"GET", "POST"},
+     *     requirements = {"id"="\d+"}
      *     )
-     * @param Request $request
+     *
+     * @param Request          $request
      * @param BlogTopicHashTag $hashTag
+     *
      * @return Response
      */
-    public function edit(Request $request, BlogTopicHashTag $hashTag) : Response
+    public function edit(Request $request, BlogTopicHashTag $hashTag): Response
     {
-//        $this->em->getRepository(BlogTopicHashTag::class)->find($hashTag);
         $form = $this->createForm(HashTagSearchType::class, $hashTag);
         $form->handleRequest($request);
 
@@ -70,15 +70,17 @@ class BlogHashTagController extends AbstractController
     /**
      * @Route(
      *     "admin/blog/hashtag/delete/{id}",
-     *     name="admin.blog.hashtag.delete",
-     *     methods={"DELETE"},
-     *     requirements={"id"="\d+"}
+     *     name         = "admin.blog.hashtag.delete",
+     *     methods      = {"DELETE"},
+     *     requirements = {"id"="\d+"}
      *     )
-     * @param Request $request
+     *
+     * @param Request          $request
      * @param BlogTopicHashTag $hashTag
+     *
      * @return Response
      */
-    public function delete(Request $request, BlogTopicHashTag $hashTag) :Response
+    public function delete(Request $request, BlogTopicHashTag $hashTag): Response
     {
         if ($this->isCsrfTokenValid('delete' . $hashTag->getId(), $request->request->get('_token'))) {
             $this->em->remove($hashTag);

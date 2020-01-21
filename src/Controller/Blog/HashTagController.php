@@ -35,20 +35,21 @@ class HashTagController extends AbstractController
     /**
      * @Route(
      *     "blog/hashtags/list",
-     *     name         ="blog.hashtags.list",
-     *     methods      ={"GET", "POST"},
-     *     defaults     ={"page":1},
-     *     requirements ={"page" = "\d+"}
+     *     name         = "blog.hashtags.list",
+     *     methods      = {"GET", "POST"},
+     *     defaults     = {"page":1},
+     *     requirements = {"page" = "\d+"}
      *     )
      *
      * @param PaginatorInterface $paginator
-     * @param int $page
-     * @param Request $request
+     * @param int                $page
+     * @param Request            $request
      *
      * @return Response
+     *
      * @throws NonUniqueResultException
      */
-    public function list(Request $request, PaginatorInterface $paginator, int $page) : Response
+    public function list(Request $request, PaginatorInterface $paginator, int $page): Response
     {
         $form = $this->createForm(HashTagSearchType::class);
         $form->handleRequest($request);
@@ -73,6 +74,7 @@ class HashTagController extends AbstractController
                     ]);
                 }
             }
+
             return $this->render('blog/hashtags/list.html.twig', [
                 'hashTags' => $hashTags,
                 'form'     => $form->createView(),
@@ -88,11 +90,12 @@ class HashTagController extends AbstractController
     /**
      * @Route(
      *     "blog/hash/{id}/show/{page}/{hashTagList}",
-     *     name         ="blog.hash.show",
-     *     methods      ={"GET"},
-     *     requirements ={"id" = "\d+"},
-     *     defaults     ={"page":1, "hashTagList":0}
+     *     name         = "blog.hash.show",
+     *     methods      = {"GET"},
+     *     requirements = {"id" = "\d+"},
+     *     defaults     = {"page":1, "hashTagList":0}
      *     )
+     *
      * @param PaginatorInterface $paginator
      * @param BlogTopicHashTag   $hashTag
      * @param int                $page
@@ -102,10 +105,10 @@ class HashTagController extends AbstractController
      */
     public function show(
         PaginatorInterface $paginator,
-        BlogTopicHashTag $hashTag,
-        int $page,
-        int $hashTagList
-    ) : Response {
+        BlogTopicHashTag   $hashTag,
+        int                $page,
+        int                $hashTagList
+    ): Response {
         $topicsOfHashTag = $paginator->paginate(
             $this->getDoctrine()->getRepository(BlogTopic::class)->findRecentTopicsByHashTag($hashTag),
             $page,

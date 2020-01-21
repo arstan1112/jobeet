@@ -13,7 +13,7 @@ class UserFixtures extends Fixture
      *
      * @return void
      */
-    public function load(ObjectManager $manager) : void
+    public function load(ObjectManager $manager): void
     {
         // TODO: Implement load() method.
         $user = new User();

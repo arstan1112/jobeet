@@ -8,7 +8,8 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 class AffiliateTokenListener
 {
     /**
-     * @param LifecycleEventArgs
+     * @param LifecycleEventArgs $args
+     *
      * @throws \Exception
      */
     public function prePersist(LifecycleEventArgs $args)

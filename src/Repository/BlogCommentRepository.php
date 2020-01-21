@@ -14,14 +14,18 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  */
 class BlogCommentRepository extends ServiceEntityRepository
 {
+    /**
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, BlogComment::class);
     }
 
     /**
-     * @param int $id
+     * @param int  $id
      * @param null $counter
+     *
      * @return BlogComment[] Returns an array of BlogComment objects
      */
     public function findByTopicId(int $id, $counter = null)
@@ -45,6 +49,7 @@ class BlogCommentRepository extends ServiceEntityRepository
 
     /**
      * @param int $id
+     *
      * @return BlogComment[] Returns an array of BlogComment objects
      */
     public function findByTopicIdApi(int $id)

@@ -14,7 +14,7 @@ class AffiliateFixtures extends Fixture implements DependentFixtureInterface
      *
      * @return void
      */
-    public function load(ObjectManager $manager) : void
+    public function load(ObjectManager $manager): void
     {
         // TODO: Implement load() method.
         $affiliateSensioLabs = new Affiliates();
@@ -41,9 +41,8 @@ class AffiliateFixtures extends Fixture implements DependentFixtureInterface
     /**
      * @return array
      */
-    public function getDependencies() : array
+    public function getDependencies(): array
     {
-        // TODO: Implement getDependencies() method.
         return [
             CategoryFixtures::class,
         ];

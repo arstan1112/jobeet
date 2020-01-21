@@ -29,9 +29,10 @@ class JobHistoryService
 
     /**
      * @param Jobs $job
+     *
      * @return void
      */
-    public function addJob(Jobs $job) :void
+    public function addJob(Jobs $job): void
     {
         // add job to session
         $jobs = $this->getJobIds();
@@ -52,16 +53,17 @@ class JobHistoryService
     /**
      * @return array
      */
-    public function getJobIds() : array
+    public function getJobIds(): array
     {
         return $this->session->get('job_history', []);
     }
 
     /**
      * @return Jobs[]
+     *
      * @throws NonUniqueResultException
      */
-    public function getJobs() : array
+    public function getJobs(): array
     {
         // get job from session
         $jobs = [];

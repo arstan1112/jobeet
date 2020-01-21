@@ -23,7 +23,6 @@ class CommentController extends AbstractController
     private $em;
 
     /**
-     * BlogCommentController constructor.
      * @param EntityManagerInterface $em
      */
     public function __construct(EntityManagerInterface $em)
@@ -33,13 +32,15 @@ class CommentController extends AbstractController
 
     /**
      * @Route("blog/comment/create/{id}", name="blog.comment.create", methods={"GET", "POST"})
+     *
      * @param Request   $request
      * @param BlogTopic $blogTopic
      *
      * @return Response
+     *
      * @throws Exception
      */
-    public function create(Request $request, BlogTopic $blogTopic) : Response
+    public function create(Request $request, BlogTopic $blogTopic): Response
     {
         $comment = new BlogComment();
         $form = $this->createForm(CommentType::class, $comment);
@@ -72,13 +73,15 @@ class CommentController extends AbstractController
      *     methods      = {"GET", "POST"},
      *     requirements = {"id"="\d+"}
      *     )
+     *
      * @param BlogTopic $topic
      * @param string    $text
      *
      * @return Response
+     *
      * @throws Exception
      */
-    public function add(BlogTopic $topic, string $text) : Response
+    public function add(BlogTopic $topic, string $text): Response
     {
         $comment = new BlogComment();
         $comment->setText($text);
@@ -110,12 +113,13 @@ class CommentController extends AbstractController
      *     methods      = {"GET", "POST"},
      *     requirements = {"id"="\d+", "counter"="\d+"}
      *     )
+     *
      * @param int $id
      * @param int $counter
      *
      * @return Response
      */
-    public function addInScroll(int $id, int $counter) : Response
+    public function addInScroll(int $id, int $counter): Response
     {
         $comments = $this
             ->em

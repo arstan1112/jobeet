@@ -88,14 +88,12 @@ class JobUploadListener
      */
     private function uploadFile($entity)
     {
-        // upload only works for Job entities
         if (!$entity instanceof Jobs) {
             return;
         }
 
         $logoFile = $entity->getLogo();
 
-        // only upload new files
         if ($logoFile instanceof UploadedFile) {
             $fileName = $this->uploader->upload($logoFile);
 

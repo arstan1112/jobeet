@@ -19,7 +19,6 @@ class VisitSubscriber implements EventSubscriberInterface
     private $visits;
 
     /**
-     * VisitSubscriber constructor.
      * @param VisitsRepository $visits
      */
     public function __construct(VisitsRepository $visits)

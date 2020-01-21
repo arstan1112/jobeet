@@ -16,6 +16,9 @@ use phpDocumentor\Reflection\Types\This;
  */
 class BlogTopicHashTagRepository extends ServiceEntityRepository
 {
+    /**
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, BlogTopicHashTag::class);
@@ -23,7 +26,9 @@ class BlogTopicHashTagRepository extends ServiceEntityRepository
 
     /**
      * @param string $hashTagName
+     *
      * @return BlogTopicHashTag|null
+     *
      * @throws NonUniqueResultException
      */
     public function findByName(string $hashTagName)
@@ -37,9 +42,10 @@ class BlogTopicHashTagRepository extends ServiceEntityRepository
 
     /**
      * @param string $hashTagName
+     *
      * @return BlogTopicHashTag[]
      */
-    public function findByNameAll(string $hashTagName) : array
+    public function findByNameAll(string $hashTagName): array
     {
         return $this->createQueryBuilder('h')
             ->where('h.name = :hashTagName')

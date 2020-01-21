@@ -19,7 +19,7 @@ class BlogTopicFixtures extends Fixture implements DependentFixtureInterface
      * @return void
      * @throws Exception
      */
-    public function load(ObjectManager $manager) : void
+    public function load(ObjectManager $manager): void
     {
         $jobMarket = new BlogTopic();
         $jobMarket->setName('Job_market');
@@ -40,7 +40,7 @@ class BlogTopicFixtures extends Fixture implements DependentFixtureInterface
     /**
      * @return array
      */
-    public function getDependencies() :array
+    public function getDependencies(): array
     {
         // TODO: Implement dependencies method
         return [

@@ -17,7 +17,6 @@ class BlogHashTagChecker
     private $em;
 
     /**
-     * BlogHashTagService constructor.
      * @param EntityManagerInterface $em
      */
     public function __construct(EntityManagerInterface $em)
@@ -27,14 +26,14 @@ class BlogHashTagChecker
 
     /**
      * @param array $hashTag
+     *
      * @return array
+     *
      * @throws NonUniqueResultException
      */
 
-//    public function hashTagExist(mixed $hashTag) : array
     public function hashTagExist(array $hashTag) : array
     {
-//        $hashes = HashTagsNormalizer::normalize($hashTag);
         $hashes = HashTagsNormalizer::normalizeArray($hashTag);
         $checkedTags = [];
         $newTags     = [];

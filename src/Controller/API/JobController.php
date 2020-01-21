@@ -30,7 +30,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\File\File as FileObject;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use App\API\JobUploadApi;
 use Psr\Log\LoggerInterface;
 
 ///**
@@ -57,7 +56,6 @@ class JobController extends AbstractFOSRestController
     private $logger;
 
     /**
-     * JobController constructor.
      * @param EntityManagerInterface $em
      * @param SerializerInterface    $serializer
      * @param LoggerInterface        $logger
@@ -82,7 +80,6 @@ class JobController extends AbstractFOSRestController
      */
     public function getJobsAction(Affiliates $affiliate)
     {
-//        $jobs = $this->em->getRepository(Jobs::class)->findActiveJobs();
         $jobs = $this->em->getRepository(Jobs::class)->findActiveJobsForAffiliate($affiliate);
 
         return $this->handleView($this->view($jobs, Response::HTTP_OK));
@@ -125,9 +122,7 @@ class JobController extends AbstractFOSRestController
 
         try {
             $jobService->saveJob($uploadApi);
-//
             $response = ['status' => 'success', 'message' => 'Entry success'];
-
 //            throw new \Exception('test_message');
         } catch (Exception $e) {
 //            $this->logger->info($e->getMessage());

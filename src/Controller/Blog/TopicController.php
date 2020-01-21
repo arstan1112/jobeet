@@ -64,12 +64,13 @@ class TopicController extends AbstractController
      *     methods  = {"GET", "POST"},
      *     defaults = {"hashTag":""},
      *     )
+     *
      * @param Request $request
      * @param string  $hashTag
      *
      * @return Response
      */
-    public function list(Request $request, string $hashTag) : Response
+    public function list(Request $request, string $hashTag): Response
     {
         $topicQuery = $this
             ->getDoctrine()
@@ -109,12 +110,13 @@ class TopicController extends AbstractController
      *     requirements = {"id" = "\d+"},
      *     defaults     = {"id":1, "hashTagId":0}
      *     )
+     *
      * @param  BlogTopic $blogTopic
      * @param  int       $hashTagId
      *
      * @return Response
      */
-    public function show(BlogTopic $blogTopic, int $hashTagId) : Response
+    public function show(BlogTopic $blogTopic, int $hashTagId): Response
     {
         $user = $this->getUser();
         $userImpressionType = 0;
@@ -141,13 +143,15 @@ class TopicController extends AbstractController
 
     /**
      * @Route("blog/topic/create/", name="blog.topic.create", methods={"GET", "POST"})
-     * @param Request $request
+     *
+     * @param Request          $request
      * @param BlogTopicCreator $topicCreator
      *
      * @return Response
+     *
      * @throws Exception
      */
-    public function create(Request $request, BlogTopicCreator $topicCreator) : Response
+    public function create(Request $request, BlogTopicCreator $topicCreator): Response
     {
         $topic = new BlogTopic();
         $form  = $this->createForm(TopicType::class, $topic);
@@ -193,14 +197,15 @@ class TopicController extends AbstractController
      *     name         = "blog.evaluate",
      *     methods      = {"GET", "POST"},
      *     requirements = {"id" = "\d+", "type" = "\d+", "impressionId" = "\d+"},
-     *     defaults={"impressionId":0}
+     *     defaults     = {"impressionId":0}
      *     )
      *
      * @param BlogTopic $topic
-     * @param int $type
-     * @param int $impressionId
+     * @param int       $type
+     * @param int       $impressionId
      *
      * @return null
+     *
      * @throws Exception
      */
     public function evaluate(BlogTopic $topic, int $type, int $impressionId)
@@ -212,7 +217,6 @@ class TopicController extends AbstractController
             } else {
                 $impression->setType($type);
             }
-
         } else {
             $impression = new BlogImpressions();
             $impression

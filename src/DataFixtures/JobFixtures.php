@@ -13,8 +13,9 @@ class JobFixtures extends Fixture implements DependentFixtureInterface
      * @param ObjectManager $manager
      *
      * @return void
+     * @throws \Exception
      */
-    public function load(ObjectManager $manager) : void
+    public function load(ObjectManager $manager): void
     {
         $jobSensioLabs = new Jobs();
         $jobSensioLabs->setCategories($manager->merge($this->getReference('category-programming')));

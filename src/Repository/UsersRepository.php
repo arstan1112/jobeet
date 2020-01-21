@@ -11,7 +11,6 @@ use Doctrine\ORM\NonUniqueResultException;
 class UsersRepository extends ServiceEntityRepository
 {
     /**
-     * UsersRepository constructor.
      * @param ManagerRegistry $registry
      */
     public function __construct(ManagerRegistry $registry)
@@ -21,7 +20,9 @@ class UsersRepository extends ServiceEntityRepository
 
     /**
      * @param int $id
+     *
      * @return User|null
+     *
      * @throws NonUniqueResultException
      */
     public function findUserById(int $id) :?User

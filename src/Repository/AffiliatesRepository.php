@@ -17,8 +17,10 @@ use Doctrine\ORM\NonUniqueResultException;
  * @method Affiliates[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class AffiliatesRepository extends ServiceEntityRepository
-//class AffiliatesRepository extends EntityRepository
 {
+    /**
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Affiliates::class);
@@ -28,9 +30,10 @@ class AffiliatesRepository extends ServiceEntityRepository
      * @param string $token
      *
      * @return Affiliates|null
+     *
      * @throws NonUniqueResultException
      */
-    public function findOneActiveByToken(string $token) : ?Affiliates
+    public function findOneActiveByToken(string $token): ?Affiliates
     {
         return $this->createQueryBuilder('a')
             ->where('a.active = :active')

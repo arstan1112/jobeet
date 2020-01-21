@@ -23,7 +23,7 @@ class CategoryService
      *
      * @return Categories
      */
-    public function create(string $name) : Categories
+    public function create(string $name): Categories
     {
         $category = new Categories();
         $category->setName($name);

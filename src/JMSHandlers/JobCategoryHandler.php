@@ -63,8 +63,8 @@ class JobCategoryHandler implements SubscribingHandlerInterface
 
     /**
      * @param JsonSerializationVisitor $visitor
-     * @param $category
-     * @param array $type
+     * @param                          $category
+     * @param array                    $type
      *
      * @return Categories|array
      */
@@ -77,8 +77,8 @@ class JobCategoryHandler implements SubscribingHandlerInterface
 
     /**
      * @param JsonDeserializationVisitor $visitor
-     * @param $categoryId
-     * @param array $type
+     * @param                            $categoryId
+     * @param array                      $type
      *
      * @return int|Categories
      */

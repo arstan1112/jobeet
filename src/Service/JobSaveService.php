@@ -78,12 +78,9 @@ class JobSaveService
 
 //        if ($file instanceof  UploadedFile) {
 //        if ($file instanceof FileObject) {
-            $fileName = $this->fileUploader->upload($file);
-            $uploadApi->setLogo($fileName);
-//            dump('upload success');
-//            dump($fileName);
+        $fileName = $this->fileUploader->upload($file);
+        $uploadApi->setLogo($fileName);
 //        }
-//        die();
         $this->em->persist($uploadApi);
         $this->em->flush();
     }

@@ -15,16 +15,14 @@ use Symfony\Component\HttpFoundation\Response;
 class AffiliateController extends AbstractController
 {
     /**
-     * Creates a new affiliate entity
-     *
      * @Route("/affiliate/create", name="affiliate.create", methods={"GET", "POST"})
      *
-     * @param Request $request
+     * @param Request                $request
      * @param EntityManagerInterface $em
      *
      * @return RedirectResponse|Response
      */
-    public function create(Request $request, EntityManagerInterface $em) : Response
+    public function create(Request $request, EntityManagerInterface $em): Response
     {
         $affiliate = new Affiliates();
         $form = $this->createForm(AffiliateType::class, $affiliate);

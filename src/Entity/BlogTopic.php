@@ -17,8 +17,8 @@ use JMS\Serializer\Annotation as JMS;
  */
 class BlogTopic
 {
-    const HASH_TAGS_LIMIT      = 3;
-    const HASH_TAGS_CHAR_LIMIT = 10;
+    public const HASH_TAGS_LIMIT      = 3;
+    public const HASH_TAGS_CHAR_LIMIT = 10;
 
     /**
      * @ORM\Id()
@@ -475,5 +475,4 @@ class BlogTopic
 
         return $this;
     }
-
 }

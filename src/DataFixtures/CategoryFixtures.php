@@ -13,7 +13,7 @@ class CategoryFixtures extends Fixture
      *
      * @return void
      */
-    public function load(ObjectManager $manager) : void
+    public function load(ObjectManager $manager): void
     {
         $designCategory = new Categories();
         $designCategory->setName('Design');

@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class BlogController extends AbstractFOSRestController
 {
-    const PAGE_LIMIT = 5;
+    private const PAGE_LIMIT = 6;
 
     /**
      * @var EntityManagerInterface
@@ -34,6 +34,7 @@ class BlogController extends AbstractFOSRestController
 
     /**
      * BlogController constructor.
+     *
      * @param EntityManagerInterface $em
      * @param SerializerInterface    $serializer
      * @param PaginatorInterface     $paginator

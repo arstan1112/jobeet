@@ -19,6 +19,9 @@ use Exception;
  */
 class JobsRepository extends ServiceEntityRepository
 {
+    /**
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Jobs::class);
@@ -28,6 +31,7 @@ class JobsRepository extends ServiceEntityRepository
      * @param int|null $categoryId
      *
      * @return Jobs[]
+     *
      * @throws Exception
      */
     public function findActiveJobs(int $categoryId = null)
@@ -71,9 +75,10 @@ class JobsRepository extends ServiceEntityRepository
      * @param Categories $category
      *
      * @return AbstractQuery
+     *
      * @throws Exception
      */
-    public function getPaginatedActiveJobsByCategoryQuery(Categories $category) : AbstractQuery
+    public function getPaginatedActiveJobsByCategory(Categories $category) : AbstractQuery
     {
         return $this->createQueryBuilder('j')
             ->where('j.categories = :category')
@@ -89,6 +94,7 @@ class JobsRepository extends ServiceEntityRepository
      * @param Affiliates $affiliate
      *
      * @return Jobs[]
+     *
      * @throws Exception
      */
     public function findActiveJobsForAffiliate(Affiliates $affiliate)

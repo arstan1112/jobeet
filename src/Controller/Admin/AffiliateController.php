@@ -18,21 +18,20 @@ use App\Service\MailerService;
 class AffiliateController extends AbstractController implements VisitInterface
 {
     /**
-     * List all affiliate entities
-     *
      * @Route("/admin/affiliates/{page}",
-     *     name         ="admin.affiliates.list",
-     *     methods      ="GET",
-     *     defaults     ={"page": 1},
-     *     requirements ={"page" = "\d+"}
+     *     name         = "admin.affiliates.list",
+     *     methods      = "GET",
+     *     defaults     = {"page": 1},
+     *     requirements = {"page" = "\d+"}
      * )
+     *
      * @param EntityManagerInterface $em
-     * @param PaginatorInterface $paginator
-     * @param int $page
+     * @param PaginatorInterface     $paginator
+     * @param int                    $page
      *
      * @return Response
      */
-    public function list(EntityManagerInterface $em, PaginatorInterface $paginator, int $page) : Response
+    public function list(EntityManagerInterface $em, PaginatorInterface $paginator, int $page): Response
     {
         $affiliates = $paginator->paginate(
             $em->getRepository(Affiliates::class)->createQueryBuilder('a'),
@@ -50,22 +49,21 @@ class AffiliateController extends AbstractController implements VisitInterface
     }
 
     /**
-     * Activate affiliate
-     *
      * @Route("/admin/affiliate/{id}/activate",
-     *     name         ="admin.affiliate.activate",
-     *     methods      ="GET",
-     *     requirements ={"id" = "\d+"}
+     *     name         = "admin.affiliate.activate",
+     *     methods      = "GET",
+     *     requirements = {"id" = "\d+"}
      * )
      *
      * @param EntityManagerInterface $em
-     * @param Affiliates $affiliate
-     * @param MailerService $mailerService
+     * @param Affiliates             $affiliate
+     * @param MailerService          $mailerService
      *
      * @return Response
+     *
      * @throws TransportExceptionInterface
      */
-    public function activate(EntityManagerInterface $em, Affiliates $affiliate, MailerService $mailerService) : Response
+    public function activate(EntityManagerInterface $em, Affiliates $affiliate, MailerService $mailerService): Response
     {
         $affiliate->setActive(true);
         $em->flush();
@@ -76,20 +74,18 @@ class AffiliateController extends AbstractController implements VisitInterface
     }
 
     /**
-     * Deactivate affiliate
-     *
      * @Route("/admin/affiliate/{id}/deactivate",
-     *     name         ="admin.affiliate.deactivate",
-     *     methods      ="GET",
-     *     requirements ={"id" = "\d+"}
+     *     name         = "admin.affiliate.deactivate",
+     *     methods      = "GET",
+     *     requirements = {"id" = "\d+"}
      * )
      *
      * @param EntityManagerInterface $em
-     * @param Affiliates $affiliate
+     * @param Affiliates             $affiliate
      *
      * @return Response
      */
-    public function deactivate(EntityManagerInterface $em, Affiliates $affiliate) : Response
+    public function deactivate(EntityManagerInterface $em, Affiliates $affiliate): Response
     {
         $affiliate->setActive(false);
         $em->flush();

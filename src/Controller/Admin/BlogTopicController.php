@@ -26,7 +26,6 @@ class BlogTopicController extends AbstractController
     private $em;
 
     /**
-     * BlogController constructor.
      * @param EntityManagerInterface $em
      */
     public function __construct(EntityManagerInterface $em)
@@ -36,9 +35,10 @@ class BlogTopicController extends AbstractController
 
     /**
      * @Route("admin/blog/topics/list", name="admin.blog.topics.list", methods="GET")
+     *
      * @return Response
      */
-    public function list() : Response
+    public function list(): Response
     {
         $topics = $this->em->getRepository(BlogTopic::class)->findAllDesc();
         return $this->render('admin/blog/list.html.twig', [
@@ -48,11 +48,14 @@ class BlogTopicController extends AbstractController
 
     /**
      * @Route("admin/blog/topic/create", name="admin.blog.topic.create", methods={"GET", "POST"})
+     *
      * @param  Request $request
+     *
      * @return Response
+     *
      * @throws \Exception
      */
-    public function create(Request $request) : Response
+    public function create(Request $request): Response
     {
         $topic = new BlogTopic();
         $form  = $this->createForm(BlogType::class, $topic);
@@ -78,20 +81,21 @@ class BlogTopicController extends AbstractController
     /**
      * @Route(
      *     "admin/blog/topic/{id}/edit",
-     *     name="admin.blog.topic.edit",
-     *     methods={"GET", "POST"},
-     *     requirements={"id"="\d+"}
+     *     name         = "admin.blog.topic.edit",
+     *     methods      = {"GET", "POST"},
+     *     requirements = {"id"="\d+"}
      *     )
+     *
      * @param Request            $request
      * @param BlogTopic          $topic
      * @param BlogHashTagChecker $hashTagService
      *
      * @return Response
+     *
      * @throws NonUniqueResultException
      */
     public function edit(Request $request, BlogTopic $topic, BlogHashTagChecker $hashTagService): Response
     {
-//        $form = $this->createForm(BlogType::class, $topic);
         $form = $this->createForm(TopicType::class, $topic);
         $form->handleRequest($request);
 
@@ -128,16 +132,17 @@ class BlogTopicController extends AbstractController
     /**
      * @Route(
      *     "admin/blog/topic/{id}/delete",
-     *     name="admin.blog.topic.delete",
-     *     methods={"DELETE"},
-     *     requirements={"id" = "\d+"}
+     *     name         = "admin.blog.topic.delete",
+     *     methods      = {"DELETE"},
+     *     requirements = {"id" = "\d+"}
      *     )
-     * @param  Request $request
+     *
+     * @param  Request   $request
      * @param  BlogTopic $topic
      *
      * @return Response
      */
-    public function delete(Request $request, BlogTopic $topic) : Response
+    public function delete(Request $request, BlogTopic $topic): Response
     {
         if ($this->isCsrfTokenValid('delete' . $topic->getId(), $request->request->get('_token'))) {
             $this->em->remove($topic);

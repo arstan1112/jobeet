@@ -23,7 +23,6 @@ class BlogCommentController extends AbstractController
     private $em;
 
     /**
-     * BlogController constructor.
      * @param EntityManagerInterface $em
      */
     public function __construct(EntityManagerInterface $em)
@@ -33,6 +32,7 @@ class BlogCommentController extends AbstractController
 
     /**
      * @Route("admin/blog/comments/list", name="admin.blog.comments.list", methods="GET")
+     *
      * @return Response
      */
     public function list() : Response
@@ -47,12 +47,14 @@ class BlogCommentController extends AbstractController
     /**
      * @Route(
      *     "admin/blog/comment/{id}/edit",
-     *     name="admin.blog.comment.edit",
-     *     methods={"GET", "POST"},
-     *     requirements={"id"="\d+"}
+     *     name         = "admin.blog.comment.edit",
+     *     methods      = {"GET", "POST"},
+     *     requirements = {"id"="\d+"}
      *     )
-     * @param  Request $request
+     *
+     * @param  Request     $request
      * @param  BlogComment $comment
+     *
      * @return Response
      */
     public function edit(Request $request, BlogComment $comment) : Response
@@ -75,12 +77,14 @@ class BlogCommentController extends AbstractController
     /**
      * @Route(
      *     "admin/blog/comment/{id}/delete",
-     *     name="admin.blog.comment.delete",
-     *     methods={"DELETE"},
-     *     requirements={"id" = "\d+"}
+     *     name         = "admin.blog.comment.delete",
+     *     methods      = {"DELETE"},
+     *     requirements = {"id" = "\d+"}
      *     )
-     * @param  Request $request
+     *
+     * @param  Request     $request
      * @param  BlogComment $comment
+     *
      * @return Response
      */
     public function delete(Request $request, BlogComment $comment) : Response

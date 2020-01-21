@@ -17,8 +17,7 @@ class TextSummarizer
         $content = preg_replace("/&nbsp;/", '', $content);
         $api          = new TextRankFacade();
         $summaryArray = $api->summarizeTextBasic($content);
-        $summary      = implode("", $summaryArray);
 
-        return $summary;
+        return implode("", $summaryArray);
     }
 }

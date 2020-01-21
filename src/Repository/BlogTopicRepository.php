@@ -7,6 +7,7 @@ use App\Entity\BlogTopicHashTag;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * @method BlogTopic|null find($id, $lockMode = null, $lockVersion = null)
@@ -25,6 +26,9 @@ class BlogTopicRepository extends ServiceEntityRepository
         parent::__construct($registry, BlogTopic::class);
     }
 
+    /**
+     * @return mixed
+     */
     public function findAllDesc()
     {
         return $this
@@ -34,6 +38,11 @@ class BlogTopicRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * @param null $tag
+     *
+     * @return QueryBuilder
+     */
     public function findRecentTopics($tag = null)
     {
         $qb = $this
@@ -50,6 +59,11 @@ class BlogTopicRepository extends ServiceEntityRepository
         return $qb;
     }
 
+    /**
+     * @param null $tag
+     *
+     * @return mixed
+     */
     public function findRecentTopicsByTag($tag = null)
     {
         return $this
@@ -76,6 +90,7 @@ class BlogTopicRepository extends ServiceEntityRepository
 
     /**
      * @param BlogTopicHashTag $hashTag
+     *
      * @return BlogTopic[]
      */
     public function findRecentTopicsByHashTag(BlogTopicHashTag $hashTag)

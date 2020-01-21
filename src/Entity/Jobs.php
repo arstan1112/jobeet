@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 //use Hshn\Base64EncodedFile\HttpFoundation\File\Base64EncodedFile;
 
 
@@ -386,7 +387,7 @@ class Jobs
     /**
      * @return bool
      */
-    public function isActivated() : ?bool
+    public function isActivated(): ?bool
     {
         return $this->activated;
     }
@@ -479,7 +480,7 @@ class Jobs
      */
     public function getLogoPath()
     {
-        return $this->getLogo() ? 'uploads/jobs/' . $this->getLogo() : null;
+        return $this->getLogo() ? 'uploads/jobs/' . $this->getLogo(): null;
     }
 
     /**

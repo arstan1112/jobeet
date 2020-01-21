@@ -14,11 +14,20 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  */
 class BlogImpressionsRepository extends ServiceEntityRepository
 {
+    /**
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, BlogImpressions::class);
     }
 
+    /**
+     * @param $blogTopicId
+     * @param $userId
+     *
+     * @return mixed
+     */
     public function findWithUser($blogTopicId, $userId)
     {
         return $this->createQueryBuilder('i')

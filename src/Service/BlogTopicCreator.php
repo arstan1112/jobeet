@@ -27,7 +27,6 @@ class BlogTopicCreator
     private $summarizer;
 
     /**
-     * BlogTopicCreator constructor.
      * @param EntityManagerInterface $em
      * @param BlogHashTagChecker     $hashTagChecker
      * @param TextSummarizer         $summarizer
@@ -71,6 +70,5 @@ class BlogTopicCreator
 
         $this->em->persist($topic);
         $this->em->flush();
-//        throw new \Exception('testerror');
     }
 }

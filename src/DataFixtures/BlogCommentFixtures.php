@@ -16,7 +16,6 @@ class BlogCommentFixtures extends Fixture implements DependentFixtureInterface
      */
     public function load(ObjectManager $manager)
     {
-        // TODO: Implement load() method.
         $comment = new BlogComment();
         $comment->setText('Lorem ipsum ...');
         $comment->setBlogTopic($manager->merge($this->getReference('blogJobMarket')));
@@ -32,7 +31,6 @@ class BlogCommentFixtures extends Fixture implements DependentFixtureInterface
      */
     public function getDependencies()
     {
-        // TODO: Implement getDependencies() method.
         return [
             BlogTopicFixtures::class,
             UserFixtures::class,

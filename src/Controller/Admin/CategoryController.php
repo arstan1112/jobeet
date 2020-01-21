@@ -20,7 +20,6 @@ class CategoryController extends AbstractController implements VisitInterface
     private $em;
 
     /**
-     * CategoryController constructor.
      * @param EntityManagerInterface $em
      */
     public function __construct(EntityManagerInterface $em)
@@ -29,14 +28,13 @@ class CategoryController extends AbstractController implements VisitInterface
     }
 
     /**
-     * Lists all categories entities.
-     *
      * @Route("/admin/categories", name="admin.category.list", methods="GET")
      *
      * @param  EntityManagerInterface $em
+     *
      * @return Response
      */
-    public function list(EntityManagerInterface $em) : Response
+    public function list(EntityManagerInterface $em): Response
     {
         $categories = $em->getRepository(Categories::class)->findAll();
 
@@ -46,16 +44,14 @@ class CategoryController extends AbstractController implements VisitInterface
     }
 
     /**
-     * Create category.
-     *
      * @Route("/admin/category/create", name="admin.category.create", methods="GET|POST")
      *
-     * @param Request $request
+     * @param Request                $request
      * @param EntityManagerInterface $em
      *
      * @return Response
      */
-    public function create(Request $request, EntityManagerInterface $em) : Response
+    public function create(Request $request, EntityManagerInterface $em): Response
     {
         $category = new Categories();
         $form = $this->createForm(CategoryType::class, $category);
@@ -78,13 +74,13 @@ class CategoryController extends AbstractController implements VisitInterface
      *
      * @Route("/admin/category/{id}/edit", name="admin.category.edit", methods="GET|POST", requirements={"id" = "\d+"})
      *
-     * @param Request $request
+     * @param Request                $request
      * @param EntityManagerInterface $em
-     * @param Categories $category
+     * @param Categories             $category
      *
      * @return Response
      */
-    public function edit(Request $request, EntityManagerInterface $em, Categories $category) : Response
+    public function edit(Request $request, EntityManagerInterface $em, Categories $category): Response
     {
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
@@ -106,14 +102,14 @@ class CategoryController extends AbstractController implements VisitInterface
      *
      * @Route("/admin/category/{id}/delete", name="admin.category.delete", methods="DELETE", requirements={"id"="\d+"})
      *
-     * @param Request $request
+     * @param Request                $request
      * @param EntityManagerInterface $em
-     * @param Categories $category
+     * @param Categories             $category
      *
      * @return Response
      *
      */
-    public function delete(Request $request, EntityManagerInterface $em, Categories $category) : Response
+    public function delete(Request $request, EntityManagerInterface $em, Categories $category): Response
     {
         if ($this->isCsrfTokenValid('delete' . $category->getId(), $request->request->get('_token'))) {
             $em->remove($category);
