@@ -70,47 +70,9 @@
 
 {% block javascripts %}
      <script>
-         // let blocks = document.getElementsByClassName("blockContainer");
-         // let counting;
-         // for (counting = 0; counting < blocks.length; counting++) {
-         //     var allSlides = blocks[counting].getElementsByClassName("mySlides");
-         //     for(var k = 0, all = allSlides.length; k < all; k++){
-         //         allSlides[k].classList.add("count"+counting);
-         //     }
-         //     var slideIndex = 0;
-         //     showSlides();
-         //     // Next/previous controls
-         //     function plusSlides(n)
-         //     {
-         //         showSlides(slideIndex += n);
-         //     }
-         //     // Thumbnail image controls
-         //     function currentSlide(n)
-         //     {
-         //         showSlides(slideIndex = n);
-         //     }
-         //     function showSlides()
-         //     {
-         //         let i;
-         //         // let slides = document.getElementsByClassName("mySlides");
-         //         let slides = document.getElementsByClassName("count"+counting);
-         //         if (slides.length>0) {
-         //             for (i = 0; i < slides.length; i++) {
-         //                 slides[i].style.display = "none";
-         //             }
-         //             slideIndex++;
-         //             if (slideIndex > slides.length) {slideIndex = 0}
-         //             slides[slideIndex-1].style.display = "block";
-         //             setTimeout(showSlides, 1000); // Change image every 2 seconds
-         //         }
-         //     }
-         //     for(var d = 0, all = allSlides.length; d < all; d++){
-         //         allSlides[d].classList.remove("count"+counting);
-         //     }
-         // }
+
      </script>
 
-     {#    {{ encore_entry_script_tags('slider') }}#}
 {% endblock %}
 
 {% include 'partials/pagination.html.twig' %}

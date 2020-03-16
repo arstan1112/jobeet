@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Entity\Categories;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class CategoryService
 {
@@ -33,4 +34,5 @@ class CategoryService
 
         return $category;
     }
+
 }

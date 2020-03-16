@@ -97,9 +97,19 @@ class TopicController extends AbstractController
             ]);
         }
 
-        return $this->render('blog/topic/list.html.twig', [
+        $response = $this->render('blog/topic/list.html.twig', [
             'topics' => $topics,
         ]);
+        $response->setPublic();
+//        $response->setEtag('test');
+//        $response->headers->addCacheControlDirective('no-cache', true);
+        $response->setMaxAge(30);
+
+        return $response;
+
+//        return $this->render('blog/topic/list.html.twig', [
+//            'topics' => $topics,
+//        ]);
     }
 
     /**
